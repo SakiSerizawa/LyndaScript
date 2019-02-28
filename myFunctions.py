@@ -1,6 +1,7 @@
 from openpyxl.utils import column_index_from_string, get_column_letter
 from openpyxl.styles import *
 
+
 def copy_paste_lookupid(sourcews, destws):
     """Copy in source sheets lookup id's into destination sheet."""
     for col in sourcews.iter_rows(min_col=1,max_col=1, min_row=2):
@@ -8,12 +9,12 @@ def copy_paste_lookupid(sourcews, destws):
             destws[cell.coordinate].value = cell.value
 
 
-
-#takes information of the first several columns, from first name to state inclusive from
-# source sheet and pastes them into the destination sheet
 def copy_paste_initial_info(source_ws, desti_ws):
+    """Takes information of columns in source worksheet, from first name to state inclusive"""
+    """Pastes into the destination worksheet"""
     c = 2
-    for row in source_ws.iter_rows(min_row=2,min_col=column_index_from_string('D'),max_col=column_index_from_string('I')):
+    for row in source_ws.iter_rows(min_row=2,min_col=column_index_from_string('D'),
+                                   max_col=column_index_from_string('I')):
         for cell in row:
             desti_ws.cell(row=cell.row, column=c).value = cell.value
             c = c+1
@@ -21,18 +22,14 @@ def copy_paste_initial_info(source_ws, desti_ws):
     return 0
 
 
-
-# Moves a portion of the data from the original source excel sheet, to the destination sheet
-# Data being added to the destination worksheet in this function is generally
-#Loops through the source sheet, finds key columns and ccpies them to their respective desination
 def copy_paste_other_info(sourcews, destws):
+    """Loops through the source sheet, finds key columns and ccpies them to their respective desination worksheet"""
     for col in sourcews.columns:
         for cell in col:
             if cell.value == 'City' or cell.value == 'CITY':
                 column = cell.column
                 column2 = get_column_letter(column)
                 for cell in sourcews[column2]:
-                    test = cell.value
                     destws.cell(row=cell.row, column=column_index_from_string('I')).value = cell.value.title()
             elif cell.value == 'STATE' or cell.value == 'State':
                 column = cell.column
@@ -66,15 +63,16 @@ def copy_paste_other_info(sourcews, destws):
                     destws.cell(row=cell.row, column=column_index_from_string('U')).value = cell.value
     return 0
 
-#Appends the lookup id from the source sheet onto the destination sheet
+
 def append_lookup_id(source_ws, dest_ws):
-    #Creates list of items that need to be appended
+    """Appends the lookup id from the source sheet onto the destination sheet"""
+    # Creates list of items that need to be appended
     lookupid_list = []
     for col in source_ws.iter_cols(min_col=1,max_col=1, min_row=2):
         for cell in col:
             lookupid_list.append(cell.value)
 
-    #Appends the lookup ID from the second workbook onto the first
+    # Appends the lookup ID from the second workbook onto the first
     for col in dest_ws.iter_rows(max_col=1):
         if col[-1].value == 'LOOKUP ID':
             for data in lookupid_list:
@@ -82,8 +80,8 @@ def append_lookup_id(source_ws, dest_ws):
     return 0
 
 
-#takes information of the first several columns, from first name to state inclusive from
-#source sheet and appends them at the bottom of the destination sheet
+# takes information of the first several columns, from first name to state inclusive from
+# source sheet and appends them at the bottom of the destination sheet
 # def append_initial_info(source_ws, desti_ws):
 #
 #
@@ -101,14 +99,14 @@ def append_lookup_id(source_ws, dest_ws):
 #                 desti_ws.append([data])
 #     return 0
 
-#appends on second worksheet information to the target worksheet
 def append_second_worksheet_initial_info(source_ws, target_ws):
+    """Appends columns (from first name to state inclusive) from secondary source worksheet to target worksheet """
     length1 = len(target_ws['A']) + 1
     for col in source_ws.iter_rows(min_row=2,min_col=column_index_from_string('D'),max_col=column_index_from_string('I')):
         row = [None]*1 + [cell.value for cell in col]
         target_ws.append(row)
 
-    #Copy in source sheets lookup id's into destination sheet
+    # Copy in source sheets lookup id's into destination sheet
     for col in source_ws.iter_rows(min_col=1,max_col=1, min_row=2):
         for cell in col:
             target_ws.cell(row=length1,column=1).value = cell.value
@@ -116,11 +114,12 @@ def append_second_worksheet_initial_info(source_ws, target_ws):
 
     return 0
 
-# Data being added to the destination worksheet in this function is generally
-# #WS source is currently copying titles of columns as well
-def append_second_worksheet_other_info(source_ws,target_ws, length_OG):
 
+def append_second_worksheet_other_info(source_ws,target_ws, length_OG):
+    """Loops through the source sheet, finds key columns and appends them to a desination worksheet"""
+    # Look through each source sheet column
     for col in source_ws.columns:
+        # Within in column, checks to see if cell is appropriate header we are looking for
         for cell in col:
             if cell.value == 'CITY' or cell.value == 'City':
                 column = cell.column
@@ -168,11 +167,18 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG):
     return 0
 
 
-hometuple = ('gmail.com','gmail.ca', 'hotmail.com', 'hotmail.ca', 'yahoo.com', 'yahoo.ca', 'live.ca', 'live.com', 'telus.net', 'shaw.ca', 'ymail.com', 'outlook.com', 'outlook.ca', 'me.com', 'icloud.com', 'sympatico.ca')
-businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee.org', 'ualberta.ca','mail.%.ca', 'fnha.ca', 'surrey.ca', 'vch.ca', 'mun.ca', 'caltech.edu', 'hec.edu', 'barcelonagse.eu', 'aucegypt.edu',
-                 'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com')
+# tuple of the different email handles that go into certain categories
+hometuple = ('gmail.com','gmail.ca', 'hotmail.com', 'hotmail.ca', 'yahoo.com', 'yahoo.ca', 'live.ca', 'live.com',
+             'telus.net', 'shaw.ca', 'ymail.com', 'outlook.com', 'outlook.ca', 'me.com', 'icloud.com', 'sympatico.ca',
+             'comcast.net', 'mail.com')
+businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee.org', 'ualberta.ca','mail.%.ca',
+                 'fnha.ca', 'surrey.ca', 'vch.ca', 'mun.ca', 'caltech.edu', 'hec.edu', 'barcelonagse.eu', 'aucegypt.edu',
+                 'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com', 'bchydro.com')
+
 
 def categorize_emails(worksheet):
+    """Looking through the email column R, determines email category and marks column next to it accordingly"""
+    """A is Alumni, H Home, and B Business. Anything not categorized is highlighted yellow in the target worksheet"""
     for cell in worksheet['R']:
         if cell.value is None:
             continue
@@ -189,6 +195,7 @@ def categorize_emails(worksheet):
     return 0
 
 def format_phone_number(worksheet):
+    """Formats phone number by removing extra spaces and unnecessary characters"""
     for col in worksheet.iter_rows(min_row=2, min_col=column_index_from_string('O'), max_col=column_index_from_string('O')):
         for cell in col:
             phone = str(cell.value)
@@ -198,6 +205,7 @@ def format_phone_number(worksheet):
             else: cell.value = int(cell.value)
     return 0
 
+# Dictionary of UBC countries. Key value is the abbreviation, and value pair is the format LINKS prefers
 countryDictionary = {"HGKG":"Hong Kong","JAPA":"Japan", "CHIN":	"China", "INDI":"India","AUST":	"Australia", "INDO":"Indonesia",  "MALY":"Malaysia", "MEXI":"Mexico", "AFGH":"Afghanistan","ALAN":"Aland Islands","ALBA":"Albania","ALGE":"Algeria ","AMSA":	"American Samoa","ANDO":"Andorra",
                      "ANGO":"Angola", "ANGU":"Anguilla","ANTA":	"Antarctica","ANTI":"Antigua and Barbuda","ARGE":	"Argentina", "ARME":"Armenia", "ARUB":	"Aruba",
                       "AUSR":	"Austria",  "AZER":	"Azerbaijan", "BAHA":"Bahamas", "BAHR":"Bahrain", "BANG":"Bangladesh", "BARB":	"Barbados", "BELA":	"Belarus", "BELG":
@@ -234,7 +242,7 @@ countryDictionary = {"HGKG":"Hong Kong","JAPA":"Japan", "CHIN":	"China", "INDI":
                      "WEBA":"Westbank", "WEST":	"Western Somoa", "YEME":	"Yemen", "YUGO":	"Yugoslavia", "ZAIR":	"Zaire", "ZAMB":	"Zambia", "ZIMB":	"Zimbabwe"}
 
 def format_country(worksheet):
-
+    """Changes country format to a type that LINKS """
     for cell in worksheet['L']:
         if cell.value == 'CANA':
             cell.value = 'Canada'
@@ -257,27 +265,34 @@ def format_postal_code(worksheet):
             postal_code = cell.offset(row=0, column=-1).value
             try:
                 if postal_code[3] != ' ' or not postal_code[3].isdigit():
-                    cell.offset(row=0, column=-1).value = postal_code[3:] + ' ' + postal_code[:3]
+                    cell.offset(row=0, column=-1).value = postal_code[:3] + ' ' + postal_code[3:]
             except:
                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                 cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
     return 0
 
-title_row = ["LOOKUPID", "FIRST_NAME", "MIDDLE_NAME", "LAST_NAME", "Street1", "Street2", "Street3", "Street4", "CITY", "STATE", "Postal_Code", "COUNTRY",
-             "Address Type", "Address is Primarry", "Phone", "Phone Type", "Phone is Primary", "Email", "Email Type", "Email is Primary", "Last_UPDT", "Source"]
 
+title_row = ["LOOKUPID", "FIRST_NAME", "MIDDLE_NAME", "LAST_NAME", "Street1", "Street2", "Street3", "Street4", "CITY",
+             "STATE", "Postal_Code", "COUNTRY","Address Type", "Address is Primary", "Phone", "Phone Type",
+             "Phone is Primary", "Email", "Email Type", "Email is Primary", "Last_UPDT", "Source"]
 
 
 def format_first_row(worksheet):
+    """Formats the first row of the freshsly formatted excel sheet to have the proper titles, referenced from
+    title list title_row"""
     i = 0
     for row in worksheet.iter_rows(min_row=1, max_row=1):
         for cell in row:
             cell.value = title_row[i]
+            cell.fill = PatternFill(fgColor='FFFFFF')
+            cell.font = Font(bold=True)
             i = i+1
     return 0
 
+
 def format_non_initium_address(worksheet):
+    """Formats non-Canadian and non-USA address to be in title format (ie: Japan vs JAPAN)"""
     for cell in worksheet['L']:
         if not cell.value == "Canada" and not cell.value == "United States of America":
             try:
@@ -287,14 +302,16 @@ def format_non_initium_address(worksheet):
             except:
                 continue
     return 0
-#Adds information to the newly created Initium worksheet
+
 
 def copy_paste_to_initium_file(source_ws, desti_ws, country):
+    """Places information into a new excel file based on country"""
     for cell in source_ws['L']:
         if cell.value == country:
             alumni_info = []
             alumni_info.append(source_ws.cell(row=cell.row, column=1).value)
-            for col in source_ws.iter_cols(min_row=cell.row, max_row=cell.row, min_col=column_index_from_string('E'), max_col=column_index_from_string('L')):
+            for col in source_ws.iter_cols(min_row=cell.row, max_row=cell.row, min_col=column_index_from_string('E'),
+                                           max_col=column_index_from_string('L')):
                 for cell in col:
                     alumni_info.append(cell.value)
             desti_ws.append(alumni_info)
@@ -302,7 +319,20 @@ def copy_paste_to_initium_file(source_ws, desti_ws, country):
     return 0
 
 
+def colour_worksheet(target_ws):
+    """Fills in cells of the worksheet to pink"""
+    for rows in target_ws.rows:
+        for cell in rows:
+            cell.fill = PatternFill(fgColor='FAFAD2', fill_type='solid')
+    for cell in target_ws[1]:
+        cell.fill=PatternFill(fgColor='FFFFFF', fill_type='solid')
+        cell.font = Font(bold=True)
+    return 0
+
+
 def replace_info(ws_source, info_list):
+    """Similar to VLOOKUP, matches LOOKUPID from the initium results document and matches to LOOKUPID in source ws.
+    If there is a match, replaces the information with information in info_list"""
     for cell in ws_source['A']:
         if cell.value == info_list[0]:
             c = 1
