@@ -1,5 +1,6 @@
 from openpyxl.utils import column_index_from_string, get_column_letter
 from openpyxl.styles import *
+from openpyxl.worksheet.datavalidation import DataValidation
 
 
 def copy_paste_lookupid(sourcews, destws):
@@ -64,6 +65,21 @@ def copy_paste_other_info(sourcews, destws):
     return 0
 
 
+def create_source_column(first_file, destws):
+
+    for cell in destws['V']:
+        cell.value = first_file
+
+    dv = DataValidation(type="list", formula1='"Registrar: SIS Import, Ruffalo Cody"', allow_blank=True)
+
+    # Add the data-validation object to the worksheet
+    destws.add_data_validation(dv)
+
+    dv.add('V2:V1048576')
+
+    return 0
+
+
 def append_lookup_id(source_ws, dest_ws):
     """Appends the lookup id from the source sheet onto the destination sheet"""
     # Creates list of items that need to be appended
@@ -115,8 +131,8 @@ def append_second_worksheet_initial_info(source_ws, target_ws):
     return 0
 
 
-def append_second_worksheet_other_info(source_ws,target_ws, length_OG):
-    """Loops through the source sheet, finds key columns and appends them to a desination worksheet"""
+def append_second_worksheet_other_info(source_ws,target_ws, length_OG, second_file):
+    """Loops through the source sheet, finds key columns and appends them to a destination worksheet"""
     # Look through each source sheet column
     for col in source_ws.columns:
         # Within in column, checks to see if cell is appropriate header we are looking for
@@ -162,6 +178,7 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG):
                 for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('U')).value = cell.value
+                        target_ws.cell(row=length, column=column_index_from_string('V')).value = second_file
                         length = length+1
         length = length_OG
     return 0
@@ -170,28 +187,43 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG):
 # tuple of the different email handles that go into certain categories
 hometuple = ('gmail.com','gmail.ca', 'hotmail.com', 'hotmail.ca', 'yahoo.com', 'yahoo.ca', 'live.ca', 'live.com',
              'telus.net', 'shaw.ca', 'ymail.com', 'outlook.com', 'outlook.ca', 'me.com', 'icloud.com', 'sympatico.ca',
-             'comcast.net', 'mail.com')
+             'comcast.net', 'mail.com', 'yeah.net', '126.com', 'rogers.com', 'citywest.ca')
 businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee.org', 'ualberta.ca','mail.%.ca',
                  'fnha.ca', 'surrey.ca', 'vch.ca', 'mun.ca', 'caltech.edu', 'hec.edu', 'barcelonagse.eu', 'aucegypt.edu',
-                 'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com', 'bchydro.com')
+                 'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com', 'bchydro.com',
+                 'carlton.ca', 'worksafebc.com', 'tru.ca', 'puttingonashow.ca', 'cfmrlaw.com', 'yorku.ca', 'kevingtonbuilding.com' )
 
 
 def categorize_emails(worksheet):
     """Looking through the email column R, determines email category and marks column next to it accordingly"""
     """A is Alumni, H Home, and B Business. Anything not categorized is highlighted yellow in the target worksheet"""
     for cell in worksheet['R']:
+        cell.offset(row=0, column=2).value = 0
         if cell.value is None:
+            cell.offset(row=0, column=2).value = None
             continue
         elif cell.value.endswith('alumni.ubc.ca'):
             (cell.offset(row=0, column=1).value) = 'A'
-        elif cell.value.endswith(hometuple):
+        elif cell.value.lower().endswith(hometuple):
             (cell.offset(row=0, column=1).value) = 'H'
-        elif cell.value.endswith(businesstuple):
+        elif cell.value.lower().endswith(businesstuple):
             (cell.offset(row=0, column=1).value) = 'B'
         elif "@alumni" in cell.value:
             (cell.offset(row=0, column=1).value) = 'H'
         else:
             cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+
+    # Creates a data validation (drop down) object
+    dv = DataValidation(type="list", formula1='"H,B,O"', allow_blank=True)
+    dv2 = DataValidation(type="list", formula1='"0,1"', allow_blank=True)
+
+    # Add the data-validation object to the worksheet
+    worksheet.add_data_validation(dv)
+    worksheet.add_data_validation(dv2)
+
+    dv.add('S2:S1048576')
+    dv2.add('T2:T1048576')
+
     return 0
 
 def format_phone_number(worksheet):
@@ -203,6 +235,25 @@ def format_phone_number(worksheet):
             if cell.value is None or cell.value == '':
                 continue
             else: cell.value = int(cell.value)
+
+
+    for cell in worksheet['P']:
+        if (cell.offset(row=0, column=-1).value) == '':
+            continue
+        else:
+            cell.value = 'H'
+            (cell.offset(row=0, column=1).value) = 0
+    # Creates a data validation (drop down) object
+    dv = DataValidation(type="list", formula1='"H,B,C"', allow_blank=True)
+    dv2 = DataValidation(type="list", formula1='"0,1"', allow_blank=True)
+
+    # Add the data-validation object to the worksheet
+    worksheet.add_data_validation(dv)
+    worksheet.add_data_validation(dv2)
+
+    dv.add('P2:P1048576')
+    dv2.add('Q2:Q1048576')
+
     return 0
 
 # Dictionary of UBC countries. Key value is the abbreviation, and value pair is the format LINKS prefers
@@ -255,6 +306,21 @@ def format_country(worksheet):
         elif cell.value in countryDictionary.keys():
             cell.value = countryDictionary.get(cell.value)
 
+    """Sets the address type and Address is Primary option"""
+    for cell in worksheet['M']:
+        cell.value = 'H'
+        (cell.offset(row=0, column=1).value) = 0
+    # Creates a data validation (drop down) object
+    dv = DataValidation(type="list", formula1='"H,B,C"', allow_blank=True)
+    dv2 = DataValidation(type="list", formula1='"0,1"', allow_blank=True)
+
+    # Add the data-validation object to the worksheet
+    worksheet.add_data_validation(dv)
+    worksheet.add_data_validation(dv2)
+
+    dv.add('M2:M1048576')
+    dv2.add('N2:N1048576')
+
     return 0
 
 def format_postal_code(worksheet):
@@ -267,6 +333,12 @@ def format_postal_code(worksheet):
                 if postal_code[3] != ' ' or not postal_code[3].isdigit():
                     cell.offset(row=0, column=-1).value = postal_code[:3] + ' ' + postal_code[3:]
             except:
+                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+        if cell.value == 'United States of America':
+            zipcode = cell.offset(row=0, column=-1.).value
+            if type(zipcode) != int:
+                # if not zipcode.isdigit():
                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                 cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
@@ -304,6 +376,10 @@ def format_non_initium_address(worksheet):
     return 0
 
 
+initium_title_row = ["LOOKUPID", "Street1", "Street2", "Street3", "Street4", "CITY",
+             "STATE", "Postal_Code", "COUNTRY"]
+
+
 def copy_paste_to_initium_file(source_ws, desti_ws, country):
     """Places information into a new excel file based on country"""
     for cell in source_ws['L']:
@@ -315,12 +391,21 @@ def copy_paste_to_initium_file(source_ws, desti_ws, country):
                 for cell in col:
                     alumni_info.append(cell.value)
             desti_ws.append(alumni_info)
-
+    desti_ws.insert_rows(1)
+    i = 0
+    for row in desti_ws.iter_rows(min_row=1, max_row=1):
+        for cell in row:
+            cell.value = initium_title_row[i]
+            cell.fill = PatternFill(fgColor='FFFFFF')
+            cell.font = Font(bold=True, color='FF0000')
+            i = i+1
+    for cell in desti_ws['A']:
+        cell.fill = PatternFill(fgColor='FFFF66', fill_type='solid')
     return 0
 
 
 def colour_worksheet(target_ws):
-    """Fills in cells of the worksheet to pink"""
+    """Fills in cells of the worksheet to yellow"""
     for rows in target_ws.rows:
         for cell in rows:
             cell.fill = PatternFill(fgColor='FAFAD2', fill_type='solid')
@@ -333,8 +418,13 @@ def colour_worksheet(target_ws):
 def replace_info(ws_source, info_list):
     """Similar to VLOOKUP, matches LOOKUPID from the initium results document and matches to LOOKUPID in source ws.
     If there is a match, replaces the information with information in info_list"""
+
     for cell in ws_source['A']:
+        cell.value = str(cell.value)
+        # print("CELL TYPE: ", type(cell.value))
+        # print("INFO_LIST TYPE: ", type(info_list[0]))
         if cell.value == info_list[0]:
+            # print(cell.value, info_list[0])
             c = 1
             for found_row_cell in ws_source[cell.row]:
                 found_row_cell.fill = PatternFill(fgColor='FFFFFF')
@@ -342,5 +432,5 @@ def replace_info(ws_source, info_list):
                 found_row_cell.offset(row=0, column=4).value = info_list[c]
                 c = c+1
                 if c == len(info_list):
-                    break
-    return 0
+                    return
+            return 0

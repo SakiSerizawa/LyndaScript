@@ -22,13 +22,14 @@ ws2 = wb2["Exact"]
 
 colour_worksheet(ws1)
 
-for col in ws2.iter_cols(min_row=3):
+
+
+for col in ws2.iter_cols(min_col=1, max_col=1,min_row=3):
         for cell in col:
             initium_info = [ws2.cell(row=cell.row, column=1).value, ws2.cell(row=cell.row, column=10).value,
                             ws2.cell(row=cell.row, column=11).value, ws2.cell(row=cell.row, column=12).value,
                             ws2.cell(row=cell.row, column=13).value, ws2.cell(row=cell.row, column=15).value,
                             ws2.cell(row=cell.row, column=16).value, ws2.cell(row=cell.row, column=17).value]
-
             replace_info(ws1, initium_info)
 
 

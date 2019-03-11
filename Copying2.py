@@ -19,12 +19,15 @@ ws3_all_info = wb1.active
 
 wb4 = Workbook()
 initium_Canada_info = wb4.active
-initium_Canada_info.title = ("Canada")
-initium_USA_info = wb4.create_sheet("USA")
+
+wb5 = Workbook()
+initium_USA_info = wb5.active
+
 
 # Hypothetically everything has been fixed. Now create these new files
 copy_paste_to_initium_file(ws3_all_info, initium_Canada_info, "Canada")
 copy_paste_to_initium_file(ws3_all_info, initium_USA_info, "United States of America")
+
 
 # TO DO: This works when I don't touch the newly created example3 file but doesn't hit hello kitty if i open file
 for cell in ws3_all_info['R']:
@@ -34,7 +37,7 @@ for cell in ws3_all_info['R']:
 
 
 wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/combined_workbook.xlsx")
-wb4.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/'Initium_Ready.xlsx")
-
+wb4.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/'Initium_Ready_CA.xlsx")
+wb5.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/'Initium_Ready_USA.xlsx")
 
 
