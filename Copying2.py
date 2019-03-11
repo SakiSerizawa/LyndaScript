@@ -13,10 +13,6 @@ workbook1 = ('combined_workbook.xlsx')
 wb1 = load_workbook(workbook1)
 ws3_all_info = wb1.active
 
-#
-# timestr = time.strftime("%Y%m%d")
-# workbook4 = ('Initium.xlsx', timestr)
-
 wb4 = Workbook()
 initium_Canada_info = wb4.active
 
