@@ -9,6 +9,8 @@ from argparse import ArgumentParser
 import sys
 from sys import argv
 
+# Adding a test comment on line 12
+
 # Where the files that go into script are kept
 path = "C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files"
 dirs = os.listdir(path)
