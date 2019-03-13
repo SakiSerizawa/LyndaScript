@@ -448,5 +448,13 @@ def make_column_list(ws_source, list_of_keys):
     return zip(*all_info)
 
 
+def create_data_validation(dv_object, dest_ws, column_choice):
 
+    # Add the data-validation object to the worksheet
+    dest_ws.add_data_validation(dv_object)
+
+    column_range = str(column_choice + "2:" + column_choice + "1048576")
+    dv_object.add(column_range)
+
+    return 0
 
