@@ -139,9 +139,16 @@ create_data_validation(dv4, ws3, 'T')
 # dv5 = DataValidation(type="list", formula1='"Online Contact Update"', allow_blank=True)
 # create_date_validation(dv5, ws3, 'W')
 
+values_for_initium = ['B','J', 'L', 'M', 'N', 'O', 'Q', 'I']
+"""Copies out Canadian address from Campaigner_workbook and puts them into a Initium ready file"""
+for cell in ws1['I']:
+    if cell.value == 'Canada':
+        all_info = []
+        for key in values_for_initium:
+            all_info.append(ws1.cell(row=cell.row, column=column_index_from_string(key)).value)
+        ws4.append(all_info)
 
-column_choice = 'A'
-column_range = str(column_choice + "2:" + column_choice + "1048576")
+
 
 wb3.save("Campaigner - Contact_Update_Template.xlsx")
 wb4.save("Campaigner - Initium Ready.xlsx")
