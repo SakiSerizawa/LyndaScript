@@ -1,5 +1,4 @@
 from openpyxl import load_workbook, Workbook
-import time
 import glob
 from myFunctions import *
 import os, sys
@@ -8,7 +7,6 @@ import os, sys
 os.chdir("C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files")
 
 Campaigner_download_file = (glob.glob("*Campaigner*")[0])
-
 
 workbook1 = Campaigner_download_file
 
@@ -53,22 +51,60 @@ for row in ws1.iter_rows(min_col=column_index_from_string('AB'),max_col=column_i
 wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner_workbook.xlsx")
 
 
+os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1")
 
-os.chdir("../../../sakiikas/Documents/ScriptFiles_TEST/Folder1")
 
-
-workbook2 = ('Campainger_workbook.xlsx')
+workbook2 = ('Campaigner_workbook.xlsx')
 wb2 = load_workbook(workbook2)
 ws2 = wb2.active
-
 
 
 """Formats phone number by removing extra spaces and unnecessary characters"""
 for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_col=column_index_from_string('AD')):
     for cell in row:
+        # cell.value = "HIT"
         phone = str(cell.value)
         cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '')
         if cell.value is None or cell.value == '':
             continue
-        else: cell.value = int(cell.value)
+        else:
+            cell.value = int(cell.value)
 
+
+wb2.save("Campaigner_workbook.xlsx")
+
+
+wb3 = Workbook()
+ws3 = wb3.active
+
+
+column_list = ['D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AF', 'AD', 'G']
+x = make_column_list(ws2, column_list)
+information_from_excel = list(x)
+maximum_rows = len(information_from_excel)
+maximum_col = len(information_from_excel[0])
+
+i = 0
+for rows in ws3.iter_rows(max_row=maximum_rows, max_col=maximum_col):
+    j = 0
+    for cell in rows:
+        cell.value = information_from_excel[i][j]
+        j = j+1
+    i = i + 1
+
+ws3.insert_cols(1, 1)
+ws3.insert_cols(5, 1)
+
+
+initium_title_row = ["Title", "First name","Middle","Last name", "Suffix", "Address 1", "Address 2",	"Address 3",
+                     "Address 4","City","Province","Postal code",	"Country","Email","Phone",	"Degree Info",
+                     "Alternate ID type","Alternate ID"]
+i = 0
+for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(initium_title_row)):
+    for cell in row:
+        cell.value = initium_title_row[i]
+        i = i + 1
+
+
+wb3.save("cmt.xlsx")
+wb2.save("Campaigner_workbook.xlsx")

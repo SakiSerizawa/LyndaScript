@@ -434,3 +434,19 @@ def replace_info(ws_source, info_list):
                 if c == len(info_list):
                     return
             return 0
+
+
+def make_column_list(ws_source, list_of_keys):
+    """Takes in list of column letters, stores values from those columns into a list, and creates tuples
+    of the rows of information"""
+    all_info = []
+    for key in list_of_keys:
+        info_from_column = []
+        for cell in ws_source[key]:
+            info_from_column.append(cell.value)
+        all_info.append(info_from_column)
+    return zip(*all_info)
+
+
+
+
