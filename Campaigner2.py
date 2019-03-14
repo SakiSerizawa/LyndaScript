@@ -12,7 +12,7 @@ from openpyxl.worksheet.datavalidation import DataValidation
 # 3) Prepare the file for LINKS
 
 os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner")
-# os.chdir("W:/Records/LyndaScript-master/CampaignerFiles")
+# os.chdir("W:/Records/LyndaScript-master/Folder1-Output_Files/CampaignerFiles")
 
 workbook1 = ('Campaigner_workbook.xlsx')
 wb1 = load_workbook(workbook1, data_only=True)

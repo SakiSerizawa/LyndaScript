@@ -10,11 +10,15 @@ from argparse import ArgumentParser
 import sys
 from sys import argv
 
-# Adding a test comment on line 12
-
 # Where the files that go into script are kept
 path = "C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files"
 os.chdir("C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files")
+
+
+# On Lynda's Computer:
+# path = "W:/Records/LyndaScript-master/Folder2-Input_Files"
+# os.chdir("W:/Records/LyndaScript-master/Folder2-Input_Files")
+
 
 
 RC_download_file = (glob.glob("*RC*")[0])
@@ -58,4 +62,6 @@ format_non_initium_address(ws3_all_info)
 
 # Where the new combined file will be saved to
 wb3.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/combined_workbook.xlsx")
+
+# wb3.save("W:/Records/LyndaScript-master/Folder1-Output_Files/combined_workbook.xlsx")
 

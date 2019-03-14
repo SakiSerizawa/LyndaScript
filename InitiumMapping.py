@@ -6,6 +6,7 @@ import os, sys
 
 
 os.chdir("../../../sakiikas/Documents/ScriptFiles_TEST/Folder1")
+# os.chdir("W:/Records/LyndaScript-master/Folder1-Output_Files")
 
 initium_results_file = (glob.glob("*Results*")[0])
 

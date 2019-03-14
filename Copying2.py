@@ -7,6 +7,8 @@ from myFunctions import *
 # Changes the directory so you are where the created combined file was saved to
 os.chdir("../../../sakiikas/Documents/ScriptFiles_TEST/Folder1")
 
+# os.chdir("W:/Records/LyndaScript-master/Folder1-Output_Files")
+
 clock = 'combined_workbook.xlsx'
 
 workbook1 = ('combined_workbook.xlsx')
@@ -35,5 +37,9 @@ for cell in ws3_all_info['R']:
 wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/combined_workbook.xlsx")
 wb4.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/RCSIS_Initium_Ready_CA.xlsx")
 wb5.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/RCSISInitium_Ready_USA.xlsx")
+
+# wb1.save("W:/Records/LyndaScript-master/Folder1-Output_Files/combined_workbook.xlsx")
+# wb4.save("W:/Records/LyndaScript-master/Folder1-Output_Files/RCSIS_Initium_Ready_CA.xlsx")
+# wb5.save("W:/Records/LyndaScript-master/Folder1-Output_Files/RCSISInitium_Ready_USA.xlsx")
 
 

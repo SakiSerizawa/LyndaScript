@@ -8,7 +8,7 @@ smaller. It also creates a file (cmt.xlsx) which is ready for the Link Constitue
 
 os.chdir("C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files")
 
-#os.chdir("W:/Records/LyndaScript-master/CampaignerFiles")
+#os.chdir("W:/Records/LyndaScript-master/Folder2-Input_Files")
 
 
 Campaigner_download_file = (glob.glob("*Download*")[0])
@@ -55,11 +55,11 @@ for row in ws1.iter_rows(min_col=column_index_from_string('AB'),max_col=column_i
 
 wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner/Campaigner_workbook.xlsx")
 
-#wb1.save("W:/Records/LyndaScript-master/CampaignerFiles/Campaigner_workbook.xlsx")
+#wb1.save("W:/Records/LyndaScript-master/Folder1-Output_Files/CampaignerFiles/Campaigner_workbook.xlsx")
 
 
 os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner")
-# os.chdir("W:/Records/LyndaScript-master/CampaignerFiles")
+# os.chdir("W:/Records/LyndaScript-master/Folder1-Output_Files/CampaignerFiles")
 
 
 workbook2 = ('Campaigner_workbook.xlsx')
