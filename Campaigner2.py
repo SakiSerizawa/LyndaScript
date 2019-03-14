@@ -1,22 +1,21 @@
 from openpyxl import load_workbook, Workbook
-import glob
 from myFunctions import *
 import os, sys
 from openpyxl.worksheet.datavalidation import DataValidation
 
 # This script is to be run after the cmt file has run through the LINKS Constituent Matching Tool
-# It is assumed the user has copied back the results back into the Campainger_workbook.xlsx file
+# It is assumed the user has copied back the results back into the Campaigner_workbook.xlsx file
 
 #
 # The purpose of this script is 1) Create a CommMailPreferences file based off the updated Campaigner_workbook.xlsx
 # 2) to delete any rows of data that could not be matched (through matching tool or manually
 # 3) Prepare the file for LINKS
 
-os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1")
-
+os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner")
+# os.chdir("W:/Records/LyndaScript-master/CampaignerFiles")
 
 workbook1 = ('Campaigner_workbook.xlsx')
-wb1 = load_workbook(workbook1)
+wb1 = load_workbook(workbook1, data_only=True)
 ws1 = wb1.active
 
 wb2 = Workbook()
@@ -73,13 +72,16 @@ ws3 = wb3.active
 wb4= Workbook()
 ws4 = wb4.active
 
-column_list = ['C', 'D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF']
+column_list = ['C', 'D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF', 'BK']
 
 x = make_column_list(ws1, column_list)
+
+
 
 information_from_excel = list(x)
 maximum_rows = len(information_from_excel)
 maximum_col = len(information_from_excel[0])
+
 
 i = 0
 for rows in ws3.iter_rows(max_row=maximum_rows, max_col=maximum_col):
@@ -95,6 +97,7 @@ for cell in ws3['M']:
     cell.value = 'H'
     (cell.offset(row=0, column=1).value) = 0
 ws3.insert_cols(column_index_from_string('Q'), 2)
+ws3.insert_cols(column_index_from_string('T'), 2)
 """Sets the Phone Type and Phone is Primary option to newly created column"""
 for cell in ws3['Q']:
     cell.value = 'H'
@@ -109,6 +112,15 @@ for cell in ws3['T']:
 for cell in ws3['W']:
     cell.value = 'Online Contact Update'
 
+for row in ws3.iter_rows(min_row=2, min_col=column_index_from_string('V'), max_col=column_index_from_string('V')):
+    for cell in row:
+        cell.value = cell.value.strftime("%Y%m%d")
+
+
+# x = datetime.datetime.now()
+#
+# print(type(x))
+# print(x.strftime("%A"))
 
 title_row = ["LOOKUP ID", "FIRST_NAME", "MIDDLE_NAME",	 "LAST_NAME",	"Street1", "Street2", "Street3",	"Street4",
             "CITY", "STATE","Postal_Code", "COUNTRY", "Address Type", "Address is Primary",  "Mystery Column" , "Phone",
@@ -142,7 +154,7 @@ create_data_validation(dv4, ws3, 'T')
 values_for_initium = ['B','J', 'L', 'M', 'N', 'O', 'Q', 'I']
 """Copies out Canadian address from Campaigner_workbook and puts them into a Initium ready file"""
 for cell in ws1['I']:
-    if cell.value == 'Canada':
+    if cell.value == 'Canada' and ws1.cell(row=cell.row, column=2).value != "unable to locate":
         all_info = []
         for key in values_for_initium:
             all_info.append(ws1.cell(row=cell.row, column=column_index_from_string(key)).value)
@@ -150,8 +162,33 @@ for cell in ws1['I']:
 
 
 
+"""Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string"""
+for cell in ws4['A']:
+    try:
+        cell.value = int(cell.value)
+    except:
+        continue
+
+
+initium_title_row = ["LOOKUPID", "Street1", "Street2", "Street3", "Street4", "CITY",
+             "STATE", "Postal_Code", "COUNTRY"]
+
+ws4.insert_rows(1, 1)
+
+i=0
+for row in ws4.iter_rows(min_row=1, max_row=1):
+    for cell in row:
+        cell.value = initium_title_row[i]
+        cell.font = Font(bold=True, color='FF0000')
+        i = i + 1
+
+
+
+
 wb3.save("Campaigner - Contact_Update_Template.xlsx")
 wb4.save("Campaigner - Initium Ready.xlsx")
+
+
 
 
 

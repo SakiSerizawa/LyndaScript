@@ -68,7 +68,7 @@ def copy_paste_other_info(sourcews, destws):
 def create_source_column(first_file, destws):
 
     for cell in destws['V']:
-        cell.value = first_file
+        cell.value = "Ruffalo Cody"
 
     dv = DataValidation(type="list", formula1='"Registrar: SIS Import, Ruffalo Cody"', allow_blank=True)
 
@@ -131,7 +131,7 @@ def append_second_worksheet_initial_info(source_ws, target_ws):
     return 0
 
 
-def append_second_worksheet_other_info(source_ws,target_ws, length_OG, second_file):
+def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file):
     """Loops through the source sheet, finds key columns and appends them to a destination worksheet"""
     # Look through each source sheet column
     for col in source_ws.columns:
@@ -178,7 +178,7 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, second_fi
                 for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('U')).value = cell.value
-                        target_ws.cell(row=length, column=column_index_from_string('V')).value = second_file
+                        target_ws.cell(row=length, column=column_index_from_string('V')).value = "Registrar: SIS Import"
                         length = length+1
         length = length_OG
     return 0

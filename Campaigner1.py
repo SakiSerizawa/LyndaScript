@@ -3,10 +3,15 @@ import glob
 from myFunctions import *
 import os, sys
 
+"""Campainger1 will move the necessary cells in the large Campaigner file to something more succient and somewhat
+smaller. It also creates a file (cmt.xlsx) which is ready for the Link Constituent Matching Tool"""
 
 os.chdir("C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files")
 
-Campaigner_download_file = (glob.glob("*Campaigner*")[0])
+#os.chdir("W:/Records/LyndaScript-master/CampaignerFiles")
+
+
+Campaigner_download_file = (glob.glob("*Download*")[0])
 
 workbook1 = Campaigner_download_file
 
@@ -48,10 +53,13 @@ for row in ws1.iter_rows(min_col=column_index_from_string('AB'),max_col=column_i
             ws1.cell(row=cell.row, column=column_index_from_string('AA')).value = cell.value
             cell.value = None
 
-wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner_workbook.xlsx")
+wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner/Campaigner_workbook.xlsx")
+
+#wb1.save("W:/Records/LyndaScript-master/CampaignerFiles/Campaigner_workbook.xlsx")
 
 
-os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1")
+os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner")
+# os.chdir("W:/Records/LyndaScript-master/CampaignerFiles")
 
 
 workbook2 = ('Campaigner_workbook.xlsx')
@@ -103,6 +111,7 @@ i = 0
 for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(initium_title_row)):
     for cell in row:
         cell.value = initium_title_row[i]
+        cell.font = Font(bold=True, color='FF0000')
         i = i + 1
 
 
