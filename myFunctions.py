@@ -325,6 +325,8 @@ def format_country(worksheet):
 
 def format_postal_code(worksheet):
     """ Formats Canadian Postal Codes to be 3 characters, a space, and three characters.
+    Formats American Postal Codes so that it's 5 characters , dash then four: 12345-5555 EXAMPLE
+    Formats Japanese Postal Codes so that it's three characters, then a dash: 123-1234 EXAMPLE
     If the postal code is an incorrect format, flag as pink"""
     for cell in worksheet['L']:
         if cell.value == 'Canada':
@@ -337,10 +339,19 @@ def format_postal_code(worksheet):
                 cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
         if cell.value == 'United States of America':
             zipcode = cell.offset(row=0, column=-1.).value
-            if type(zipcode) != int:
-                # if not zipcode.isdigit():
+            if type(zipcode) != int and '-' not in zipcode:
                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                 cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+            else:
+                temp_str_zip = str(zipcode)
+                cell.offset(row=0, column=-1.).value = temp_str_zip[:5] + '-' + temp_str_zip[5:]
+                if '--' in cell.offset(row=0, column=-1.).value:
+                    cell.offset(row=0, column=-1.).value = cell.offset(row=0, column=-1.).value.replace('-', '', 1)
+        if cell.value == 'Japan':
+            zipcode = cell.offset(row=0, column=-1.).value
+            temp_str_zip = str(zipcode)
+            cell.offset(row=0, column=-1.).value = temp_str_zip[:3] + '-' + temp_str_zip[3:]
+
 
     return 0
 
@@ -405,10 +416,10 @@ def copy_paste_to_initium_file(source_ws, desti_ws, country):
 
 
 def colour_worksheet(target_ws):
-    """Fills in cells of the worksheet to yellow"""
+    """Fills in cells of the worksheet to red"""
     for rows in target_ws.rows:
         for cell in rows:
-            cell.fill = PatternFill(fgColor='FAFAD2', fill_type='solid')
+            cell.fill = PatternFill(fgColor='ef5f5f', fill_type='solid')
     for cell in target_ws[1]:
         cell.fill=PatternFill(fgColor='FFFFFF', fill_type='solid')
         cell.font = Font(bold=True)

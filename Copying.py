@@ -6,18 +6,19 @@ import glob
 import os, sys
 from myFunctions import *
 
+
 from argparse import ArgumentParser
 import sys
 from sys import argv
 
 # Where the files that go into script are kept
-path = "C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files"
-os.chdir("C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files")
+path = "C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES"
+os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES")
 
 
 # On Lynda's Computer:
-# path = "W:/Records/LyndaScript-master/Folder2-Input_Files"
-# os.chdir("W:/Records/LyndaScript-master/Folder2-Input_Files")
+# path = "W:/Records/LyndaScript-master/RC_SIS_Files"
+# os.chdir("W:/Records/LyndaScript-master/RC_SIS_Files")
 
 
 
@@ -61,7 +62,7 @@ format_first_row(ws3_all_info)
 format_non_initium_address(ws3_all_info)
 
 # Where the new combined file will be saved to
-wb3.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/combined_workbook.xlsx")
+wb3.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES/combined_workbook.xlsx")
 
-# wb3.save("W:/Records/LyndaScript-master/Folder1-Output_Files/combined_workbook.xlsx")
+# wb3.save("W:/Records/LyndaScript-master/RC_SIS_Files/combined_workbook.xlsx")
 
