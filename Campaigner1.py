@@ -1,14 +1,15 @@
 from openpyxl import load_workbook, Workbook
 import glob
 from myFunctions import *
+from stateAbbreviations import *
 import os, sys
 
 """Campainger1 will move the necessary cells in the large Campaigner file to something more succient and somewhat
 smaller. It also creates a file (cmt.xlsx) which is ready for the Link Constituent Matching Tool"""
 
-os.chdir("C:/Users/sakiikas/Documents/LyndaScript/FromRecordsFolder/files")
+os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner")
 
-#os.chdir("W:/Records/LyndaScript-master/Folder2-Input_Files")
+#os.chdir("W:/Records/LyndaScript-master/Campaigner Files")
 
 
 Campaigner_download_file = (glob.glob("*Download*")[0])
@@ -33,14 +34,14 @@ for row in ws1.iter_rows(min_col=column_index_from_string('P'),max_col=column_in
             cell.value = None
 
 """Moves values over from R column and places them into Q column"""
-for row in ws1.iter_rows(min_col=column_index_from_string('R'),max_col=column_index_from_string('R'), min_row=2):
+for row in ws1.iter_rows(min_col=column_index_from_string('R'),max_col=column_index_from_string('S'), min_row=2):
     for cell in row:
         if cell.value is not None:
             cell.offset(row=0, column=-1).value = cell.value
             cell.value = None
 
-"""Moves values over from T U V W X Y  columns and places them into Q column"""
-for row in ws1.iter_rows(min_col=column_index_from_string('T'),max_col=column_index_from_string('Y'), min_row=2):
+"""Moves values over from T U V W X Y Z columns and places them into Q column"""
+for row in ws1.iter_rows(min_col=column_index_from_string('T'),max_col=column_index_from_string('Z'), min_row=2):
     for cell in row:
         if cell.value is not None:
             ws1.cell(row=cell.row, column=column_index_from_string('Q')).value = cell.value
@@ -53,13 +54,39 @@ for row in ws1.iter_rows(min_col=column_index_from_string('AB'),max_col=column_i
             ws1.cell(row=cell.row, column=column_index_from_string('AA')).value = cell.value
             cell.value = None
 
-wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner/Campaigner_workbook.xlsx")
+"""Moves values over from AS,AT,AU,AV,AW,AX,AY,AZ,BA and AC and places them into AR column"""
+for row in ws1.iter_rows(min_col=column_index_from_string('AS'),max_col=column_index_from_string('BA'), min_row=2):
+    for cell in row:
+        if cell.value is not None:
+            ws1.cell(row=cell.row, column=column_index_from_string('AR')).value = cell.value
+            cell.value = None
 
-#wb1.save("W:/Records/LyndaScript-master/Folder1-Output_Files/CampaignerFiles/Campaigner_workbook.xlsx")
+"""Moves values over from AQ and places them into AR column"""
+for row in ws1.iter_rows(min_col=column_index_from_string('AQ'),max_col=column_index_from_string('AQ'), min_row=2):
+    for cell in row:
+        if cell.value is not None:
+            ws1.cell(row=cell.row, column=column_index_from_string('AR')).value = cell.value
+            cell.value = None
+
+"""Moves values over from AK and places them into AR column"""
+for row in ws1.iter_rows(min_col=column_index_from_string('AK'),max_col=column_index_from_string('AK'), min_row=2):
+    for cell in row:
+        if cell.value is not None:
+            ws1.cell(row=cell.row, column=column_index_from_string('AR')).value = cell.value
+            cell.value = None
+
+"""Moves values over from BC,BD  and places them into AR column"""
+for row in ws1.iter_rows(min_col=column_index_from_string('BC'),max_col=column_index_from_string('BD'), min_row=2):
+    for cell in row:
+        if cell.value is not None:
+            ws1.cell(row=cell.row, column=column_index_from_string('BB')).value = cell.value
+            cell.value = None
 
 
-os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Folder1/Campaigner")
-# os.chdir("W:/Records/LyndaScript-master/Folder1-Output_Files/CampaignerFiles")
+
+wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner/Campaigner_workbook.xlsx")
+
+# wb1.save("W:/Records/LyndaScript-master/Campaigner Files/Campaigner_workbook.xlsx")
 
 
 workbook2 = ('Campaigner_workbook.xlsx')
@@ -77,6 +104,76 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
             continue
         else:
             cell.value = int(cell.value)
+
+
+asian_countries = ["Japan", "Indonesia", "Malaysia", "Philippines", "South Korea", "Thailand", "China", "India",
+                   "Hong Kong"]
+
+
+for cell in ws2['I']:
+    if cell.value in asian_countries:
+        country = cell.value
+        if country == "Japan":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = japan_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "Hong Kong":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = hongkong_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "Indonesia":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = indonesia_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "Malaysia":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = malaysia_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "Philippines":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = philippines_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "South Korea":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = korea_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "Thailand":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = thailand_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "China":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = china_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "India":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = india_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+        elif country == "United States Of America":
+            if cell.offset(row=0, column=8).value is not None:
+                try:
+                    cell.offset(row=0, column=8).value = usa_states.get(cell.offset(row=0, column=8).value)
+                except:
+                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+
 
 
 wb2.save("Campaigner_workbook.xlsx")
@@ -104,15 +201,29 @@ ws3.insert_cols(1, 1)
 ws3.insert_cols(5, 1)
 
 
-initium_title_row = ["Title", "First name","Middle","Last name", "Suffix", "Address 1", "Address 2",	"Address 3",
+"""Combines street address 1 and 2 into one"""
+for cell in ws3['G']:
+    if cell.offset(row=0, column=-1).value is not None:
+        cell_tuple = (str(cell.offset(row=0, column=-1).value), str(cell.value))
+        x = "-".join(cell_tuple)
+        cell.value = x
+        cell.offset(row=0, column=-1).value = ""
+ws3.delete_cols(column_index_from_string('F'),1)
+ws3.insert_cols(column_index_from_string('I'), 1)
+
+
+
+cmt_title_row = ["Title", "First name","Middle","Last name", "Suffix", "Address 1", "Address 2",	"Address 3",
                      "Address 4","City","Province","Postal code",	"Country","Email","Phone",	"Degree Info",
                      "Alternate ID type","Alternate ID"]
 i = 0
-for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(initium_title_row)):
+for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(cmt_title_row)):
     for cell in row:
-        cell.value = initium_title_row[i]
+        cell.value = cmt_title_row[i]
         cell.font = Font(bold=True, color='FF0000')
         i = i + 1
+
+
 
 
 wb3.save("cmt.xlsx")
