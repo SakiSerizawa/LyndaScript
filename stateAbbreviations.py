@@ -1,72 +1,4 @@
-japan_states = {"Aichi": "AICHI","Akita":"AKITA","Aomori":"AOMOR","Chiba":"CHIBA","Ehime":"EHIME",
-                "Fukui":"FUKUI","Fukuoka":"FUKUO","Fukushima":"FUKUS","Gifu":"GIFU","Gunma":"GUNMA",
-                "Hiroshima":"HIROS","Hokkaido":"HOKKA","Hyogo":"HYOGO","Ibaraki":"IBARA","Ishikawa":"ISHIK",
-                "Iwate":"IWATE","Kagawa":"KAGAW","Kagoshima":"KAGOS","Kanagawa":"KANAG","Kochi":"KOCHI",
-                "Kumamoto":"KUMAM","Kyoto":"KYOTO","Mie":"MIE","Miyagi":"MIYAG","Miyazaki":"MIYAZ",
-                "Nagano":"NAGAN","Nagasaki":"NAGAS","Nara":"NARA ","Niigata":"NIIGA","Oita":"OITA ",
-                "Okayama":"OKAYA","Okinawa":"OKINA","Osaka":"OSAKA","Saga":"SAGA ","Saitama":"SAITA",
-                "Shiga":"SHIGA","Shimane":"SHIMA","Shizuoka":"SHIZU","Tochigi":"TOCHI","Tokushima":"TOKUS",
-                "Tokyo":"TOKYO","Tottori":"TOTTO","Toyama":"TOYAM","Wakayama":"WAKAY","Yamagata":"YAMGA",
-                "Yamaguchi":"YAMGU","Yamanashi":"YAMAN"}
-
-indonesia_states = {"Aceh":"AC","Bali":"BA","Bangka-Belitung":"BB","Bengkulu":"BE","Banten":"BT",
-                    "Gorontalo":"GO","Jambi":"JA","Jawa Barat":"JB","Jawa Timur":"JI","Jakarta Raya":"JK",
-                    "Jawa Tengah":"JT","Kalimantan Barat":"KB","Kalimantan Timur":"KI","Kepulauan Riau":"KR",
-                    "Kalimantan Selatan":"KS", "Kalimantan Tengah":"KT","Lampung":"LA","Maluku":"MA","Maluku Utara":"MU",
-                    "Nusa Tenggara Barat":"NB","Nusa Tenggara Timur":"NT","Papua":"PA","Papua Barat":"PB","Riau":"RI",
-                    "Sulawesi Utara":"SA", "Sumatera Barat":"SB","Sulawesi Tenggara":"SG","Sulawesi Selatan":"SN",
-                    "Sulawesi Barat":"SR","Sumatera Selatan":"SS", "Sulawesi Tengah":"ST","Sumatera Utara":"SU",
-                    "Yogyakarta":"YO"}
-
-malaysia_states = {"Johor":"JOHOR","Kedah":"KEDAH","Kelantan":"KELAN","Melaka":"MELAK","Negeri Sembilan":"NEGER",
-                    "Pahang":"PAHAN","Pinang":"PINAN","Perak":"PERAK","Perlis":"PERLI","Selangor":"SELAN",
-                    "Terengganu":"TEREN","Sabah":"SABAH","Sarawak":"SARAW","Kuala Lumpur": "KUALA","Labuan":"LABUA",
-                    "Putrajaya":"PUTRA"}
-
-philippines_states = {"Autonomous Region in Muslim Mindanao":"AUTON","Bicol":"BICOL","Cagayan Valley":"CAGAY","Calabarzon":"CALAB",
-                    "Caraga":"CARAG","Central Luzon":"CENLU","Central Visayas":"CENVI","Cordillera Administrative Region":"CORDI",
-                    "Davao":"DAVAO","Eastern Visayas":"EASTE","Ilocos":"ILOCO","Mimaropa":"MIMAR",
-                    "National Capital Region (NCR)":"NATIO","Northern Mindanao":"NORTH","Soccsksargen":"SOCCS","Western Visayas":"WESTE",
-                    "Zamboanga Peninsula":"ZAMBO"}
-
-korea_states = {
-                "Busan":"BUSAN","Chungcheongbuk-do":"CHBUK","Chungcheongnam-do":"CHNAM","Daegu":"DAEGU",
-                "Daejeon":"DAEJE","Gangwon-do":"GANGW","Gwangju":"GWANG","Gyeonggi-do":"GYGGI",
-                "Gyeongsangbuk-do":"GYBUK","Gyeongsangnam-do":"GYNAM","Incheon":"INCHE","Jeju-do":"JEJU-",
-                "Jeollabuk-do":"JEBUK","Jeollanam-do":"JEBNAM","Seoul":"SEOUL","Ulsan":"ULSAN"}
-
-
-thailand_states = {"Phuket":"PHUKE","Prachin Buri":"PRABU","Prachuap Khiri Khan":"PRAKH","Ranong":"RANON",
-                    "Ratchaburi":"RATCH","Rayong":"RAYON","Roi Et":"ROIET","Sa Kaeo":"SAKAE",
-                    "Sakon Nakhon":"SAKON","Samut Prakan":"SAMPR","Samut Sakhon":"SAMSA","Samut Songkhram":"SAMSO",
-                    "Saraburi":"SARAB","Satun":"SATUN","Si Sa Ket":"SISAK","Sing Buri":"SINGB",
-                    "Songkhla":"SONGK","Sukhothai":"SUKHO","Suphanburi":"SUPHA","Surat Thani":"SURAT",
-                    "Surin":"SURIN","Tak":"TAK ","Trang":"TRANG","Trat":"TRAT",
-                    "Ubon Ratchathani":"UBON ","Udon Thani":"UDON","Uthai Thani":"UTHAI","Uttaradit":"UTTAR",
-                    "Yala":"YALA ","Yasothon":"YASOT"}
-
-china_states = {"Beijing":"BEIJI","Anhui":"ANHUI","Chongqìng":"CHONG","Fujian":"FUJIA",
-                "Gansu":"GANSU","Guangdong":"GUANG","Guangxi":"GUANX","Guizhou":"GUIZH",
-                "Hainan":"HAINA","Hebei":"HEBEI","Heilongjiang":"HEILO","Henan":"HENAN",
-                "Hubei":"HUBEI","Hunan":"HUNAN","Jiangsu":"JIASU","Jiangxi":"JIAXI",
-                "Jilin":"JILIN","Liaoning":"LIAON","Nei Mongol":"NEIMO","Ningxia":"NINGX",
-                "Qinghai":"QINGH","Shaanxi":"SHAAN","Shandong":"SHAND","Shanghai":"SHANG",
-                "Shanxi":"SHANX","Sichuan":"SICHU","Tianjin":"TIANJ","Xinjiang":"XINJI",
-                "Xizang Zìzhìqu (Tibet)":"XIZAN","Yunnan":"YUNNA","Zhejiang":"ZHEJI"}
-
-india_states = {"Andaman and Nicobar Islands":"AN","Andhra Pradesh":"AP","Arunachal Pradesh":"AR","Assam":"AS",
-                "Bihar":"BR","Chandigarh":"CH","Chhattisgarh":"CT","Daman and Diu":"DD",
-                "Delhi":"DL","Dadra and Nagar Haveli":"DN","Goa":"GA","Gujarat":"GJ",
-                "Himachal Pradesh":"HP","Haryana":"HR","Jharkhand":"JH","Jammu and Kashmir":"JK",
-                "Karnataka":"KA","Kerala":"KL","Lakshadweep":"LD","Maharashtra":"MH",
-                "Meghalaya":"ML","Manipur":"MN","Madhya Pradesh":"MP","Mizoram":"MZ",
-                "Nagaland":"NL","Orissa":"OR","Punjab":"PB","Pondicherry":"PY",
-                "Rajasthan":"RJ","Sikkim":"SK","Tamil Nadu":"TN","Tripura":"TR",
-                "Uttaranchal":"UL","Uttar Pradesh":"UP","West Bengal":"WB"}
-
-hongkong_states = {"Hong Kong": "HKI", "Hong Kong Island": "HKI", "Kowloon": "KOW", "New Territories": "NT"}
-
-usa_states = {"Alabama" : "AL","Alaska" : "AK","Arizona" : "AZ","Arkansas" : "AR",
+usa_canada = {"United States Of America": {"Alabama" : "AL","Alaska" : "AK","Arizona" : "AZ","Arkansas" : "AR",
                 "California":"CA","Colorado" : "CO","Connecticut" : "CT","Delaware" : "DE",
                 "Florida" : "FL","Georgia" : "GA","Hawaii" : "HI","Idaho" : "ID",
                 "Illinois" : "IL","Indiana" : "IN","Iowa" : "IA","Kansas" : "KS",
@@ -78,4 +10,131 @@ usa_states = {"Alabama" : "AL","Alaska" : "AK","Arizona" : "AZ","Arkansas" : "AR
                 "Oregon" : "OR","Pennsylvania" : "PA","Rhode Island" : "RI","South Carolina" : "SC",
                 "South Dakota" : "SD","Tennessee" : "TN","Texas" : "TX","Utah" : "UT",
                 "Vermont" : "VT","Virginia" : "VA","Washington" : "WA","West Virginia" : "WV",
-                "Wisconsin" : "WI","Wyoming" : "WY"}
+                "Wisconsin" : "WI","Wyoming" : "WY"},
+
+              "Canada": {
+                "Alberta":"AB","British Columbia":"BC","Manitoba":"MB","New Brunswick":"NB",
+                "Newfoundland and Labrador":"NL","Northwest Territories":"NT","Nova Scotia":"NS","Nunavut":"NU",
+                "Ontario":"ON","Prince Edward Island":"PE","Quebec":"QC","Saskatchewan":"SK",
+                "Yukon":"YT"}}
+
+popular_countries = {
+                            "Japan":{"Aichi": "AICHI","Akita":"AKITA","Aomori":"AOMOR","Chiba":"CHIBA","Ehime":"EHIME",
+                                "Fukui":"FUKUI","Fukuoka":"FUKUO","Fukushima":"FUKUS","Gifu":"GIFU","Gunma":"GUNMA",
+                                "Hiroshima":"HIROS","Hokkaido":"HOKKA","Hyogo":"HYOGO","Ibaraki":"IBARA","Ishikawa":"ISHIK",
+                                "Iwate":"IWATE","Kagawa":"KAGAW","Kagoshima":"KAGOS","Kanagawa":"KANAG","Kochi":"KOCHI",
+                                "Kumamoto":"KUMAM","Kyoto":"KYOTO","Mie":"MIE","Miyagi":"MIYAG","Miyazaki":"MIYAZ",
+                                "Nagano":"NAGAN","Nagasaki":"NAGAS","Nara":"NARA ","Niigata":"NIIGA","Oita":"OITA ",
+                                "Okayama":"OKAYA","Okinawa":"OKINA","Osaka":"OSAKA","Saga":"SAGA ","Saitama":"SAITA",
+                                "Shiga":"SHIGA","Shimane":"SHIMA","Shizuoka":"SHIZU","Tochigi":"TOCHI","Tokushima":"TOKUS",
+                                "Tokyo":"TOKYO","Tottori":"TOTTO","Toyama":"TOYAM","Wakayama":"WAKAY","Yamagata":"YAMGA",
+                                "Yamaguchi":"YAMGU","Yamanashi":"YAMAN"},
+
+                            "Indonesia":{"Aceh":"AC","Bali":"BA","Bangka-Belitung":"BB","Bengkulu":"BE","Banten":"BT",
+                                "Gorontalo":"GO","Jambi":"JA","Jawa Barat":"JB","Jawa Timur":"JI","Jakarta Raya":"JK",
+                                "Jawa Tengah":"JT","Kalimantan Barat":"KB","Kalimantan Timur":"KI",
+                                "Kepulauan Riau":"KR","Kalimantan Selatan":"KS", "Kalimantan Tengah":"KT","Lampung":"LA",
+                                "Maluku":"MA","Maluku Utara":"MU","Nusa Tenggara Barat":"NB","Nusa Tenggara Timur":"NT",
+                                "Papua":"PA","Papua Barat":"PB","Riau":"RI","Sulawesi Utara":"SA", "Sumatera Barat":"SB",
+                                "Sulawesi Tenggara":"SG","Sulawesi Selatan":"SN","Sulawesi Barat":"SR",
+                                "Sumatera Selatan":"SS", "Sulawesi Tengah":"ST","Sumatera Utara":"SU","Yogyakarta":"YO"},
+
+                            "Malaysia":{"Johor":"JOHOR","Kedah":"KEDAH","Kelantan":"KELAN","Melaka":"MELAK",
+                                "Negeri Sembilan":"NEGER","Pahang":"PAHAN","Pinang":"PINAN","Perak":"PERAK",
+                                "Perlis":"PERLI","Selangor":"SELAN","Terengganu":"TEREN","Sabah":"SABAH",
+                                "Sarawak":"SARAW","Kuala Lumpur": "KUALA","Labuan":"LABUA", "Putrajaya":"PUTRA"},
+
+                             "Philippines": {"Autonomous Region in Muslim Mindanao":"AUTON","Bicol":"BICOL",
+                                "Cagayan Valley":"CAGAY","Calabarzon":"CALAB","Caraga":"CARAG","Central Luzon":"CENLU",
+                                "Central Visayas":"CENVI","Cordillera Administrative Region":"CORDI",
+                                "Davao":"DAVAO","Eastern Visayas":"EASTE","Ilocos":"ILOCO","Mimaropa":"MIMAR",
+                                "National Capital Region (NCR)":"NATIO","Northern Mindanao":"NORTH",
+                                "Soccsksargen":"SOCCS","Western Visayas":"WESTE","Zamboanga Peninsula":"ZAMBO"},
+
+                             "South Korea":{"Busan":"BUSAN","Chungcheongbuk-do":"CHBUK","Chungcheongnam-do":"CHNAM","Daegu":"DAEGU",
+                                "Daejeon":"DAEJE","Gangwon-do":"GANGW","Gwangju":"GWANG","Gyeonggi-do":"GYGGI",
+                                "Gyeongsangbuk-do":"GYBUK","Gyeongsangnam-do":"GYNAM","Incheon":"INCHE","Jeju-do":"JEJU-",
+                                "Jeollabuk-do":"JEBUK","Jeollanam-do":"JEBNAM","Seoul":"SEOUL","Ulsan":"ULSAN"} ,
+
+                             "Thailand" :{"Phuket":"PHUKE","Prachin Buri":"PRABU","Prachuap Khiri Khan":"PRAKH",
+                                "Ranong":"RANON","Ratchaburi":"RATCH","Rayong":"RAYON","Roi Et":"ROIET","Sa Kaeo":"SAKAE",
+                                "Sakon Nakhon":"SAKON","Samut Prakan":"SAMPR","Samut Sakhon":"SAMSA","Samut Songkhram":"SAMSO",
+                                "Saraburi":"SARAB","Satun":"SATUN","Si Sa Ket":"SISAK","Sing Buri":"SINGB",
+                                "Songkhla":"SONGK","Sukhothai":"SUKHO","Suphanburi":"SUPHA","Surat Thani":"SURAT",
+                                "Surin":"SURIN","Tak":"TAK ","Trang":"TRANG","Trat":"TRAT",
+                                "Ubon Ratchathani":"UBON ","Udon Thani":"UDON","Uthai Thani":"UTHAI","Uttaradit":"UTTAR",
+                                "Yala":"YALA ","Yasothon":"YASOT"},
+
+                             "China": {"Beijing":"BEIJI","Anhui":"ANHUI","Chongqìng":"CHONG","Fujian":"FUJIA",
+                                "Gansu":"GANSU","Guangdong":"GUANG","Guangxi":"GUANX","Guizhou":"GUIZH",
+                                "Hainan":"HAINA","Hebei":"HEBEI","Heilongjiang":"HEILO","Henan":"HENAN",
+                                "Hubei":"HUBEI","Hunan":"HUNAN","Jiangsu":"JIASU","Jiangxi":"JIAXI",
+                                "Jilin":"JILIN","Liaoning":"LIAON","Nei Mongol":"NEIMO","Ningxia":"NINGX",
+                                "Qinghai":"QINGH","Shaanxi":"SHAAN","Shandong":"SHAND","Shanghai":"SHANG",
+                                "Shanxi":"SHANX","Sichuan":"SICHU","Tianjin":"TIANJ","Xinjiang":"XINJI",
+                                "Xizang Zìzhìqu (Tibet)":"XIZAN","Yunnan":"YUNNA","Zhejiang":"ZHEJI"},
+
+                             "India":{"Andaman and Nicobar Islands":"AN","Andhra Pradesh":"AP","Arunachal Pradesh":"AR",
+                                "Assam":"AS","Bihar":"BR","Chandigarh":"CH","Chhattisgarh":"CT","Daman and Diu":"DD",
+                                "Delhi":"DL","Dadra and Nagar Haveli":"DN","Goa":"GA","Gujarat":"GJ",
+                                "Himachal Pradesh":"HP","Haryana":"HR","Jharkhand":"JH","Jammu and Kashmir":"JK",
+                                "Karnataka":"KA","Kerala":"KL","Lakshadweep":"LD","Maharashtra":"MH",
+                                "Meghalaya":"ML","Manipur":"MN","Madhya Pradesh":"MP","Mizoram":"MZ",
+                                "Nagaland":"NL","Orissa":"OR","Punjab":"PB","Pondicherry":"PY",
+                                "Rajasthan":"RJ","Sikkim":"SK","Tamil Nadu":"TN","Tripura":"TR",
+                                "Uttaranchal":"UL","Uttar Pradesh":"UP","West Bengal":"WB"},
+
+                            "Hong Kong":{"Hong Kong": "HKI", "Hong Kong Island": "HKI", "Kowloon": "KOW",
+                                "New Territories": "NT"},
+
+                             "Mexico": {"Aguascalientes":"AGU ","Baja California":"BCN","Baja California Sur": "BCS",
+                                "Campeche":"CAM ","Chiapas":"CHP","Chihuahua":"CHH","Coahuila":"COA","Colima":"COL",
+                                "Distrito Federal":"DIF","Durango":"DUR","Guanajuato":"GUA","Guerrero":"GRO",
+                                "Hidalgo":"HID","Jalisco":"JAL","Mexico":"MEX","Michoacan":"MIC",
+                                "Morelos":"MOR","Nayarit":"NAY","Nuevo Leon":"NLE","Oaxaca":"OAX",
+                                "Puebla":"PUE","Queretaro":"QUE","Quintana Roo":"ROO","San Luis Potosi":"SLP",
+                                "Sinaloa":"SIN","Sonora":"SON","Tabasco":"TAB","Tamaulipas":"TAM",
+                                "Tlaxcala":"TLA","Veracruz":"VER","Yucatan":"YUC","Zacatecas":"ZAC"},
+
+                            "Australia": {
+                                "New South Wales":"NSW","Victoria":"VIC","Queensland":"QLD","Tasmania":"TAS",
+                                "Western Australia":"WA","South Australia":"SA","Northern Territory":"NT",
+                                "Australian Capital Territory":"ACT"}}
+
+
+
+# Dictionary of UBC countries. Key value is the abbreviation, and value pair is the format LINKS prefers
+countryDictionary = {"HGKG":"Hong Kong","JAPA":"Japan", "CHIN":	"China", "INDI":"India","AUST":	"Australia", "INDO":"Indonesia",  "MALY":"Malaysia", "MEXI":"Mexico", "AFGH":"Afghanistan","ALAN":"Aland Islands","ALBA":"Albania","ALGE":"Algeria ","AMSA":	"American Samoa","ANDO":"Andorra",
+                     "ANGO":"Angola", "ANGU":"Anguilla","ANTA":	"Antarctica","ANTI":"Antigua and Barbuda","ARGE":	"Argentina", "ARME":"Armenia", "ARUB":	"Aruba",
+                      "AUSR":	"Austria",  "AZER":	"Azerbaijan", "BAHA":"Bahamas", "BAHR":"Bahrain", "BANG":"Bangladesh", "BARB":	"Barbados", "BELA":	"Belarus", "BELG":
+                    "Belgium", "BELI":	"Belize", "BENI":	"Benin", "BERM":	"Bermuda", "BHUT":"Bhutan", "BIOT":"British Indian Ocean Territory", "BOLI":	"Bolivia",
+                     "BOSN":"Bosnia and Herzegovina", "BOTS":	"Botswana", "BOUV":	"Bouvet Island", "BRAZ":	"Brazil", "BRSI":	"British Solomon Islands", "BRUN":	"Brunei Darussalam",
+                     "BRVI":"Virgin Islands, British", "BULG":	"Bulgaria", "BURK":	"Burkina Faso", "BURM":	"Burma", "BURU":	"Burundi", "CAFR":"Central African Republic", "CAMB":	"Cambodia",
+                     "CAME":"Cameroon", "CAMP":	"Campus Mail", "CANA":	"Canada", "CANZ":"Canal Zone", "CAYM":	"Cayman Islands", "CHAD":"Chad", "CHIL":	"Chile",  "CHRI":	"Christmas Island",
+                     "CHTA":"Taiwan", "COCO":	"Cocos (Keeling) Islands", "COLU":	"Colombia", "COMO":"Comoros", "CONG":	"Congo", "COOK":"Cook Islands", "COST":	"Costa Rica", "CROA":	"Croatia", "CUBA":	"Cuba",
+                     "CVIS":"Cape Verde", "CYPR":	"Cyprus", "CZEC":	"Czechoslovakia", "CZER":"Czech Republic", "DENM":	"Denmark", "DJIB":	"Djibouti", "DOMI":	"Dominica", "DOMR":	"Dominican Republic", "DROC":	"Congo, Democratic Republic",
+                     "ECUA":"Ecuador", "EGYP":	"Egypt", "ELSA":	"El Salvador", "ENGL":	"England", "EQUA":	"Equatorial Guinea", "ERIT":	"Eritrea", "ESTO":	"Estonia", "ETHI":	"Ethiopia",
+                     "FAER":"Faeroe Islands", "FALK":	"Falkland Islands (Malvinas)", "FEDN":	"Nigeria", "FIJI":	"Fiji", "FINL":	"Finland", "FRAN":	"France", "FRGU":	"French Guiana", "FRPO":	"French Polynesia",
+                     "FRST":"French Southern Territories", "FRTE":	"French Ter of Afars Issas", "GABO":"Gabon", "GAMB":	"Gambia", "GAZA":	"Gaza", "GEOR":	"Georgia", "GERD":	"Germany, Democratic Rep (Hist)", "GERF":	"Germany, Federal Rep (Hist)",
+                     "GERM":"Germany", "GHAN":	"Ghana", "GIBR":	"Gibraltar", "GILB":	"Gilbert & Ellice Islands", "GREE":	"Greece", "GREN":	"Grenada", "GRLD":	"Greenland", "GUAD":	"Guadeloupe", "GUAM":	"Guam",
+                     "GUAT":"Guatemala", "GUBI":	"Guinea-Bissau", "GUER":	"Guernsey", "GUIN":	"Guinea", "GUYA":	"Guyana", "HAIT":	"Haiti",  "HIMI":	"Heard Island &McDonald Islands",
+                     "HOND":"Honduras", "HUNG":	"Hungary", "ICEL":	"Iceland",   "IRAN":	"Iran", "IRAQ":	"Iraq", "IRIS":	"Ireland, Republic of (EIRE)", "ISLM":	"Isle of Man", "ISRA":	"Israel",
+                     "ITAL":"Italy", "IVOR":	"Cote d'Ivoire", "JAMA":	"Jamaica", "JERS":	"Jersey", "JORD":	"Jordan", "KAZA":	"Kazakhstan", "KENY":	"Kenya", "KIRI":	"Kiribati", "KORN":	"Korea, North",
+                     "KORR":"South Korea", "KUWA":	"Kuwait", "KYRG":	"Kyrgyzstan", "LAOS":	"Laos", "LATV":	"Latvia", "LEBA":	"Lebanon", "LEIC":	"Liechtenstein", "LESO":	"Lesotho", "LIBE":	"Liberia", "LIBY":	"Libya",
+                     "LITH":"Lithuania","LUXE":	"Luxembourg", "MACA":	"Macao","MACE":	"Macedonia (FYROM)", "MADA":	"Madagascar", "MALA":	"Malawi", "MALD":	"Maldives", "MALI":	"Mali", "MALT":	"Malta",
+                     "MARS":"Marshall Islands", "MART":	"Martinique", "MAUR":	"Mauritania", "MAUT":	"Mauritius", "MAYO":	"Mayotte", "MICR":	"Micronesia, Federated States", "MOLD":	"Moldova, Republic of", "MONA":	"Monaco",
+                     "MON":"Mongolia", "MONS":	"Montserrat",  "MONT":	"Montenegro", "MORO":	"Morocco","MOZA":	"Mozambique", "MUSC":	"Muscat and Oman", "MYAN":	"Myanmar", "NAMI":	"Namibia", "NAUR":	"Nauru", "NEPA":	"Nepal",
+                     "NETA":"Netherlands Antilles", "NETH":	"Netherlands", "NEWC":	"New Caledonia", "NEWG":	"Papua New Guinea", "NEWH":	"New Hebrides", "NEWZ":	"New Zealand", "NICA":	"Nicaragua", "NIGE":	"Niger", "NIRE":	"Northern Ireland",
+                     "NIUE":"Niue", "NMIS":	"Northern Mariana Islands", "NORF":	"Norfolk Island", "NORW":	"Norway", "OMAN":	"Oman", "OTHE":	"Other Pac Isl under U.S.", "PALA":	"Palau", "PALE":	"Palestinian Territory Occ.",
+                     "PANA":"Panama", "PARA":	"Paraguay", "PERS":	"Persian Gulf States", "PERU":	"Peru", "PHIL":	"Philippines", "PITC":	"Pitcairn", "POLA":	"Poland", "PORG":	"Portuguese Guinea", "PORT":	"Portugal", "PUER":	"Puerto Rico", \
+                     "QATA":"Qatar", "REUN":	"Reunion", "RKOS":	"Republic of Kosovo", "ROMA":	"Romania", "RWAN":	"Rwanda", "SAMO":	"Samoa", "SANM":	"San Marino", "SAOT":	"Sao Tome & Principe", "SAUD":	"Saudi Arabia",
+                     "SBAR":"Saint Barthelemy", "SCOT":	"Scotland", "SENE":	"Senegal", "SERA":	"Serbia", "SERB":	"Serbia and Montenegro", "SEYC":	"Seychelles", "SGSS":	"Sth Georgia & Sth Sandwich Isl", "SIER":	"Sierra Leone", "SIKK":	"Sikkim",
+                     "SING":"Singapore", "SLOE":	"Slovenia", "SLOV":	"Slovakia", "SMAR":	"Saint Martin", "SOLO":	"Solomon Islands", "SOMA":	"Somalia", "SOUT":	"South Africa", "SOUW":	"South West Africa", "SOUY":	"Southern Yemen",
+                     "SOVI":"Soviet Union (USSR)", "SPAI":	"Spain", "SPAN":	"Spanish Sahara", "SRIL":	"Sri Lanka", "SSUD":	"South Sudan", "STAT":	"Stateless", "STHE":	"Saint Helena", "STKI":	"Saint Kitts and Nevis",
+                     "STLU":"Saint Lucia", "STPI":	"Saint Pierre and Miquelon", "STVI":	"St. Vincent and the Grenadines", "SUDA":	"Sudan", "SURN":	"Surinam", "SVJM":	"Svalbard and Jan Mayen Island", "SWAZ":	"Swaziland",
+                     "SWED":"Sweden", "SWIT":	"Switzerland", "SYRI":	"Syria", "TAJI":	"Tajikistan", "TANZ":	"Tanzania, United Republic of", "THAI":	"Thailand",
+                     "TIMO":"Timor-Leste", "TOGO":	"Togo","TOKE":	"Tokelau", "TONG":	"Tonga", "TRIN":	"Trinidad & Tobago", "TRUC":	"Trucial Oman", "TRUS":	"Trust Ter of Pacific Isl.", "TUMN":	"Turkmenistan",
+                     "TUNI":"Tunisia", "TURK":	"Turkey", "TURS":	"Turks and Caicos Islands", "TUVA":	"Tuvalu", "UGAN":	"Uganda", "UKRA":	"Ukraine", "UNIK":	"United Kingdom", "UNIT":	"United Arab Emirates",
+                     "UNKN":"Unknown - But Foreign", "UPPE":	"Upper Volta", "URUG":	"Uruguay", "USA ":	"United States", "USM ":	"US Minor Outlying Islands", "UZBE":	"Uzbekistan", "VANU":	"Vanuatu",
+                     "VATC":"Vatican City State", "VENE":	"Venezuela", "VIER":	"Vietnam", "VIET":	"Vietnam, North", "VIRG":	"Virgin Islands, U.S.", "WALE":	"Wales", "WALL":	"Wallis and Futuna",
+                     "WEBA":"Westbank", "WEST":	"Western Somoa", "YEME":	"Yemen", "YUGO":	"Yugoslavia", "ZAIR":	"Zaire", "ZAMB":	"Zambia", "ZIMB":	"Zimbabwe"}

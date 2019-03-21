@@ -1,6 +1,8 @@
 from openpyxl.utils import column_index_from_string, get_column_letter
 from openpyxl.styles import *
 from openpyxl.worksheet.datavalidation import DataValidation
+import unidecode
+from stateAbbreviations import *
 
 
 def copy_paste_lookupid(sourcews, destws):
@@ -17,8 +19,8 @@ def copy_paste_initial_info(source_ws, desti_ws):
     for row in source_ws.iter_rows(min_row=2,min_col=column_index_from_string('D'),
                                    max_col=column_index_from_string('I')):
         for cell in row:
-            desti_ws.cell(row=cell.row, column=c).value = cell.value
-            c = c+1
+                desti_ws.cell(row=cell.row, column=c).value = cell.value
+                c = c+1
         c = 2
     return 0
 
@@ -28,39 +30,26 @@ def copy_paste_other_info(sourcews, destws):
     for col in sourcews.columns:
         for cell in col:
             if cell.value == 'City' or cell.value == 'CITY':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
-                    destws.cell(row=cell.row, column=column_index_from_string('I')).value = cell.value.title()
+                for cell in sourcews[get_column_letter(cell.column)]:
+                    destws.cell(row=cell.row, column=column_index_from_string('I')).value\
+                        = cell.value.title()
             elif cell.value == 'STATE' or cell.value == 'State':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
+                for cell in sourcews[get_column_letter(cell.column)]:
                     destws.cell(row=cell.row, column=column_index_from_string('J')).value = cell.value
             elif cell.value == 'ZIP' or cell.value == 'Postal_Code':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
+                for cell in sourcews[get_column_letter(cell.column)]:
                     destws.cell(row=cell.row, column=column_index_from_string('K')).value = cell.value
             elif cell.value == 'COUNTRY' or cell.value == 'Country':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
+                for cell in sourcews[get_column_letter(cell.column)]:
                     destws.cell(row=cell.row, column=column_index_from_string('L')).value = cell.value
             elif cell.value == 'EMAIL1' or cell.value == 'Email':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
+                for cell in sourcews[get_column_letter(cell.column)]:
                     destws.cell(row=cell.row, column=column_index_from_string('R')).value = cell.value
             elif cell.value == 'Phone' or cell.value == 'PHONE':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
+                for cell in sourcews[get_column_letter(cell.column)]:
                     destws.cell(row=cell.row, column=column_index_from_string('O')).value = cell.value
             elif cell.value == 'LastChangeDate' or cell.value == 'SIS_LAST_UPDATE_DATE':
-                column = cell.column
-                column2 = get_column_letter(column)
-                for cell in sourcews[column2]:
+                for cell in sourcews[get_column_letter(cell.column)]:
                     destws.cell(row=cell.row, column=column_index_from_string('U')).value = cell.value
     return 0
 
@@ -96,31 +85,14 @@ def append_lookup_id(source_ws, dest_ws):
     return 0
 
 
-# takes information of the first several columns, from first name to state inclusive from
-# source sheet and appends them at the bottom of the destination sheet
-# def append_initial_info(source_ws, desti_ws):
-#
-#
-#     #Creates list of items that need to be appended
-#     otherinfo_list = []
-#     for col in source_ws.iter_cols(min_row=2,min_col=,max_col=11):
-#         for cell in col:
-#             otherinfo_list.append(cell.value)
-#     print(otherinfo_list)
-#     r = 2
-#     c = 2
-#     for col in desti_ws.iter_rows(max_col=1):
-#         if col[-1].value == 'LOOKUP ID':
-#             for data in otherinfo_list:
-#                 desti_ws.append([data])
-#     return 0
-
 def append_second_worksheet_initial_info(source_ws, target_ws):
     """Appends columns (from first name to state inclusive) from secondary source worksheet to target worksheet """
+    """The try catch is to remove accents, but if the cell is blank, doesn't attempt to remove acccents (avoid error)"""
     length1 = len(target_ws['A']) + 1
     for col in source_ws.iter_rows(min_row=2,min_col=column_index_from_string('D'),max_col=column_index_from_string('I')):
-        row = [None]*1 + [cell.value for cell in col]
-        target_ws.append(row)
+            row = [None]*1 + [cell.value for cell in col]
+            target_ws.append(row)
+
 
     # Copy in source sheets lookup id's into destination sheet
     for col in source_ws.iter_rows(min_col=1,max_col=1, min_row=2):
@@ -138,44 +110,41 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file)
         # Within in column, checks to see if cell is appropriate header we are looking for
         for cell in col:
             if cell.value == 'CITY' or cell.value == 'City':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('I')).value = cell.value.title()
                         length = length+1
             elif cell.value == 'STATE' or cell.value == 'State':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
-                        target_ws.cell(row=length, column=column_index_from_string('J')).value = cell.value
-                        length = length+1
+                        try:
+                            target_ws.cell(row=length, column=column_index_from_string('J')).value = cell.value
+                            length = length+1
+                        except:
+                            target_ws.cell(row=length, column=column_index_from_string('J')).value =  cell.value
+                            length = length+1
             elif cell.value == 'ZIP' or cell.value == 'Postal_Code':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('K')).value = cell.value
                         length = length+1
             elif cell.value == 'COUNTRY' or cell.value == 'Country':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('L')).value = cell.value
                         length = length+1
             elif cell.value == 'EMAIL' or cell.value == 'Email' or cell.value == 'EMAIL1':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('R')).value = cell.value
                         length = length+1
             elif cell.value == 'PHONE' or cell.value == 'Phone':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('O')).value = cell.value
                         length = length+1
             elif cell.value == 'LastChangeDate' or cell.value == 'SIS_LAST_UPDATE_DATE':
-                column = cell.column
-                for col in source_ws.iter_cols(min_row=2, max_col=column, min_col=column):
+                for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
                         target_ws.cell(row=length, column=column_index_from_string('U')).value = cell.value
                         target_ws.cell(row=length, column=column_index_from_string('V')).value = "Registrar: SIS Import"
@@ -187,11 +156,12 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file)
 # tuple of the different email handles that go into certain categories
 hometuple = ('gmail.com','gmail.ca', 'hotmail.com', 'hotmail.ca', 'yahoo.com', 'yahoo.ca', 'live.ca', 'live.com',
              'telus.net', 'shaw.ca', 'ymail.com', 'outlook.com', 'outlook.ca', 'me.com', 'icloud.com', 'sympatico.ca',
-             'comcast.net', 'mail.com', 'yeah.net', '126.com', 'rogers.com', 'citywest.ca')
+             'comcast.net', 'mail.com', 'yeah.net', '126.com', 'rogers.com', 'citywest.ca', '163.com', 'qq.com')
 businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee.org', 'ualberta.ca','mail.%.ca',
                  'fnha.ca', 'surrey.ca', 'vch.ca', 'mun.ca', 'caltech.edu', 'hec.edu', 'barcelonagse.eu', 'aucegypt.edu',
                  'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com', 'bchydro.com',
-                 'carlton.ca', 'worksafebc.com', 'tru.ca', 'puttingonashow.ca', 'cfmrlaw.com', 'yorku.ca', 'kevingtonbuilding.com' )
+                 'carlton.ca', 'worksafebc.com', 'tru.ca', 'puttingonashow.ca', 'cfmrlaw.com', 'yorku.ca',
+                 'kevingtonbuilding.com', 'sd44.ca', 'kdhs.org', 'ahs.ca')
 
 
 def categorize_emails(worksheet):
@@ -210,8 +180,22 @@ def categorize_emails(worksheet):
             (cell.offset(row=0, column=1).value) = 'B'
         elif "@alumni" in cell.value:
             (cell.offset(row=0, column=1).value) = 'H'
+
         else:
-            cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+            try:
+                last_name_email = worksheet.cell(row=cell.row, column=column_index_from_string('D')).value.lower() + ".ca"
+                last_name_email_USA = worksheet.cell(row=cell.row,
+                                                 column=column_index_from_string('D')).value.lower() + ".com"
+                last_name_email_USA2 = worksheet.cell(row=cell.row,
+                                                 column=column_index_from_string('D')).value.lower() + ".us"
+                # print(last_name_email)
+                if cell.value.endswith(last_name_email) or cell.value.endswith(last_name_email_USA) or cell.value.endswith(last_name_email_USA2) :
+                    (cell.offset(row=0, column=1).value) = 'H'
+                else:
+                    cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+
+            except:
+                cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
 
     # Creates a data validation (drop down) object
     dv = DataValidation(type="list", formula1='"H,B,O"', allow_blank=True)
@@ -242,7 +226,7 @@ def format_phone_number(worksheet):
             continue
         else:
             cell.value = 'H'
-            (cell.offset(row=0, column=1).value) = 0
+            (cell.offset(row=0, column=1).value) = 1
     # Creates a data validation (drop down) object
     dv = DataValidation(type="list", formula1='"H,B,C"', allow_blank=True)
     dv2 = DataValidation(type="list", formula1='"0,1"', allow_blank=True)
@@ -256,44 +240,16 @@ def format_phone_number(worksheet):
 
     return 0
 
-# Dictionary of UBC countries. Key value is the abbreviation, and value pair is the format LINKS prefers
-countryDictionary = {"HGKG":"Hong Kong","JAPA":"Japan", "CHIN":	"China", "INDI":"India","AUST":	"Australia", "INDO":"Indonesia",  "MALY":"Malaysia", "MEXI":"Mexico", "AFGH":"Afghanistan","ALAN":"Aland Islands","ALBA":"Albania","ALGE":"Algeria ","AMSA":	"American Samoa","ANDO":"Andorra",
-                     "ANGO":"Angola", "ANGU":"Anguilla","ANTA":	"Antarctica","ANTI":"Antigua and Barbuda","ARGE":	"Argentina", "ARME":"Armenia", "ARUB":	"Aruba",
-                      "AUSR":	"Austria",  "AZER":	"Azerbaijan", "BAHA":"Bahamas", "BAHR":"Bahrain", "BANG":"Bangladesh", "BARB":	"Barbados", "BELA":	"Belarus", "BELG":
-                    "Belgium", "BELI":	"Belize", "BENI":	"Benin", "BERM":	"Bermuda", "BHUT":"Bhutan", "BIOT":"British Indian Ocean Territory", "BOLI":	"Bolivia",
-                     "BOSN":"Bosnia and Herzegovina", "BOTS":	"Botswana", "BOUV":	"Bouvet Island", "BRAZ":	"Brazil", "BRSI":	"British Solomon Islands", "BRUN":	"Brunei Darussalam",
-                     "BRVI":"Virgin Islands, British", "BULG":	"Bulgaria", "BURK":	"Burkina Faso", "BURM":	"Burma", "BURU":	"Burundi", "CAFR":"Central African Republic", "CAMB":	"Cambodia",
-                     "CAME":"Cameroon", "CAMP":	"Campus Mail", "CANA":	"Canada", "CANZ":"Canal Zone", "CAYM":	"Cayman Islands", "CHAD":"Chad", "CHIL":	"Chile",  "CHRI":	"Christmas Island",
-                     "CHTA":"Taiwan", "COCO":	"Cocos (Keeling) Islands", "COLU":	"Colombia", "COMO":"Comoros", "CONG":	"Congo", "COOK":"Cook Islands", "COST":	"Costa Rica", "CROA":	"Croatia", "CUBA":	"Cuba",
-                     "CVIS":"Cape Verde", "CYPR":	"Cyprus", "CZEC":	"Czechoslovakia", "CZER":"Czech Republic", "DENM":	"Denmark", "DJIB":	"Djibouti", "DOMI":	"Dominica", "DOMR":	"Dominican Republic", "DROC":	"Congo, Democratic Republic",
-                     "ECUA":"Ecuador", "EGYP":	"Egypt", "ELSA":	"El Salvador", "ENGL":	"England", "EQUA":	"Equatorial Guinea", "ERIT":	"Eritrea", "ESTO":	"Estonia", "ETHI":	"Ethiopia",
-                     "FAER":"Faeroe Islands", "FALK":	"Falkland Islands (Malvinas)", "FEDN":	"Nigeria", "FIJI":	"Fiji", "FINL":	"Finland", "FRAN":	"France", "FRGU":	"French Guiana", "FRPO":	"French Polynesia",
-                     "FRST":"French Southern Territories", "FRTE":	"French Ter of Afars Issas", "GABO":"Gabon", "GAMB":	"Gambia", "GAZA":	"Gaza", "GEOR":	"Georgia", "GERD":	"Germany, Democratic Rep (Hist)", "GERF":	"Germany, Federal Rep (Hist)",
-                     "GERM":"Germany", "GHAN":	"Ghana", "GIBR":	"Gibraltar", "GILB":	"Gilbert & Ellice Islands", "GREE":	"Greece", "GREN":	"Grenada", "GRLD":	"Greenland", "GUAD":	"Guadeloupe", "GUAM":	"Guam",
-                     "GUAT":"Guatemala", "GUBI":	"Guinea-Bissau", "GUER":	"Guernsey", "GUIN":	"Guinea", "GUYA":	"Guyana", "HAIT":	"Haiti",  "HIMI":	"Heard Island &McDonald Islands",
-                     "HOND":"Honduras", "HUNG":	"Hungary", "ICEL":	"Iceland",   "IRAN":	"Iran", "IRAQ":	"Iraq", "IRIS":	"Ireland, Republic of (EIRE)", "ISLM":	"Isle of Man", "ISRA":	"Israel",
-                     "ITAL":"Italy", "IVOR":	"Cote d'Ivoire", "JAMA":	"Jamaica", "JERS":	"Jersey", "JORD":	"Jordan", "KAZA":	"Kazakhstan", "KENY":	"Kenya", "KIRI":	"Kiribati", "KORN":	"Korea, North",
-                     "KORR":"South Korea", "KUWA":	"Kuwait", "KYRG":	"Kyrgyzstan", "LAOS":	"Laos", "LATV":	"Latvia", "LEBA":	"Lebanon", "LEIC":	"Liechtenstein", "LESO":	"Lesotho", "LIBE":	"Liberia", "LIBY":	"Libya",
-                     "LITH":"Lithuania","LUXE":	"Luxembourg", "MACA":	"Macao","MACE":	"Macedonia (FYROM)", "MADA":	"Madagascar", "MALA":	"Malawi", "MALD":	"Maldives", "MALI":	"Mali", "MALT":	"Malta",
-                     "MARS":"Marshall Islands", "MART":	"Martinique", "MAUR":	"Mauritania", "MAUT":	"Mauritius", "MAYO":	"Mayotte", "MICR":	"Micronesia, Federated States", "MOLD":	"Moldova, Republic of", "MONA":	"Monaco",
-                     "MON":"Mongolia", "MONS":	"Montserrat",  "MONT":	"Montenegro", "MORO":	"Morocco","MOZA":	"Mozambique", "MUSC":	"Muscat and Oman", "MYAN":	"Myanmar", "NAMI":	"Namibia", "NAUR":	"Nauru", "NEPA":	"Nepal",
-                     "NETA":"Netherlands Antilles", "NETH":	"Netherlands", "NEWC":	"New Caledonia", "NEWG":	"Papua New Guinea", "NEWH":	"New Hebrides", "NEWZ":	"New Zealand", "NICA":	"Nicaragua", "NIGE":	"Niger", "NIRE":	"Northern Ireland",
-                     "NIUE":"Niue", "NMIS":	"Northern Mariana Islands", "NORF":	"Norfolk Island", "NORW":	"Norway", "OMAN":	"Oman", "OTHE":	"Other Pac Isl under U.S.", "PALA":	"Palau", "PALE":	"Palestinian Territory Occ.",
-                     "PANA":"Panama", "PARA":	"Paraguay", "PERS":	"Persian Gulf States", "PERU":	"Peru", "PHIL":	"Philippines", "PITC":	"Pitcairn", "POLA":	"Poland", "PORG":	"Portuguese Guinea", "PORT":	"Portugal", "PUER":	"Puerto Rico", \
-                     "QATA":"Qatar", "REUN":	"Reunion", "RKOS":	"Republic of Kosovo", "ROMA":	"Romania", "RWAN":	"Rwanda", "SAMO":	"Samoa", "SANM":	"San Marino", "SAOT":	"Sao Tome & Principe", "SAUD":	"Saudi Arabia",
-                     "SBAR":"Saint Barthelemy", "SCOT":	"Scotland", "SENE":	"Senegal", "SERA":	"Serbia", "SERB":	"Serbia and Montenegro", "SEYC":	"Seychelles", "SGSS":	"Sth Georgia & Sth Sandwich Isl", "SIER":	"Sierra Leone", "SIKK":	"Sikkim",
-                     "SING":"Singapore", "SLOE":	"Slovenia", "SLOV":	"Slovakia", "SMAR":	"Saint Martin", "SOLO":	"Solomon Islands", "SOMA":	"Somalia", "SOUT":	"South Africa", "SOUW":	"South West Africa", "SOUY":	"Southern Yemen",
-                     "SOVI":"Soviet Union (USSR)", "SPAI":	"Spain", "SPAN":	"Spanish Sahara", "SRIL":	"Sri Lanka", "SSUD":	"South Sudan", "STAT":	"Stateless", "STHE":	"Saint Helena", "STKI":	"Saint Kitts and Nevis",
-                     "STLU":"Saint Lucia", "STPI":	"Saint Pierre and Miquelon", "STVI":	"St. Vincent and the Grenadines", "SUDA":	"Sudan", "SURN":	"Surinam", "SVJM":	"Svalbard and Jan Mayen Island", "SWAZ":	"Swaziland",
-                     "SWED":"Sweden", "SWIT":	"Switzerland", "SYRI":	"Syria", "TAJI":	"Tajikistan", "TANZ":	"Tanzania, United Republic of", "THAI":	"Thailand",
-                     "TIMO":"Timor-Leste", "TOGO":	"Togo","TOKE":	"Tokelau", "TONG":	"Tonga", "TRIN":	"Trinidad & Tobago", "TRUC":	"Trucial Oman", "TRUS":	"Trust Ter of Pacific Isl.", "TUMN":	"Turkmenistan",
-                     "TUNI":"Tunisia", "TURK":	"Turkey", "TURS":	"Turks and Caicos Islands", "TUVA":	"Tuvalu", "UGAN":	"Uganda", "UKRA":	"Ukraine", "UNIK":	"United Kingdom", "UNIT":	"United Arab Emirates",
-                     "UNKN":"Unknown - But Foreign", "UPPE":	"Upper Volta", "URUG":	"Uruguay", "USA ":	"United States", "USM ":	"US Minor Outlying Islands", "UZBE":	"Uzbekistan", "VANU":	"Vanuatu",
-                     "VATC":"Vatican City State", "VENE":	"Venezuela", "VIER":	"Vietnam", "VIET":	"Vietnam, North", "VIRG":	"Virgin Islands, U.S.", "WALE":	"Wales", "WALL":	"Wallis and Futuna",
-                     "WEBA":"Westbank", "WEST":	"Western Somoa", "YEME":	"Yemen", "YUGO":	"Yugoslavia", "ZAIR":	"Zaire", "ZAMB":	"Zambia", "ZIMB":	"Zimbabwe"}
+def remove_accents(worksheet):
+    for row in worksheet.iter_rows(min_col=2, max_col=column_index_from_string('L')):
+        for cell in row:
+            try:
+                cell.value = unidecode.unidecode(cell.value)
+            except:
+                continue
 
 def format_country(worksheet):
-    """Changes country format to a type that LINKS """
+    """ Changes country format to a type that LINKS """
     for cell in worksheet['L']:
         if cell.value == 'CANA':
             cell.value = 'Canada'
@@ -305,6 +261,19 @@ def format_country(worksheet):
             (cell.offset(row=0, column=-3).value) = 'Vancouver'
         elif cell.value in countryDictionary.keys():
             cell.value = countryDictionary.get(cell.value)
+        if cell.value in popular_countries and cell.offset(row=0, column=-2).value is not None:
+            try:
+                (cell.offset(row=0, column=-2).value) = popular_countries[cell.value][cell.offset(row=0, column=-2).value]
+            except:
+                print("exception occurred")
+                continue
+
+
+    """Highlights any cells that don't have a state, or formats states if they need formatting"""
+    for cell in worksheet['J']:
+        if cell.value is None:
+            cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+            cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
     """Sets the address type and Address is Primary option"""
     for cell in worksheet['M']:
@@ -387,7 +356,8 @@ def format_non_initium_address(worksheet):
     return 0
 
 
-initium_title_row = ["LOOKUPID", "Street1", "Street2", "Street3", "Street4", "CITY",
+
+initium_title_row = ["LOOKUP ID", "Street1", "Street2", "Street3", "Street4", "CITY",
              "STATE", "Postal_Code", "COUNTRY"]
 
 
@@ -419,7 +389,7 @@ def colour_worksheet(target_ws):
     """Fills in cells of the worksheet to red"""
     for rows in target_ws.rows:
         for cell in rows:
-            cell.fill = PatternFill(fgColor='ef5f5f', fill_type='solid')
+            cell.fill = PatternFill(fgColor='FCD5B4', fill_type='solid')
     for cell in target_ws[1]:
         cell.fill=PatternFill(fgColor='FFFFFF', fill_type='solid')
         cell.font = Font(bold=True)
@@ -468,4 +438,6 @@ def create_data_validation(dv_object, dest_ws, column_choice):
     dv_object.add(column_range)
 
     return 0
+
+
 

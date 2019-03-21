@@ -4,6 +4,8 @@ from openpyxl.worksheet.datavalidation import DataValidation
 import time
 import glob
 import os, sys
+import unidecode
+
 from myFunctions import *
 
 
@@ -56,6 +58,7 @@ append_second_worksheet_other_info(ws2, ws3_all_info, length, SIS_download_file)
 
 categorize_emails(ws3_all_info)
 format_phone_number(ws3_all_info)
+remove_accents(ws3_all_info)
 format_country(ws3_all_info)
 format_postal_code(ws3_all_info)
 format_first_row(ws3_all_info)

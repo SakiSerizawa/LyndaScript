@@ -3,6 +3,7 @@ import glob
 from myFunctions import *
 from stateAbbreviations import *
 import os, sys
+import unicodedata
 
 """Campainger1 will move the necessary cells in the large Campaigner file to something more succient and somewhat
 smaller. It also creates a file (cmt.xlsx) which is ready for the Link Constituent Matching Tool"""
@@ -33,15 +34,8 @@ for row in ws1.iter_rows(min_col=column_index_from_string('P'),max_col=column_in
             cell.offset(row=0, column=1).value = cell.value
             cell.value = None
 
-"""Moves values over from R column and places them into Q column"""
-for row in ws1.iter_rows(min_col=column_index_from_string('R'),max_col=column_index_from_string('S'), min_row=2):
-    for cell in row:
-        if cell.value is not None:
-            cell.offset(row=0, column=-1).value = cell.value
-            cell.value = None
-
-"""Moves values over from T U V W X Y Z columns and places them into Q column"""
-for row in ws1.iter_rows(min_col=column_index_from_string('T'),max_col=column_index_from_string('Z'), min_row=2):
+"""Moves values over from R S T U V W X Y Z columns and places them into Q column"""
+for row in ws1.iter_rows(min_col=column_index_from_string('R'),max_col=column_index_from_string('Z'), min_row=2):
     for cell in row:
         if cell.value is not None:
             ws1.cell(row=cell.row, column=column_index_from_string('Q')).value = cell.value
@@ -103,76 +97,23 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
         if cell.value is None or cell.value == '':
             continue
         else:
-            cell.value = int(cell.value)
+            try:
+                cell.value = int(cell.value)
+            except:
+                continue
 
-
-asian_countries = ["Japan", "Indonesia", "Malaysia", "Philippines", "South Korea", "Thailand", "China", "India",
-                   "Hong Kong"]
-
-
+"""Formats the states of both popular countries, USA, and Canada and reformats to their matching state"""
 for cell in ws2['I']:
-    if cell.value in asian_countries:
-        country = cell.value
-        if country == "Japan":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = japan_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "Hong Kong":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = hongkong_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "Indonesia":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = indonesia_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "Malaysia":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = malaysia_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "Philippines":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = philippines_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "South Korea":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = korea_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "Thailand":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = thailand_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "China":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = china_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "India":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = india_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
-        elif country == "United States Of America":
-            if cell.offset(row=0, column=8).value is not None:
-                try:
-                    cell.offset(row=0, column=8).value = usa_states.get(cell.offset(row=0, column=8).value)
-                except:
-                    cell.offset(row=0, column=8).font = Font(color='F9f631')
+    if cell.value in popular_countries and cell.offset(row=0, column=8).value is not None:
+        try:
+            cell.offset(row=0, column=8).value = popular_countries[cell.value][cell.offset(row=0, column=8).value]
+        except:
+            cell.offset(row=0, column=8).font = Font(color='F9f631')
+    elif cell.value in usa_canada and cell.offset(row=0, column=8).value is not None:
+        try:
+            cell.offset(row=0, column=8).value = usa_canada[cell.value][cell.offset(row=0, column=8).value]
+        except:
+            cell.offset(row=0, column=8).font = Font(color='F9f631')
 
 
 
