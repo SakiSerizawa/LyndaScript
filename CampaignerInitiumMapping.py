@@ -7,9 +7,9 @@ import os, sys
 os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner")
 # os.chdir("W:/Records/LyndaScript-master/Campaigner Files")
 
+"""Loads the two excel files, Contact Update Template and Initium Canada-Results"""
 contact_update_template_file = (glob.glob("*Contact_Update_Template*")[0])
 initium_results_file = (glob.glob("*Canada-Results*")[0])
-
 
 workbook1 = (contact_update_template_file)
 workbook2 = (initium_results_file)
