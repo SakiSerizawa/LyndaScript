@@ -28,6 +28,7 @@ ws2 = wb2.active
 """Extracts LOOKUPID, FIRST/MIDDLE/LAST NAME, EMAIL from Campaigner_workbook and puts them in new CommPrefUpdate file"""
 extra_row_info = ["General Correspondence", " ", "AA - TREK Magazine"," ", "No", "M", "Alumni Affairs",
                   "Requested by constituent", "Last_UPDT", "Alumni Association"]
+
 for cellz in ws1['BH']:
     row_info = []
     if "online" in cellz.value:
@@ -73,7 +74,7 @@ ws3 = wb3.active
 wb4= Workbook()
 ws4 = wb4.active
 
-column_list = ['C', 'D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF', 'BK']
+column_list = ['B', 'D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF', 'BK']
 
 x = make_column_list(ws1, column_list)
 
@@ -253,28 +254,16 @@ business_file_titles_row = ["LOOKUPID", "First Name", "Middle Name", "Last Name"
                             "Graduation Year (most recent)", "Job Title", "Company Name", "Address 1", "Address 2",	"Address 3",
                             "Address 4","City","Province","Postal code","Country","Business Phone", "Business Email"]
 
+
+business_file_needed_column = ['B','D','E','F','G','H','AH','AI','AL','AM','AN','AO','AP','AR','BB','AJ', 'BE','BG' ]
+ll=0
 """Creating a file for updating business information"""
 for cell in ws1['AG']:
     if cell.value is not None:
-        business_row_info = []
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('B')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('D')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('E')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('F')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('G')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('H')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AH')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AI')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AL')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AM')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AN')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AO')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AP')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AR')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('AJ')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('BE')).value)
-        business_row_info.append(ws1.cell(row=cell.row, column=column_index_from_string('BG')).value)
-        ws5.append(business_row_info)
+        one_row = []
+        for key in business_file_needed_column:
+            one_row.append(ws1.cell(row=cell.row, column=column_index_from_string(key)).value)
+        ws5.append(one_row)
 
 """Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string"""
 for cell in ws5['A']:

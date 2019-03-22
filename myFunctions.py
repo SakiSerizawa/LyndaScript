@@ -241,12 +241,20 @@ def format_phone_number(worksheet):
     return 0
 
 def remove_accents(worksheet):
+    """Trys to remove accents from First/Middle/Last name, Address1234, City, and Country"""
     for row in worksheet.iter_rows(min_col=2, max_col=column_index_from_string('L')):
         for cell in row:
             try:
                 cell.value = unidecode.unidecode(cell.value)
             except:
                 continue
+    """Trys to removes accents from the Country column"""
+    for cell in worksheet['Q']:
+        try:
+            cell.value = unidecode.unidecode(cell.value)
+        except:
+            continue
+
 
 def format_country(worksheet):
     """ Changes country format to a type that LINKS """

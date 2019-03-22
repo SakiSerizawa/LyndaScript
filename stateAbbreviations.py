@@ -30,6 +30,14 @@ popular_countries = {
                                 "Tokyo":"TOKYO","Tottori":"TOTTO","Toyama":"TOYAM","Wakayama":"WAKAY","Yamagata":"YAMGA",
                                 "Yamaguchi":"YAMGU","Yamanashi":"YAMAN"},
 
+                            "Brazil":{"Acre":"AC","Alagoas":"AL","Amapa":"AP","Amazonas":"AM",
+                                "Bahia":"BA", "Brasilia":"DF","Ceara":"CE","Distrito Federal":"DF","Espirito Santo":"ES",
+                                "Goias":"GO","Maranhao":"MA","Mato Grosso":"MT","Mato Grosso do Sul":"MS",
+                                "Minas Gerais":"MG","Para":"PA","Paraiba":"PB","Parana":"PR",
+                                "Pernambuco":"PE","Piaui":"PI","Rio de Janeiro":"RJ","Rio Grande do Norte":"RN",
+                                "Rio Grande do Sul":"RS","Rondonia":"RO","Roraima":"RR","Santa Catarina":"SC",
+                                "Sao Paulo":"SP","Sergipe":"SE","Tocantins":"TO"},
+
                             "Indonesia":{"Aceh":"AC","Bali":"BA","Bangka-Belitung":"BB","Bengkulu":"BE","Banten":"BT",
                                 "Gorontalo":"GO","Jambi":"JA","Jawa Barat":"JB","Jawa Timur":"JI","Jakarta Raya":"JK",
                                 "Jawa Tengah":"JT","Kalimantan Barat":"KB","Kalimantan Timur":"KI",

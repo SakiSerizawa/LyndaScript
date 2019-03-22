@@ -8,11 +8,6 @@ import unidecode
 
 from myFunctions import *
 
-
-from argparse import ArgumentParser
-import sys
-from sys import argv
-
 # Where the files that go into script are kept
 path = "C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES"
 os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES")

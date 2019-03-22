@@ -31,7 +31,7 @@ for col in ws2.iter_cols(min_col=1, max_col=1,min_row=3):
                             ws2.cell(row=cell.row, column=16).value, ws2.cell(row=cell.row, column=17).value]
             replace_info(ws1, initium_info)
 
-"""Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string"""
+"""Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string)"""
 for cell in ws1['A']:
     cell.value = str(cell.value)
 
