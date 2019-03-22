@@ -157,6 +157,9 @@ for cell in ws3['F']:
     if cell.value is None:
         ws3.delete_rows(cell.row,1)
 
+
+
+"""Creates a title row in Campaigner Contact Update"""
 title_row = ["LOOKUP ID", "FIRST_NAME", "MIDDLE_NAME",	 "LAST_NAME",	"Street1", "Street2", "Street3",	"Street4",
             "CITY", "STATE","Postal_Code", "COUNTRY", "Address Type", "Address is Primary",  "Preferred Home" , "Phone",
             "Phone Type", "Phone is Primary", "Email", "Email Type", "Email is Primary",	"Last_UPDT", "Source"]
@@ -167,14 +170,14 @@ for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(title_row)):
         cell.font = Font(bold=True)
         i = i + 1
 
-
+"""Creates data validation drop down lists for campaigner contact update template"""
 dv1 = DataValidation(type="list", formula1='"H,B,A,O,P,S"', allow_blank=True)
 create_data_validation(dv1, ws3, 'M')
 
 dv2 = DataValidation(type="list", formula1='"0,1"', allow_blank=True)
-create_data_validation(dv2, ws3, 'M')
 create_data_validation(dv2, ws3, 'N')
 create_data_validation(dv2, ws3, 'R')
+create_data_validation(dv2, ws3, 'U')
 
 dv3 = DataValidation(type="list", formula1='"H,B,C,F,0,S"', allow_blank=True)
 create_data_validation(dv3, ws3, 'Q')
@@ -232,7 +235,7 @@ ws4.insert_cols(column_index_from_string('E'), 1)
 
 
 
-
+"""Creates a title row for Initium_Ready file"""
 initium_title_row = ["LOOKUP ID", "Street1", "Street2", "Street3", "Street4", "CITY",
              "STATE", "Postal_Code", "COUNTRY"]
 
@@ -246,6 +249,7 @@ for row in ws4.iter_rows(min_row=1, max_row=1, max_col=9):
         i = i + 1
 
 
+"""Creates workbook for the business information based on the campaigner_workbook"""
 wb5 = Workbook()
 ws5 = wb5.active
 
@@ -257,7 +261,7 @@ business_file_titles_row = ["LOOKUPID", "First Name", "Middle Name", "Last Name"
 
 business_file_needed_column = ['B','D','E','F','G','H','AH','AI','AL','AM','AN','AO','AP','AR','BB','AJ', 'BE','BG' ]
 ll=0
-"""Creating a file for updating business information"""
+
 for cell in ws1['AG']:
     if cell.value is not None:
         one_row = []
