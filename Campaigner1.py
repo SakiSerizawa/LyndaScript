@@ -147,6 +147,8 @@ information_from_excel = list(make_column_list(ws2, column_list))
 maximum_rows = len(information_from_excel)
 maximum_col = len(information_from_excel[0])
 
+
+
 i = 0
 for rows in ws3.iter_rows(max_row=maximum_rows, max_col=maximum_col):
     j = 0

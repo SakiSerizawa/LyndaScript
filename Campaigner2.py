@@ -27,7 +27,8 @@ ws2 = wb2.active
 
 """Extracts LOOKUPID, FIRST/MIDDLE/LAST NAME, EMAIL from Campaigner_workbook and puts them in new CommPrefUpdate file"""
 extra_row_info = ["General Correspondence", " ", "AA - TREK Magazine"," ", "No", "M", "Alumni Affairs",
-                  "Requested by constituent", "Last_UPDT", "Alumni Association"]
+                  "Requested by constituent"]
+                  #"Last_UPDT", "Alumni Association"]
 
 for cellz in ws1['BH']:
     row_info = []
@@ -40,6 +41,8 @@ for cellz in ws1['BH']:
             row_info.append(ws1.cell(row=cellz.row, column=6).value)
             for item in extra_row_info:
                 row_info.append(item)
+            row_info.append(int(ws1.cell(row=cellz.row, column=column_index_from_string('BK')).value.strftime("%Y%m%d")))
+            row_info.append("Alumni Association")
             ws2.append(row_info)
 
 
@@ -83,14 +86,24 @@ x = make_column_list(ws1, column_list)
 information_from_excel = list(x)
 maximum_rows = len(information_from_excel)
 maximum_col = len(information_from_excel[0])
+# print(information_from_excel[0])
+#print(information_from_excel[0][0])
+# print(information_from_excel[0][1])
+# print(information_from_excel[0][2])
+# print(information_from_excel[1][0])
+# print(information_from_excel[2][0])
+
 
 
 i = 0
 for rows in ws3.iter_rows(max_row=maximum_rows, max_col=maximum_col):
     j = 0
-    for cell in rows:
-        cell.value = information_from_excel[i][j]
-        j = j+1
+    if information_from_excel[i][j] == "unable to locate":
+        pass
+    else:
+        for cell in rows:
+            cell.value = information_from_excel[i][j]
+            j = j + 1
     i = i + 1
 
 ws3.insert_cols(column_index_from_string('M'), 2)
@@ -150,7 +163,10 @@ for cell in ws3['W']:
 """Formats the date column to the proper LINKS format"""
 for row in ws3.iter_rows(min_row=2, min_col=column_index_from_string('V'), max_col=column_index_from_string('V')):
     for cell in row:
-        cell.value = cell.value.strftime("%Y%m%d")
+        try:
+            cell.value = float(cell.value.strftime("%Y%m%d"))
+        except:
+            continue
 
 """Deletes all rows that don't have a address"""
 for cell in ws3['F']:
