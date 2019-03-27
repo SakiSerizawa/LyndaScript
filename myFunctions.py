@@ -3,6 +3,7 @@ from openpyxl.styles import *
 from openpyxl.worksheet.datavalidation import DataValidation
 import unidecode
 from stateAbbreviations import *
+from emailHandles import *
 
 
 def copy_paste_lookupid(sourcews, destws):
@@ -153,15 +154,7 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file)
     return 0
 
 
-# tuple of the different email handles that go into certain categories
-hometuple = ('gmail.com','gmail.ca', 'hotmail.com', 'hotmail.ca', 'yahoo.com', 'yahoo.ca', 'live.ca', 'live.com',
-             'telus.net', 'shaw.ca', 'ymail.com', 'outlook.com', 'outlook.ca', 'me.com', 'icloud.com', 'sympatico.ca',
-             'comcast.net', 'mail.com', 'yeah.net', '126.com', 'rogers.com', 'citywest.ca', '163.com', 'qq.com')
-businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee.org', 'ualberta.ca','mail.%.ca',
-                 'fnha.ca', 'surrey.ca', 'vch.ca', 'mun.ca', 'caltech.edu', 'hec.edu', 'barcelonagse.eu', 'aucegypt.edu',
-                 'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com', 'bchydro.com',
-                 'carlton.ca', 'worksafebc.com', 'tru.ca', 'puttingonashow.ca', 'cfmrlaw.com', 'yorku.ca',
-                 'kevingtonbuilding.com', 'sd44.ca', 'kdhs.org', 'ahs.ca')
+
 
 
 def categorize_emails(worksheet):
@@ -247,6 +240,7 @@ def remove_accents(worksheet):
             try:
                 cell.value = unidecode.unidecode(cell.value)
             except:
+                # print(cell.value)
                 continue
     """Trys to removes accents from the Country column"""
     for cell in worksheet['Q']:

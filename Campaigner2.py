@@ -164,7 +164,8 @@ for cell in ws3['W']:
 for row in ws3.iter_rows(min_row=2, min_col=column_index_from_string('V'), max_col=column_index_from_string('V')):
     for cell in row:
         try:
-            cell.value = float(cell.value.strftime("%Y%m%d"))
+            cell.number_format = 'General'
+            cell.value = int(cell.value.strftime("%Y%m%d"))
         except:
             continue
 

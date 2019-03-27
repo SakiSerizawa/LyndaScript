@@ -9,9 +9,9 @@ os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES")
 
 # os.chdir("W:/Records/LyndaScript-master/RC_SIS_Files")
 
-clock = 'combined_workbook.xlsx'
+clock = 'Combined_Workbook.xlsx'
 
-workbook1 = ('combined_workbook.xlsx')
+workbook1 = ('Combined_Workbook.xlsx')
 wb1 = load_workbook(workbook1)
 ws3_all_info = wb1.active
 
@@ -34,11 +34,11 @@ for cell in ws3_all_info['R']:
             cell.fill = PatternFill(fill_type=None)
 
 
-wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES/combined_workbook.xlsx")
+wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES/Combined_Workbook.xlsx")
 wb4.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES/RCSIS_Initium_Ready_CA.xlsx")
 wb5.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES/RCSISInitium_Ready_USA.xlsx")
 
-# wb1.save("W:/Records/LyndaScript-master/RC_SIS_Files/combined_workbook.xlsx")
+# wb1.save("W:/Records/LyndaScript-master/RC_SIS_Files/Combined_Workbook.xlsx")
 # wb4.save("W:/Records/LyndaScript-master/RC_SIS_Files/RCSIS_Initium_Ready_CA.xlsx")
 # wb5.save("W:/Records/LyndaScript-master/RC_SIS_Files/RCSISInitium_Ready_USA.xlsx")
 

@@ -76,4 +76,13 @@ for cell in ws1['T']:
                          top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
 
 
+# """Changes the date format to be LINKS ready"""
+# for cell in ws1['V']:
+#     try:
+#         cell.number_format = 'General'
+#         cell.value = float(cell.value.strftime("%Y%m%d"))
+#     except:
+#         continue
+#         print("Didn't work soz man")
+
 wb1.save("Campaigner - Contact_Update_Template.xlsx")
