@@ -208,7 +208,8 @@ def format_phone_number(worksheet):
     for col in worksheet.iter_rows(min_row=2, min_col=column_index_from_string('O'), max_col=column_index_from_string('O')):
         for cell in col:
             phone = str(cell.value)
-            cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '')
+            cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '').\
+                replace('#', '').replace('.', '')
             if cell.value is None or cell.value == '':
                 continue
             else: cell.value = int(cell.value)
@@ -305,6 +306,7 @@ def format_postal_code(worksheet):
             try:
                 if postal_code[3] != ' ' or not postal_code[3].isdigit():
                     cell.offset(row=0, column=-1).value = postal_code[:3] + ' ' + postal_code[3:]
+                    cell.offset(row=0, column=-1).value = str(postal_code).replace('  ', ' ')
             except:
                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                 cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
@@ -345,16 +347,38 @@ def format_first_row(worksheet):
     return 0
 
 
-def format_non_initium_address(worksheet):
-    """Formats non-Canadian and non-USA address to be in title format (ie: Japan vs JAPAN)"""
-    for cell in worksheet['L']:
-        if not cell.value == "Canada" and not cell.value == "United States of America":
-            try:
-                cell.offset(row=0, column=-7).value = cell.offset(row=0, column=-7).value.title()
-                cell.offset(row=0, column=-6).value = cell.offset(row=0, column=-6).value.title()
-                cell.offset(row=0, column=-5).value = cell.offset(row=0, column=-5).value.title()
-            except:
-                continue
+def format_address(worksheet):
+    """Formats address to be in title format (ie: Japan vs JAPAN) while removing unecessary symbols"""
+    """Removes the word Apartment from Canadian address"""
+    for cell in worksheet['E']:
+        try:
+            address1 = str(cell.value).title()
+            address2 = str(cell.offset(row=0, column=1).value).title()
+            address3 = str(cell.offset(row=0, column=2).value).title()
+            address4 = str(cell.offset(row=0, column=3).value).title()
+
+            cell.value = address1.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',',
+                                                                                                                ' ').replace(
+                'None', '').replace(' - ', '-').replace('  ', ' ')
+            cell.offset(row=0, column=1).value = address2.replace('(', '').replace(')', '').replace('.', ' ').replace(
+                '#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+            cell.offset(row=0, column=2).value = address3.replace('(', '').replace(')', '').replace('.', ' ').replace(
+                '#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+            cell.offset(row=0, column=3).value = address4.replace('(', '').replace(')', '').replace('.', ' ').replace(
+                '#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+        except Exception as e:
+            print(e)
+            continue
+    if cell.offset(row=0, column = 7).value == "Canada":
+        if cell.value.startswith('Apt') or cell.value.startswith('Apartment'):
+            cell.value = cell.value.replace('Apt', '').replace('Apartment', '')
+        # if cell.offset(row=0, column=-6).value.startswith('Apt') or cell.offset(row=0, column=-6).value.startswith(
+        #         'Apartment'):
+        #     cell.offset(row=0, column=-6).value = cell.offset(row=0, column=-6).value.replace('Apt', '').replace(
+        #         'Apartment', '')
+    if "Po Box" in address1 or "Po Box" in address2:
+        cell.value = address1.replace('Po', 'PO')
+        cell.offset(row=0, column=1).value = address2.replace('Po', 'PO')
     return 0
 
 

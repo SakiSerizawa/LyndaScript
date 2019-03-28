@@ -57,7 +57,7 @@ remove_accents(ws3_all_info)
 format_country(ws3_all_info)
 format_postal_code(ws3_all_info)
 format_first_row(ws3_all_info)
-format_non_initium_address(ws3_all_info)
+format_address(ws3_all_info)
 
 # Where the new combined file will be saved to
 wb3.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/RC_SIS_FILES/Combined_Workbook.xlsx")

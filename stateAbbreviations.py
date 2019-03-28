@@ -52,11 +52,12 @@ popular_countries = {
                                 "Perlis":"PERLI","Selangor":"SELAN","Terengganu":"TEREN","Sabah":"SABAH",
                                 "Sarawak":"SARAW","Kuala Lumpur": "KUALA","Labuan":"LABUA", "Putrajaya":"PUTRA"},
 
+
                              "Philippines": {"Autonomous Region in Muslim Mindanao":"AUTON","Bicol":"BICOL",
                                 "Cagayan Valley":"CAGAY","Calabarzon":"CALAB","Caraga":"CARAG","Central Luzon":"CENLU",
                                 "Central Visayas":"CENVI","Cordillera Administrative Region":"CORDI",
                                 "Davao":"DAVAO","Eastern Visayas":"EASTE","Ilocos":"ILOCO","Mimaropa":"MIMAR",
-                                "National Capital Region (NCR)":"NATIO","Northern Mindanao":"NORTH",
+                                "National Capital Region":"NATIO","Northern Mindanao":"NORTH",
                                 "Soccsksargen":"SOCCS","Western Visayas":"WESTE","Zamboanga Peninsula":"ZAMBO"},
 
                              "South Korea":{"Busan":"BUSAN","Chungcheongbuk-do":"CHBUK","Chungcheongnam-do":"CHNAM","Daegu":"DAEGU",
@@ -109,6 +110,12 @@ popular_countries = {
                                 "Western Australia":"WA","South Australia":"SA","Northern Territory":"NT",
                                 "Australian Capital Territory":"ACT"}}
 
+european_countries_and_singapore = ("Albania","Austria","Belgium", "Bosnia And Herzegovina","Bulgaria","Croatia","Cyprus",
+                        "Czech Republic","Denmark","Estonia","Finland","France",
+                        "Germany","Greece","Hungary","Ireland","Italy",
+                        "Latvia","Luxembourg","Lithuania","Malta","Moldova", "Macedonia","Montenegro","Netherlands", "Norway",
+                        "Poland","Portugal","Romania","Slovak Republic","Slovenia",
+                        "Spain","Sweden", "Switzerland", "Ukraine","United Kingdom", "Singapore")
 
 
 # Dictionary of UBC countries. Key value is the abbreviation, and value pair is the format LINKS prefers
@@ -146,3 +153,50 @@ countryDictionary = {"HGKG":"Hong Kong","JAPA":"Japan", "CHIN":	"China", "INDI":
                      "UNKN":"Unknown - But Foreign", "UPPE":	"Upper Volta", "URUG":	"Uruguay", "USA ":	"United States", "USM ":	"US Minor Outlying Islands", "UZBE":	"Uzbekistan", "VANU":	"Vanuatu",
                      "VATC":"Vatican City State", "VENE":	"Venezuela", "VIER":	"Vietnam", "VIET":	"Vietnam, North", "VIRG":	"Virgin Islands, U.S.", "WALE":	"Wales", "WALL":	"Wallis and Futuna",
                      "WEBA":"Westbank", "WEST":	"Western Somoa", "YEME":	"Yemen", "YUGO":	"Yugoslavia", "ZAIR":	"Zaire", "ZAMB":	"Zambia", "ZIMB":	"Zimbabwe"}
+
+country_codes = {"86":"China","852":"Hong Kong","91":"India", "81":"Japan","52":"Mexico","82":"South Korea","886":"Taiwan",
+                 "44":"United Kingdom","93":"Afghanistan","355":"Albania","213":"Algeria","684":"American Samoa","376":"Andorra",
+                "244":"Angola","809":"Anguilla","268":"Antigua","54":"Argentina","374":"Armenia",
+                "297":"Aruba","247":"Ascension Island","61":"Australia","672":"Australian External Territories","43":"Austria",
+                "994":"Azerbaijan","242":"Bahamas","246":"Barbados","973":"Bahrain","880":"Bangladesh",
+                "375":"Belarus","32":"Belgium","501":"Belize","229":"Benin","809":"Bermuda",
+                "975":"Bhutan","284":"British Virgin Islands","591":"Bolivia","387":"Bosnia and Hercegovina","267":"Botswana",
+                "55":"Brazil","284":"British V.I.","673":"Brunei Darussalm","359":"Bulgaria","226":"Burkina Faso",
+                "257":"Burundi","855":"Cambodia","237":"Cameroon","1":"Canada","238":"CapeVerde Islands",
+                "1":"Caribbean Nations","345":"Cayman Islands","238":"Cape Verdi","236":"Central African Republic","235":"Chad",
+                "56":"Chile","57":"Colombia","242":"Congo","682":"Cook Islands",
+                "506":"Costa Rica","385":"Croatia","53":"Cuba","357":"Cyprus","420":"Czech Republic",
+                "45":"Denmark","246":"Diego Garcia","767":"Dominca","809":"Dominican Republic","253":"Djibouti",
+                "593":"Ecuador","20":"Egypt","503":"El Salvador","240":"Equatorial Guinea","291":"Eritrea",
+                "372":"Estonia","251":"Ethiopia","500":"Falkland Islands","679":"Fiji","358":"Finland",
+                "33":"France","596":"French Antilles","594":"French Guiana","241":"Gabon","220":"Gambia",
+                "995":"Georgia","49":"Germany","233":"Ghana","350":"Gibraltar","30":"Greece",
+                "299":"Greenland","671":"Guam","502":"Guatemala","224":"Guinea","245":"Guinea-Bissau",
+                "592":"Guyana","509":"Haiti","504":"Honduras","36":"Hungary",
+                "354":"Iceland","62":"Indonesia","98":"Iran","964":"Iraq",
+                "353":"Ireland","972":"Israel","39":"Italy","225":"Cote d'Ivoire","876":"Jamaica",
+                "962":"Jordan","7":"Kazakhstan","254":"Kenya","855":"Khmer Republic (Cambodia/Kampuchea)",
+                "686":"Kiribati Republic (Gilbert Islands)","850":"North Korea","965":"Kuwait","996":"Kyrgyz Republic",
+                "371":"Latvia","856":"Laos","961":"Lebanon","266":"Lesotho","231":"Liberia",
+                "370":"Lithuania","218":"Libya","423":"Liechtenstein","352":"Luxembourg","853":"Macao",
+                "389":"Macedonia","261":"Madagascar","265":"Malawi","60":"Malaysia","960":"Maldives",
+                "223":"Mali","356":"Malta","692":"Marshall Islands","596":"Martinique (French Antilles)","222":"Mauritania",
+                "230":"Mauritius","269":"Mayolte","691":"Micronesia (F.S. of Polynesia)","373":"Moldova",
+                "33":"Monaco","976":"Mongolia","473":"Montserrat","212":"Morocco","258":"Mozambique",
+                "95":"Myanmar (former Burma)","264":"Namibia (former South-West Africa)","674":"Nauru","977":"Nepal","31":"Netherlands",
+                "599":"Netherlands Antilles","869":"Nevis","687":"New Caledonia","64":"New Zealand","505":"Nicaragua",
+                "227":"Niger","234":"Nigeria","683":"Niue","850":"North Korea","1 670":"North Mariana Islands (Saipan)",
+                "47":"Norway","968":"Oman","92":"Pakistan","680":"Palau","507":"Panama",
+                "675":"Papua New Guinea","595":"Paraguay","51":"Peru","63":"Philippines","48":"Poland",
+                "351":"Portugal","1 787":"Puerto Rico","974":"Qatar","40":"Romania","7":"Russia",
+                "250":"Rwanda","378":"San Marino","239":"Sao Tome and Principe","966":"Saudi Arabia","221":"Senegal",
+                "381":"Serbia and Montenegro","248":"Seychelles","232":"Sierra Leone","65":"Singapore","421":"Slovakia",
+                "386":"Slovenia","677":"Solomon Islands","252":"Somalia","27":"South Africa","34":"Spain",
+                "94":"Sri Lanka","290":"St. Helena","869":"St. Kitts/Nevis","249":"Sudan","597":"Suriname",
+                "268":"Swaziland","46":"Sweden","41":"Switzerland","963":"Syria","689":"French Polynesia",
+                "7":"Tajikistan","255":"Tanzania","66":"Thailand","228":"Togo",
+                "690":"Tokelau","676":"Tonga","1 868":"Trinidad and Tobago","216":"Tunisia","90":"Turkey",
+                "993":"Turkmenistan","688":"Tuvalu","256":"Uganda","380":"Ukraine","971":"United Arab Emirates",
+                "598":"Uruguay","1":"United States of America","7":"Uzbekistan","678":"Vanuatu",
+                "39":"Vatican City","58":"Venezuela","84":"Vietnam","1 340":"Virgin Islands, US","681":"Wallis and Futuna",
+                "685":"Western Samoa","381":"Yemen","260":"Zambia","263":"Zimbabwe"}

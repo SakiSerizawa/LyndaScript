@@ -78,12 +78,12 @@ for row in ws1.iter_rows(min_col=column_index_from_string('BC'),max_col=column_i
 
 
 
-wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner/Campaigner_workbook.xlsx")
+wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner/Campaigner_Workbook.xlsx")
 
-# wb1.save("W:/Records/LyndaScript-master/Campaigner Files/Campaigner_workbook.xlsx")
+# wb1.save("W:/Records/LyndaScript-master/Campaigner Files/Campaigner_Workbook.xlsx")
 
 
-workbook2 = ('Campaigner_workbook.xlsx')
+workbook2 = ('Campaigner_Workbook.xlsx')
 wb2 = load_workbook(workbook2)
 ws2 = wb2.active
 
@@ -92,14 +92,31 @@ ws2 = wb2.active
 for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_col=column_index_from_string('AD')):
     for cell in row:
         phone = str(cell.value)
-        cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '')
-        if cell.value is None or cell.value == '':
-            continue
-        else:
-            try:
-                cell.value = int(cell.value)
-            except:
-                continue
+        cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').\
+            replace('None', '').replace('#', '').replace('.', '').replace('+','')
+        if len(cell.value) > 10:
+            #print(cell.coordinate)
+            if cell.value.startswith('1') and (cell.offset(row=0, column=-21).value == "Canada" or cell.offset(row=0, column=-21).value == "United States Of America"):
+                cell.value = cell.value.replace('1', '')
+            else:
+                for key in country_codes:
+                    if cell.value.startswith(key):
+                        if country_codes[key] == cell.offset(row=0, column=-21).value:
+                            cell.value = cell.value.replace(key, '')
+                            #print(cell.coordinate, 1)
+                            break
+                        else:
+                            #print(cell.coordinate,2)
+                            cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                            break
+
+        try:
+            cell.value = int(cell.value)
+        except:
+            pass
+for cell in ws2['AD']:
+    if len(str(cell.value)) > 10:
+        cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
 """Formats phone number by removing extra spaces and unnecessary characters for business phone numbers"""
 for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('BE'), max_col=column_index_from_string('BE')):
@@ -114,12 +131,19 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('BE'), max_
             except:
                 continue
 
-"""Removes accents from First/Middle/Last name, Address1234, City, and Country and State"""
-remove_accents(ws2)
+"""Trys to remove accents from First/Middle/Last name, Address1234, City, and Country"""
+for row in ws2.iter_rows(min_col=2, max_col=column_index_from_string('BD')):
+    for cell in row:
+        try:
+            cell.value = unidecode.unidecode(cell.value)
+        except:
+            continue
 
-"""Formats the states of both popular countries, USA, and Canada and reformats to their matching state"""
-"""If the country doesn't match any of the above states OR if the state is  misspelled/not found in the state
-dictionary, it is highlighted"""
+"""Formats the states of both popular countries, USA, and Canada and formats to their matching state"""
+"""There are several cases when the cell will be flagged (highlighted):
+-If the state given does not match something in our dictionary (aka mispelled)
+-
+-If the country os european and a city is written, state can be deleted"""
 for cell in ws2['I']:
     if cell.value in popular_countries and cell.offset(row=0, column=8).value is not None:
         try:
@@ -131,18 +155,66 @@ for cell in ws2['I']:
             cell.offset(row=0, column=8).value = usa_canada[cell.value][cell.offset(row=0, column=8).value]
         except:
             cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-    elif cell.offset(row=0, column=8).value is not None and cell.offset(row=0, column=8).value != "Province":
+    elif cell.value in european_countries_and_singapore and cell.offset(row=0, column=6).value is not None:
+        cell.offset(row=0, column=8).value = ''
+    elif cell.offset(row=0, column=3).value is None:
+        pass
+    # elif cell.offset(row=0, column=8).value is not None and cell.offset(row=0, column=8).value != "Province":
+    #     cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+    else:
         cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+    if cell.offset(row=0, column=6).value is None and (cell.value == 'Singapore' or cell.value == 'Hong Kong'):
+        cell.offset(row=0, column=6).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
 
-wb2.save("Campaigner_workbook.xlsx")
+
+
+"""Combines street address 1 and 2 into one"""
+"""Try statements removes extra symbols and words from the address - such as #, commas, Apt"""
+for cell in ws2['L']:
+
+    if cell.offset(row=0, column=-2).value is not None:
+        cell_tuple = (str(cell.offset(row=0, column=-2).value), str(cell.value))
+        x = "-".join(cell_tuple)
+        cell.value = x
+        cell.offset(row=0, column=-2).value = ""
+    if cell.offset(row=0, column=2).value == cell.offset(row=0,column=3).value:
+        cell.offset(row=0, column=2).value = ""
+    try:
+        address1 = str(cell.value).title()
+        address2 = str(cell.offset(row=0, column=1).value).title()
+        address3 = str(cell.offset(row=0, column=2).value).title()
+        cell.value = address1.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',', ' ').replace('None', '').replace(' - ', '-').replace('  ', ' ')
+        cell.offset(row=0, column=1).value = address2.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+        cell.offset(row=0, column=2).value = address3.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+        """Takes out the first iteration of Apt or Apartment for Canadian addresss"""
+
+        for cellz in ws2['I']:
+            if cellz.value == 'Canada':
+                if cellz.offset(row=0, column=3).value.startswith('Apt') or cellz.offset(row=0, column=3).value.startswith('Apartment'):
+                    cellz.offset(row=0, column=3).value = cellz.offset(row=0, column=3).value.replace('Apt', '').replace('Apartment', '')
+                elif cellz.offset(row=0, column=4).value.startswith('Apt') or cellz.offset(row=0, column=4).value.startswith('Apartment'):
+                    cellz.offset(row=0, column=4).value = cellz.offset(row=0, column=4).value.replace('Apt', '').replace('Apartment', '')
+                elif cellz.offset(row=0, column=5).value.startswith('Apt') or cellz.offset(row=0, column=5).value.startswith('Apartment'):
+                    cellz.offset(row=0, column=5).value = cellz.offset(row=0, column=5).value.replace('Apt', '').replace('Apartment', '')
+    except Exception as e:
+        pass
+
+    if "Po Box" in cell.value or "Po Box" in cell.offset(row=0, column=1).value:
+        cell.value = address1.replace('Po', 'PO')
+        cell.offset(row=0, column=1).value = address2.replace('Po', 'PO')
+
+    """highlights column b"""
+    cell.offset(row=0, column=-10).fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+
+wb2.save("Campaigner_Workbook.xlsx")
 
 
 wb3 = Workbook()
 ws3 = wb3.active
 
 
-column_list = ['D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AF', 'AD', 'G']
+column_list = ['D', 'E', 'F', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AF', 'AD', 'G']
 information_from_excel = list(make_column_list(ws2, column_list))
 maximum_rows = len(information_from_excel)
 maximum_col = len(information_from_excel[0])
@@ -159,17 +231,7 @@ for rows in ws3.iter_rows(max_row=maximum_rows, max_col=maximum_col):
 
 ws3.insert_cols(1, 1)
 ws3.insert_cols(5, 1)
-
-
-"""Combines street address 1 and 2 into one"""
-for cell in ws3['G']:
-    if cell.offset(row=0, column=-1).value is not None:
-        cell_tuple = (str(cell.offset(row=0, column=-1).value), str(cell.value))
-        x = "-".join(cell_tuple)
-        cell.value = x
-        cell.offset(row=0, column=-1).value = ""
-ws3.delete_cols(column_index_from_string('F'),1)
-ws3.insert_cols(column_index_from_string('I'), 1)
+ws3.insert_cols(9, 1)
 
 
 
@@ -187,4 +249,4 @@ for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(cmt_title_row)):
 
 
 wb3.save("cmt.xlsx")
-wb2.save("Campaigner_workbook.xlsx")
+wb2.save("Campaigner_Workbook.xlsx")

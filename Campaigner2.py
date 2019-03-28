@@ -15,10 +15,11 @@ from openpyxl.worksheet.datavalidation import DataValidation
 os.chdir("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner")
 # os.chdir("W:/Records/LyndaScript-master/Campaigner Files")
 
-workbook1 = ('Campaigner_workbook.xlsx')
+workbook1 = ('Campaigner_Workbook.xlsx')
 wb1 = load_workbook(workbook1, data_only=True)
 ws1 = wb1.active
 
+"""Creates the workbook CommMailPreferences"""
 wb2 = Workbook()
 ws2 = wb2.active
 
@@ -77,7 +78,7 @@ ws3 = wb3.active
 wb4= Workbook()
 ws4 = wb4.active
 
-column_list = ['B', 'D', 'E', 'F', 'J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF', 'BK']
+column_list = ['B', 'D', 'E', 'F', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF', 'BK']
 
 x = make_column_list(ws1, column_list)
 
@@ -86,13 +87,6 @@ x = make_column_list(ws1, column_list)
 information_from_excel = list(x)
 maximum_rows = len(information_from_excel)
 maximum_col = len(information_from_excel[0])
-# print(information_from_excel[0])
-#print(information_from_excel[0][0])
-# print(information_from_excel[0][1])
-# print(information_from_excel[0][2])
-# print(information_from_excel[1][0])
-# print(information_from_excel[2][0])
-
 
 
 i = 0
@@ -105,8 +99,9 @@ for rows in ws3.iter_rows(max_row=maximum_rows, max_col=maximum_col):
             cell.value = information_from_excel[i][j]
             j = j + 1
     i = i + 1
-
+ws3.insert_cols(column_index_from_string('H'), 1)
 ws3.insert_cols(column_index_from_string('M'), 2)
+
 """Sets the Address Type and Address is Primary option to newly created column and manipulates the colour"""
 for cell in ws3['M']:
     cell.value = 'H'
@@ -170,10 +165,9 @@ for row in ws3.iter_rows(min_row=2, min_col=column_index_from_string('V'), max_c
             continue
 
 """Deletes all rows that don't have a address"""
-for cell in ws3['F']:
+for cell in ws3['E']:
     if cell.value is None:
         ws3.delete_rows(cell.row,1)
-
 
 
 """Creates a title row in Campaigner Contact Update"""
@@ -207,18 +201,8 @@ create_data_validation(dv4, ws3, 'T')
 # create_date_validation(dv5, ws3, 'W')
 
 
-"""Combines street address 1 and 2 into one with the Business Info Sheet"""
-for cell in ws3['F']:
-    if cell.offset(row=0, column=-1).value is not None:
-        cell_tuple = (str(cell.offset(row=0, column=-1).value), str(cell.value))
-        x = "-".join(cell_tuple)
-        cell.value = x
-        cell.offset(row=0, column=-1).value = ""
-ws3.delete_cols(column_index_from_string('E'),1)
-ws3.insert_cols(column_index_from_string('H'), 1)
 
-
-values_for_initium = ['B','J', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I']
+values_for_initium = ['B','L', 'M', 'N', 'O', 'Q', 'AA', 'I']
 """Copies out Canadian address from Campaigner_workbook and puts them into a Initium ready file"""
 for cell in ws1['I']:
     if cell.value == 'Canada' and ws1.cell(row=cell.row, column=2).value != "unable to locate":
@@ -236,20 +220,9 @@ for cell in ws4['A']:
         continue
 
 """Delete rows that have a lookupID without an address"""
-for cell in ws4['C']:
+for cell in ws4['B']:
     if cell.value is None:
         ws4.delete_rows(cell.row,1)
-
-"""Combines street address 1 and 2 into one with the Initium Sheet"""
-for cell in ws4['C']:
-    if cell.offset(row=0, column=-1).value is not None:
-        cell_tuple = (str(cell.offset(row=0, column=-1).value), str(cell.value))
-        x = "-".join(cell_tuple)
-        cell.value = x
-        cell.offset(row=0, column=-1).value = ""
-ws4.delete_cols(2,1)
-ws4.insert_cols(column_index_from_string('E'), 1)
-
 
 
 """Creates a title row for Initium_Ready file"""
@@ -301,6 +274,11 @@ for cell in ws5['J']:
         x = "-".join(cell_tuple)
         cell.value = x
         cell.offset(row=0, column=-1).value = ""
+    try:
+        if cell.offset(row=0, column=2).value.lower() == cell.offset(row=0,column=3).value.lower():
+            cell.offset(row=0, column=2).value = ""
+    except:
+        continue
 ws5.delete_cols(column_index_from_string('I'),1)
 ws5.insert_cols(column_index_from_string('K'), 1)
 
