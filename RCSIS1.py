@@ -48,14 +48,15 @@ copy_paste_other_info(ws1, ws3_all_info)
 create_source_column(RC_download_file, ws3_all_info)
 
 length = len(ws3_all_info['A']) + 1
+
 append_second_worksheet_initial_info(ws2, ws3_all_info)
 append_second_worksheet_other_info(ws2, ws3_all_info, length, SIS_download_file)
 
-categorize_emails(ws3_all_info)
+categorize_emails(ws3_all_info, 'R', 'S2:S1048576', 'T2:T1048576')
 format_phone_number(ws3_all_info)
 remove_accents(ws3_all_info)
 format_country(ws3_all_info)
-format_postal_code(ws3_all_info)
+format_postal_code(ws3_all_info, 'L', -1)
 format_first_row(ws3_all_info)
 format_address(ws3_all_info)
 

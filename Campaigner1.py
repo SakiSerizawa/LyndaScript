@@ -93,9 +93,8 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
     for cell in row:
         phone = str(cell.value)
         cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').\
-            replace('None', '').replace('#', '').replace('.', '').replace('+','')
+            replace('None', '').replace('#', '').replace('.', '').replace('+','').replace('=','')
         if len(cell.value) > 10:
-            #print(cell.coordinate)
             if cell.value.startswith('1') and (cell.offset(row=0, column=-21).value == "Canada" or cell.offset(row=0, column=-21).value == "United States Of America"):
                 cell.value = cell.value.replace('1', '')
             else:
@@ -103,10 +102,8 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
                     if cell.value.startswith(key):
                         if country_codes[key] == cell.offset(row=0, column=-21).value:
                             cell.value = cell.value.replace(key, '')
-                            #print(cell.coordinate, 1)
                             break
                         else:
-                            #print(cell.coordinate,2)
                             cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                             break
 
@@ -115,14 +112,15 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
         except:
             pass
 for cell in ws2['AD']:
-    if len(str(cell.value)) > 10:
+    if len(str(cell.value)) > 10 and not str(cell.value).startswith('Preferred Phone'):
         cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
 """Formats phone number by removing extra spaces and unnecessary characters for business phone numbers"""
 for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('BE'), max_col=column_index_from_string('BE')):
     for cell in row:
         phone = str(cell.value)
-        cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '')
+        cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '')\
+            .replace('.', '').replace('+', '').replace('=', '').replace('#', '')
         if cell.value is None or cell.value == '':
             continue
         else:
@@ -157,7 +155,7 @@ for cell in ws2['I']:
             cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
     elif cell.value in european_countries_and_singapore and cell.offset(row=0, column=6).value is not None:
         cell.offset(row=0, column=8).value = ''
-    elif cell.offset(row=0, column=3).value is None:
+    elif cell.offset(row=0, column=3).value is None or cell.offset(row=0, column=8).value == 'Province':
         pass
     # elif cell.offset(row=0, column=8).value is not None and cell.offset(row=0, column=8).value != "Province":
     #     cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
@@ -180,13 +178,20 @@ for cell in ws2['L']:
         cell.offset(row=0, column=-2).value = ""
     if cell.offset(row=0, column=2).value == cell.offset(row=0,column=3).value:
         cell.offset(row=0, column=2).value = ""
+
     try:
         address1 = str(cell.value).title()
         address2 = str(cell.offset(row=0, column=1).value).title()
         address3 = str(cell.offset(row=0, column=2).value).title()
-        cell.value = address1.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',', ' ').replace('None', '').replace(' - ', '-').replace('  ', ' ')
-        cell.offset(row=0, column=1).value = address2.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
-        cell.offset(row=0, column=2).value = address3.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+        cell.value = address1.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').\
+            replace(',', ' ').replace('None', '').replace(' - ', '-').replace('- ', '-').replace(' -', '-')\
+            .replace('  ', ' ').replace('Th', 'th')
+        cell.offset(row=0, column=1).value = address2.replace('(', '').replace(')', '').replace('.', ' ')\
+            .replace('#', ' ').replace(',', ' ').replace('None', '').replace('- ', '-').replace(' -', '-')\
+            .replace('  ', ' ').replace('Th', 'th')
+        cell.offset(row=0, column=2).value = address3.replace('(', '').replace(')', '').replace('.', ' ')\
+            .replace('#', ' ').replace(',', ' ').replace('None', '').replace('- ', '-')\
+            .replace(' -', '-').replace('  ', ' ').replace('Th', 'th')
         """Takes out the first iteration of Apt or Apartment for Canadian addresss"""
 
         for cellz in ws2['I']:
@@ -200,12 +205,18 @@ for cell in ws2['L']:
     except Exception as e:
         pass
 
-    if "Po Box" in cell.value or "Po Box" in cell.offset(row=0, column=1).value:
-        cell.value = address1.replace('Po', 'PO')
-        cell.offset(row=0, column=1).value = address2.replace('Po', 'PO')
+
+    for key in unwanted_words:
+        if cell.value.startswith(key):
+            cell.value = cell.value.replace(key, unwanted_words[key])
+            break
+
 
     """highlights column b"""
     cell.offset(row=0, column=-10).fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+
+
+format_postal_code(ws2, 'I', 18)
 
 wb2.save("Campaigner_Workbook.xlsx")
 
@@ -245,7 +256,10 @@ for row in ws3.iter_rows(min_row=1, max_row=1, max_col=len(cmt_title_row)):
         cell.font = Font(bold=True, color='FF0000')
         i = i + 1
 
-
+ws2.delete_cols(column_index_from_string('AB'), 2)
+ws2.delete_cols(column_index_from_string('R'), 9)
+ws2.delete_cols(column_index_from_string('P'), 1)
+ws2.delete_cols(column_index_from_string('J'), 2)
 
 
 wb3.save("cmt.xlsx")

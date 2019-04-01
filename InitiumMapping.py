@@ -50,7 +50,7 @@ try:
                                 ws3.cell(row=cell.row, column=16).value, ws3.cell(row=cell.row, column=17).value]
                 replace_info(ws1, initium_info)
 
-except:
+except Exception as e:
     print("No Initium USA-Results File or Error Processing Initium USA-Results File")
 
 """Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string"""

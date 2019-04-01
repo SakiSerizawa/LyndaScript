@@ -31,18 +31,18 @@ extra_row_info = ["General Correspondence", " ", "AA - TREK Magazine"," ", "No",
                   "Requested by constituent"]
                   #"Last_UPDT", "Alumni Association"]
 
-for cellz in ws1['BH']:
+for cellz in ws1['AT']:
     row_info = []
     if "online" in cellz.value:
         if "unable to locate" not in str(ws1.cell(row=cellz.row, column=2).value):
             row_info.append(ws1.cell(row=cellz.row, column=2).value)
-            row_info.append(ws1.cell(row=cellz.row, column=column_index_from_string('AF')).value)
+            row_info.append(ws1.cell(row=cellz.row, column=column_index_from_string('R')).value)
             row_info.append(ws1.cell(row=cellz.row, column=4).value)
             row_info.append(ws1.cell(row=cellz.row, column=5).value)
             row_info.append(ws1.cell(row=cellz.row, column=6).value)
             for item in extra_row_info:
                 row_info.append(item)
-            row_info.append(int(ws1.cell(row=cellz.row, column=column_index_from_string('BK')).value.strftime("%Y%m%d")))
+            row_info.append(int(ws1.cell(row=cellz.row, column=column_index_from_string('AW')).value.strftime("%Y%m%d")))
             row_info.append("Alumni Association")
             ws2.append(row_info)
 
@@ -74,11 +74,15 @@ wb2.save("CommMailPreferences.xlsx")
 wb3= Workbook()
 ws3 = wb3.active
 
-"""New workbook: Campaigner Initium Ready file"""
+"""New workbook: Canadian Campaigner Initium Ready file"""
 wb4= Workbook()
 ws4 = wb4.active
 
-column_list = ['B', 'D', 'E', 'F', 'L', 'M', 'N', 'O', 'Q', 'AA', 'I', 'AE', 'AD', 'AF', 'BK']
+"""New workbook: USA Campaigner Initium Ready file"""
+wb6= Workbook()
+ws6 = wb6.active
+
+column_list = ['B', 'D', 'E', 'F', 'J', 'K', 'L', 'M','N', 'O', 'I', 'Q', 'P', 'R', 'AW']
 
 x = make_column_list(ws1, column_list)
 
@@ -105,13 +109,6 @@ ws3.insert_cols(column_index_from_string('M'), 2)
 """Sets the Address Type and Address is Primary option to newly created column and manipulates the colour"""
 for cell in ws3['M']:
     cell.value = 'H'
-    cell.fill = PatternFill(fgColor="D8E4BC", fill_type="solid")
-    cell.border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
-    (cell.offset(row=0, column=1).value) = 0
-    cell.offset(row=0, column=1).fill = PatternFill(fgColor="D8E4BC", fill_type="solid")
-    cell.offset(row=0, column=1).border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
 ws3.insert_cols(column_index_from_string('Q'), 2)
 ws3.insert_cols(column_index_from_string('T'), 2)
 
@@ -127,33 +124,12 @@ for cell in ws3['Q']:
     else:
         cell.value = 'H'
 
-    (cell.offset(row=0, column=1).value) = 0
-
-    cell.fill = PatternFill(fgColor="FDE9D9", fill_type="solid")
-    cell.border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
-    cell.offset(row=0, column=1).fill = PatternFill(fgColor="FDE9D9", fill_type="solid")
-    cell.offset(row=0, column=1).border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
-
-"""Sets the Email Type and Email is Primary option to newly created column"""
-for cell in ws3['T']:
-    cell.value = 'H'
-    (cell.offset(row=0, column=1).value) = 0
-    cell.fill = PatternFill(fgColor="B7DEE8", fill_type="solid")
-    cell.border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
-    cell.offset(row=0, column=1).fill = PatternFill(fgColor="B7DEE8", fill_type="solid")
-    cell.offset(row=0, column=1).border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
+    (cell.offset(row=0, column=1).value) = 1
 
 
-"""Sets the Source column of the worksheet to Online Contact Update"""
-for cell in ws3['W']:
-    cell.value = 'Online Contact Update'
-    cell.fill = PatternFill(fgColor="DCE6F1", fill_type="solid")
-    cell.border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
+
+categorize_emails(ws3, 'S', 'T2:T1048576', 'U2:U1048576')
+
 
 """Formats the date column to the proper LINKS format"""
 for row in ws3.iter_rows(min_row=2, min_col=column_index_from_string('V'), max_col=column_index_from_string('V')):
@@ -202,7 +178,7 @@ create_data_validation(dv4, ws3, 'T')
 
 
 
-values_for_initium = ['B','L', 'M', 'N', 'O', 'Q', 'AA', 'I']
+values_for_initium = ['B','J', 'K', 'L', 'M','N', 'O', 'I']
 """Copies out Canadian address from Campaigner_workbook and puts them into a Initium ready file"""
 for cell in ws1['I']:
     if cell.value == 'Canada' and ws1.cell(row=cell.row, column=2).value != "unable to locate":
@@ -210,19 +186,18 @@ for cell in ws1['I']:
         for key in values_for_initium:
             all_info.append(ws1.cell(row=cell.row, column=column_index_from_string(key)).value)
         ws4.append(all_info)
+    elif cell.value == 'United States Of America' and ws1.cell(row=cell.row, column=2).value != "unable to locate":
+        all_info = []
+        for key in values_for_initium:
+            all_info.append(ws1.cell(row=cell.row, column=column_index_from_string(key)).value)
+        ws6.append(all_info)
 
 
-"""Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string"""
-for cell in ws4['A']:
-    try:
-        cell.value = int(cell.value)
-    except:
-        continue
+convert_from_string_to_int(ws4, 'A')
+convert_from_string_to_int(ws6, 'A')
 
-"""Delete rows that have a lookupID without an address"""
-for cell in ws4['B']:
-    if cell.value is None:
-        ws4.delete_rows(cell.row,1)
+delete_empty_rows(ws4, 'B')
+delete_empty_rows(ws6, 'B')
 
 
 """Creates a title row for Initium_Ready file"""
@@ -230,9 +205,19 @@ initium_title_row = ["LOOKUP ID", "Street1", "Street2", "Street3", "Street4", "C
              "STATE", "Postal_Code", "COUNTRY"]
 
 ws4.insert_rows(1, 1)
+ws4.insert_cols(5, 1)
+ws6.insert_rows(1, 1)
+ws6.insert_cols(5, 1)
+
 
 i=0
 for row in ws4.iter_rows(min_row=1, max_row=1, max_col=9):
+    for cell in row:
+        cell.value = initium_title_row[i]
+        cell.font = Font(bold=True, color='FF0000')
+        i = i + 1
+i=0
+for row in ws6.iter_rows(min_row=1, max_row=1, max_col=9):
     for cell in row:
         cell.value = initium_title_row[i]
         cell.font = Font(bold=True, color='FF0000')
@@ -249,10 +234,9 @@ business_file_titles_row = ["LOOKUPID", "First Name", "Middle Name", "Last Name"
                             "Address 4","City","Province","Postal code","Country","Business Phone", "Business Email"]
 
 
-business_file_needed_column = ['B','D','E','F','G','H','AH','AI','AL','AM','AN','AO','AP','AR','BB','AJ', 'BE','BG' ]
-ll=0
+business_file_needed_column = ['B','D','E','F','G','H','T', 'U', 'X','Y','Z','AA','AB','AD','AN','V','AQ','AS']
 
-for cell in ws1['AG']:
+for cell in ws1['S']:
     if cell.value is not None:
         one_row = []
         for key in business_file_needed_column:
@@ -290,9 +274,9 @@ for row in ws5.iter_rows(min_row=1, max_row=1):
         i = i + 1
 
 wb3.save("Campaigner - Contact_Update_Template.xlsx")
-wb4.save("Campaigner - Initium Ready.xlsx")
+wb4.save("Canada Initium Ready.xlsx")
 wb5.save("Business Addresss from Campaigner.xlsx")
-
+wb6.save("USA Initium Ready.xlsx")
 
 
 

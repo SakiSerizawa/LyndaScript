@@ -52,6 +52,18 @@ popular_countries = {
                                 "Perlis":"PERLI","Selangor":"SELAN","Terengganu":"TEREN","Sabah":"SABAH",
                                 "Sarawak":"SARAW","Kuala Lumpur": "KUALA","Labuan":"LABUA", "Putrajaya":"PUTRA"},
 
+                            "Mexico":{"Aguascalientes":"AGU","Baja California":"BCN","Baja California Sur":"BCS",
+                                "Campeche":"CAM","Chiapas":"CHP","Chihuahua":"CHH",
+                                "Coahuila":"COA","Colima":"COL","Distrito Federal":"DIF",
+                                "Durango":"DUR","Guanajuato":"GUA","Guerrero":"GRO",
+                                "Hidalgo":"HID","Jalisco":"JAL","Mexico":"MEX",
+                                "Michoacan":"MIC","Morelos":"MOR","Nayarit":"NAY",
+                                "Nuevo Leon":"NLE","Oaxaca":"OAX","Puebla":"PUE",
+                                "Queretaro":"QUE","Quintana Roo":"ROO","San Luis Potosi":"SLP",
+                                "Sinaloa":"SIN","Sonora":"SON","Tabasco":"TAB",
+                                "Tamaulipas":"TAM","Tlaxcala":"TLA","Veracruz":"VER",
+                                "Yucatan":"YUC","Zacatecas":"ZAC"
+                            },
 
                              "Philippines": {"Autonomous Region in Muslim Mindanao":"AUTON","Bicol":"BICOL",
                                 "Cagayan Valley":"CAGAY","Calabarzon":"CALAB","Caraga":"CARAG","Central Luzon":"CENLU",
@@ -115,7 +127,7 @@ european_countries_and_singapore = ("Albania","Austria","Belgium", "Bosnia And H
                         "Germany","Greece","Hungary","Ireland","Italy",
                         "Latvia","Luxembourg","Lithuania","Malta","Moldova", "Macedonia","Montenegro","Netherlands", "Norway",
                         "Poland","Portugal","Romania","Slovak Republic","Slovenia",
-                        "Spain","Sweden", "Switzerland", "Ukraine","United Kingdom", "Singapore")
+                        "Spain","Sweden", "Switzerland", "Ukraine","United Kingdom", "Singapore", "Taiwan")
 
 
 # Dictionary of UBC countries. Key value is the abbreviation, and value pair is the format LINKS prefers
@@ -200,3 +212,6 @@ country_codes = {"86":"China","852":"Hong Kong","91":"India", "81":"Japan","52":
                 "598":"Uruguay","1":"United States of America","7":"Uzbekistan","678":"Vanuatu",
                 "39":"Vatican City","58":"Venezuela","84":"Vietnam","1 340":"Virgin Islands, US","681":"Wallis and Futuna",
                 "685":"Western Samoa","381":"Yemen","260":"Zambia","263":"Zimbabwe"}
+
+unwanted_words = {"Po Box": "PO Box", "Box": "PO Box", "Po": "PO Box", "Apt":"", "Apartment":"", "Unit": "",
+                  "Unt":"", "Suite":"", "Suit":""}

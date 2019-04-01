@@ -70,20 +70,20 @@ def create_source_column(first_file, destws):
     return 0
 
 
-def append_lookup_id(source_ws, dest_ws):
-    """Appends the lookup id from the source sheet onto the destination sheet"""
-    # Creates list of items that need to be appended
-    lookupid_list = []
-    for col in source_ws.iter_cols(min_col=1,max_col=1, min_row=2):
-        for cell in col:
-            lookupid_list.append(cell.value)
-
-    # Appends the lookup ID from the second workbook onto the first
-    for col in dest_ws.iter_rows(max_col=1):
-        if col[-1].value == 'LOOKUP ID':
-            for data in lookupid_list:
-                dest_ws.append([data])
-    return 0
+# def append_lookup_id(source_ws, dest_ws):
+#     """Appends the lookup id from the source sheet onto the destination sheet"""
+#     # Creates list of items that need to be appended
+#     lookupid_list = []
+#     for col in source_ws.iter_cols(min_col=1,max_col=1, min_row=2):
+#         for cell in col:
+#             lookupid_list.append(cell.value)
+#
+#     # Appends the lookup ID from the second workbook onto the first
+#     for col in dest_ws.iter_rows(max_col=1):
+#         if col[-1].value == 'LOOKUP ID':
+#             for data in lookupid_list:
+#                 dest_ws.append([data])
+#     return 0
 
 
 def append_second_worksheet_initial_info(source_ws, target_ws):
@@ -122,7 +122,7 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file)
                             target_ws.cell(row=length, column=column_index_from_string('J')).value = cell.value
                             length = length+1
                         except:
-                            target_ws.cell(row=length, column=column_index_from_string('J')).value =  cell.value
+                            target_ws.cell(row=length, column=column_index_from_string('J')).value = cell.value
                             length = length+1
             elif cell.value == 'ZIP' or cell.value == 'Postal_Code':
                 for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
@@ -157,10 +157,10 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file)
 
 
 
-def categorize_emails(worksheet):
+def categorize_emails(worksheet, chosen_column, datavalidation_location1, datavalidation_location2):
     """Looking through the email column R, determines email category and marks column next to it accordingly"""
     """A is Alumni, H Home, and B Business. Anything not categorized is highlighted yellow in the target worksheet"""
-    for cell in worksheet['R']:
+    for cell in worksheet[chosen_column]:
         cell.offset(row=0, column=2).value = 0
         if cell.value is None:
             cell.offset(row=0, column=2).value = None
@@ -191,15 +191,14 @@ def categorize_emails(worksheet):
                 cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
 
     # Creates a data validation (drop down) object
-    dv = DataValidation(type="list", formula1='"H,B,O"', allow_blank=True)
+    dv = DataValidation(type="list", formula1='"H,B,O,A"', allow_blank=True)
     dv2 = DataValidation(type="list", formula1='"0,1"', allow_blank=True)
 
     # Add the data-validation object to the worksheet
     worksheet.add_data_validation(dv)
     worksheet.add_data_validation(dv2)
-
-    dv.add('S2:S1048576')
-    dv2.add('T2:T1048576')
+    dv.add(datavalidation_location1)
+    dv2.add(datavalidation_location2)
 
     return 0
 
@@ -209,10 +208,32 @@ def format_phone_number(worksheet):
         for cell in col:
             phone = str(cell.value)
             cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '').\
-                replace('#', '').replace('.', '')
-            if cell.value is None or cell.value == '':
-                continue
-            else: cell.value = int(cell.value)
+                replace('#', '').replace('.', '').replace('+','').replace('=','')
+            if len(cell.value) > 10:
+                # print(cell.coordinate)
+                if cell.value.startswith('1') and (
+                        cell.offset(row=0, column=-21).value == "Canada" or cell.offset(row=0,
+                                                                                        column=-21).value == "United States Of America"):
+                    cell.value = cell.value.replace('1', '')
+                else:
+                    for key in country_codes:
+                        if cell.value.startswith(key):
+                            if country_codes[key] == cell.offset(row=0, column=-21).value:
+                                cell.value = cell.value.replace(key, '')
+                                # print(cell.coordinate, 1)
+                                break
+                            else:
+                                # print(cell.coordinate,2)
+                                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                                break
+
+            if len(str(cell.value)) > 10:
+                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+
+            try:
+                cell.value = int(cell.value)
+            except:
+                pass
 
 
     for cell in worksheet['P']:
@@ -295,38 +316,43 @@ def format_country(worksheet):
 
     return 0
 
-def format_postal_code(worksheet):
+def format_postal_code(worksheet, country_column,offset_value):
     """ Formats Canadian Postal Codes to be 3 characters, a space, and three characters.
     Formats American Postal Codes so that it's 5 characters , dash then four: 12345-5555 EXAMPLE
     Formats Japanese Postal Codes so that it's three characters, then a dash: 123-1234 EXAMPLE
     If the postal code is an incorrect format, flag as pink"""
-    for cell in worksheet['L']:
-        if cell.value == 'Canada':
-            postal_code = cell.offset(row=0, column=-1).value
+    for cell in worksheet[country_column]:
+        if cell.value == 'Canada' or cell.value == 'Province':
+            postal_code = cell.offset(row=0, column=offset_value).value
             try:
-                if postal_code[3] != ' ' or not postal_code[3].isdigit():
-                    cell.offset(row=0, column=-1).value = postal_code[:3] + ' ' + postal_code[3:]
-                    cell.offset(row=0, column=-1).value = str(postal_code).replace('  ', ' ')
-            except:
+                if cell.offset(row=0, column=offset_value).value is None or cell.value == 'Province':
+                    pass
+                elif (postal_code[3] != ' ' or not postal_code[3].isdigit()) and postal_code is not None:
+                    cell.offset(row=0, column=offset_value ).value = postal_code[:3] + ' ' + postal_code[3:]
+                    cell.offset(row=0, column=offset_value).value = cell.offset(row=0, column=offset_value).value.replace('  ', ' ')
+            except Exception as e:
+                print("one", e, cell.coordinate)
                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-                cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                cell.offset(row=0, column=offset_value ).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
         if cell.value == 'United States of America':
-            zipcode = cell.offset(row=0, column=-1.).value
+            zipcode = cell.offset(row=0, column=offset_value).value
             if type(zipcode) != int and '-' not in zipcode:
-                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-                cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                if cell.offset(row=0, column=offset_value).value is not None:
+                    cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                    cell.offset(row=0, column=offset_value ).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
             else:
                 temp_str_zip = str(zipcode)
-                cell.offset(row=0, column=-1.).value = temp_str_zip[:5] + '-' + temp_str_zip[5:]
+                cell.offset(row=0, column=offset_value).value = temp_str_zip[:5] + '-' + temp_str_zip[5:]
                 if '--' in cell.offset(row=0, column=-1.).value:
-                    cell.offset(row=0, column=-1.).value = cell.offset(row=0, column=-1.).value.replace('-', '', 1)
+                    cell.offset(row=0, column=offset_value ).value = cell.offset(row=0, column=offset_value ).value.replace('-', '', 1)
         if cell.value == 'Japan':
-            zipcode = cell.offset(row=0, column=-1.).value
+            zipcode = cell.offset(row=0, column=offset_value).value
             temp_str_zip = str(zipcode)
-            cell.offset(row=0, column=-1.).value = temp_str_zip[:3] + '-' + temp_str_zip[3:]
+            cell.offset(row=0, column=offset_value).value = temp_str_zip[:3] + '-' + temp_str_zip[3:]
 
 
     return 0
+
 
 
 title_row = ["LOOKUPID", "FIRST_NAME", "MIDDLE_NAME", "LAST_NAME", "Street1", "Street2", "Street3", "Street4", "CITY",
@@ -357,28 +383,22 @@ def format_address(worksheet):
             address3 = str(cell.offset(row=0, column=2).value).title()
             address4 = str(cell.offset(row=0, column=3).value).title()
 
-            cell.value = address1.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',',
-                                                                                                                ' ').replace(
-                'None', '').replace(' - ', '-').replace('  ', ' ')
+            cell.value = address1.replace('(', '').replace(')', '').replace('.', ' ').replace('#', ' ').replace(',',' ')\
+                .replace('None', '').replace(' - ', '-').replace('- ', '-').replace(' -', '-').replace('  ', ' ').replace('Th', 'th')
             cell.offset(row=0, column=1).value = address2.replace('(', '').replace(')', '').replace('.', ' ').replace(
-                '#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+                '#', ' ').replace(',', ' ').replace('None', '').replace('- ', '-').replace(' -', '-').replace('  ', ' ').replace('Th', 'th')
             cell.offset(row=0, column=2).value = address3.replace('(', '').replace(')', '').replace('.', ' ').replace(
-                '#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+                '#', ' ').replace(',', ' ').replace('None', '').replace('- ', '-').replace(' -', '-').replace('  ', ' ').replace('Th', 'th')
             cell.offset(row=0, column=3).value = address4.replace('(', '').replace(')', '').replace('.', ' ').replace(
-                '#', ' ').replace(',', ' ').replace('None', '').replace('  ', ' ')
+                '#', ' ').replace(',', ' ').replace('None', '').replace('- ', '-').replace(' -', '-').replace('  ', ' ').replace('Th', 'th')
         except Exception as e:
-            print(e)
             continue
-    if cell.offset(row=0, column = 7).value == "Canada":
-        if cell.value.startswith('Apt') or cell.value.startswith('Apartment'):
-            cell.value = cell.value.replace('Apt', '').replace('Apartment', '')
-        # if cell.offset(row=0, column=-6).value.startswith('Apt') or cell.offset(row=0, column=-6).value.startswith(
-        #         'Apartment'):
-        #     cell.offset(row=0, column=-6).value = cell.offset(row=0, column=-6).value.replace('Apt', '').replace(
-        #         'Apartment', '')
-    if "Po Box" in address1 or "Po Box" in address2:
-        cell.value = address1.replace('Po', 'PO')
-        cell.offset(row=0, column=1).value = address2.replace('Po', 'PO')
+
+        for key in unwanted_words:
+            if cell.value.startswith(key) and cell.offset(row=0, column = 7).value == "Canada":
+                cell.value = cell.value.replace(key, unwanted_words[key])
+                break
+
     return 0
 
 
@@ -465,5 +485,20 @@ def create_data_validation(dv_object, dest_ws, column_choice):
 
     return 0
 
+def convert_from_string_to_int(worksheet, column):
+    """Converts most LOOKUPID's back to integers to prevent warnings in excel (ex "this number is stored as string"""
+    for cell in worksheet[column]:
+        try:
+            cell.value = int(cell.value)
+        except:
+            continue
 
+    return 0
+
+def delete_empty_rows(worksheet, column):
+    """Delete rows that have a lookupID without an address"""
+    for cell in worksheet[column]:
+        if cell.value is None:
+            worksheet.delete_rows(cell.row, 1)
+    return 0
 
