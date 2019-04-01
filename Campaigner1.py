@@ -194,17 +194,8 @@ for cell in ws2['L']:
             .replace(' -', '-').replace('  ', ' ').replace('Th', 'th')
         """Takes out the first iteration of Apt or Apartment for Canadian addresss"""
 
-        for cellz in ws2['I']:
-            if cellz.value == 'Canada':
-                if cellz.offset(row=0, column=3).value.startswith('Apt') or cellz.offset(row=0, column=3).value.startswith('Apartment'):
-                    cellz.offset(row=0, column=3).value = cellz.offset(row=0, column=3).value.replace('Apt', '').replace('Apartment', '')
-                elif cellz.offset(row=0, column=4).value.startswith('Apt') or cellz.offset(row=0, column=4).value.startswith('Apartment'):
-                    cellz.offset(row=0, column=4).value = cellz.offset(row=0, column=4).value.replace('Apt', '').replace('Apartment', '')
-                elif cellz.offset(row=0, column=5).value.startswith('Apt') or cellz.offset(row=0, column=5).value.startswith('Apartment'):
-                    cellz.offset(row=0, column=5).value = cellz.offset(row=0, column=5).value.replace('Apt', '').replace('Apartment', '')
     except Exception as e:
         pass
-
 
     for key in unwanted_words:
         if cell.value.startswith(key):
