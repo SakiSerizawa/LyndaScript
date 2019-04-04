@@ -2,7 +2,7 @@
 hometuple = ('gmail.com','gmail.ca', 'hotmail.com', 'hotmail.ca', 'yahoo.com', 'yahoo.ca', 'live.ca', 'live.com',
              'telus.net', 'shaw.ca', 'shaw.com', 'ymail.com', 'outlook.com', 'outlook.ca', 'me.com', 'icloud.com', 'sympatico.ca',
              'comcast.net', 'mail.com', 'yeah.net', '126.com', 'rogers.com', 'citywest.ca', '163.com', 'qq.com',
-             'hotmail.co.uk')
+             'hotmail.co.uk', 'aol.com')
 
 
 businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee.org', 'ualberta.ca','.edu', '.org',

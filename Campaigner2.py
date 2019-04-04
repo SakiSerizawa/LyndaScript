@@ -68,7 +68,7 @@ for row in ws2.iter_rows(min_row=1, max_row=1):
         cell.font = Font(bold=True, color='FF0000')
         i = i + 1
 
-wb2.save("CommMailPreferences.xlsx")
+wb2.save("CommMailPreferences.csv")
 
 """New workbook: Contact Update Template"""
 wb3= Workbook()
@@ -109,6 +109,7 @@ ws3.insert_cols(column_index_from_string('M'), 2)
 """Sets the Address Type and Address is Primary option to newly created column and manipulates the colour"""
 for cell in ws3['M']:
     cell.value = 'H'
+    cell.offset(row=0, column=1).value = 0
 ws3.insert_cols(column_index_from_string('Q'), 2)
 ws3.insert_cols(column_index_from_string('T'), 2)
 
@@ -119,12 +120,15 @@ for cell in ws3['Q']:
         pass
     elif cell.offset(row=0,column=-2).value == "Home Cell Phone":
         cell.value = 'C'
+        cell.offset(row=0, column=1).value = 1
     elif cell.offset(row=0,column=-2).value == "Home Landline":
         cell.value = 'H'
+        cell.offset(row=0, column=1).value = 1
     else:
         cell.value = 'H'
+        cell.offset(row=0, column=1).value = 1
 
-    (cell.offset(row=0, column=1).value) = 1
+
 
 
 
@@ -274,7 +278,7 @@ for row in ws5.iter_rows(min_row=1, max_row=1):
         i = i + 1
 
 wb3.save("Campaigner - Contact_Update_Template.xlsx")
-wb4.save("Canada Initium Ready.xlsx")
+wb4.save("CANADA Initium Ready.xlsx")
 wb5.save("Business Addresss from Campaigner.xlsx")
 wb6.save("USA Initium Ready.xlsx")
 

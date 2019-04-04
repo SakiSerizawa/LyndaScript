@@ -55,14 +55,14 @@ popular_countries = {
                             "Mexico":{"Aguascalientes":"AGU","Baja California":"BCN","Baja California Sur":"BCS",
                                 "Campeche":"CAM","Chiapas":"CHP","Chihuahua":"CHH",
                                 "Coahuila":"COA","Colima":"COL","Distrito Federal":"DIF",
-                                "Durango":"DUR","Guanajuato":"GUA","Guerrero":"GRO",
-                                "Hidalgo":"HID","Jalisco":"JAL","Mexico":"MEX",
+                                "Durango":"DUR", "DGO": "DUR","Guanajuato":"GUA","Guerrero":"GRO",
+                                "Hidalgo":"HID","Jalisco":"JAL","Mexico":"MEX","Edo. Mex":"MEX", "Estado De Mexico":"MEX",
                                 "Michoacan":"MIC","Morelos":"MOR","Nayarit":"NAY",
                                 "Nuevo Leon":"NLE","Oaxaca":"OAX","Puebla":"PUE",
                                 "Queretaro":"QUE","Quintana Roo":"ROO","San Luis Potosi":"SLP",
                                 "Sinaloa":"SIN","Sonora":"SON","Tabasco":"TAB",
                                 "Tamaulipas":"TAM","Tlaxcala":"TLA","Veracruz":"VER",
-                                "Yucatan":"YUC","Zacatecas":"ZAC"
+                                "Yucatan":"YUC","Zacatecas":"ZAC",
                             },
 
                              "Philippines": {"Autonomous Region in Muslim Mindanao":"AUTON","Bicol":"BICOL",

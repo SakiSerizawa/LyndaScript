@@ -311,6 +311,8 @@ def format_country(worksheet):
     worksheet.add_data_validation(dv)
     worksheet.add_data_validation(dv2)
 
+
+
     dv.add('M2:M1048576')
     dv2.add('N2:N1048576')
 

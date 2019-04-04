@@ -71,12 +71,6 @@ for cell in ws1['A']:
         continue
 
 
-
-
-
-
-
-
 """Sets the Address Type and Address is Primary option to green"""
 for cell in ws1['M']:
     cell.fill = PatternFill(fgColor="D8E4BC", fill_type="solid")
@@ -107,10 +101,11 @@ for cell in ws1['T']:
 
 
 """Sets the Source column of the worksheet to Online Contact Update"""
-for cell in ws1['W']:
-    cell.value = 'Online Contact Update'
-    cell.fill = PatternFill(fgColor="DCE6F1", fill_type="solid")
-    cell.border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
-                         top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
+for row in ws1.iter_rows(min_row=2, min_col=column_index_from_string('W'), max_col=column_index_from_string('W')):
+    for cell in row:
+        cell.value = 'Online Contact Update'
+        cell.fill = PatternFill(fgColor="DCE6F1", fill_type="solid")
+        cell.border = Border(left=Side(style='thin', color='FF000000'), right=Side(style='thin', color='FF000000'),
+                             top=Side(style='thin', color='FF000000'), bottom=Side(style='thin', color='FF000000'), )
 
 wb1.save("Campaigner - Contact_Update_Template.xlsx")
