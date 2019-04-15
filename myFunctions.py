@@ -186,9 +186,11 @@ def categorize_emails(worksheet, chosen_column, datavalidation_location1, datava
                     (cell.offset(row=0, column=1).value) = 'H'
                 else:
                     cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+                    (cell.offset(row=0, column=1).value) = 'B'
 
             except:
                 cell.fill = PatternFill(fgColor='FFFF33', fill_type = 'solid')
+                (cell.offset(row=0, column=1).value) = 'B'
 
     # Creates a data validation (drop down) object
     dv = DataValidation(type="list", formula1='"H,B,O,A"', allow_blank=True)
@@ -289,15 +291,21 @@ def format_country(worksheet):
             try:
                 (cell.offset(row=0, column=-2).value) = popular_countries[cell.value][cell.offset(row=0, column=-2).value]
             except:
-                print("exception occurred")
+                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                 continue
+        """Removes state (unecessary) if the country is European, Singapore, or Taiwan"""
+        if cell.value in european_countries_and_singapore and cell.offset(row=0,column=-3).value is not None:
+            cell.offset(row=0, column=-2).value = ''
+
+        elif cell.offset(row=0,column=-2).value is None:
+            cell.offset(row=0, column=-2).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+            cell.offset(row=0, column=-3).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
 
-    """Highlights any cells that don't have a state, or formats states if they need formatting"""
-    for cell in worksheet['J']:
-        if cell.value is None:
-            cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-            cell.offset(row=0, column=-1).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+
+
+
 
     """Sets the address type and Address is Primary option"""
     for cell in worksheet['M']:
@@ -333,7 +341,6 @@ def format_postal_code(worksheet, country_column,offset_value):
                     cell.offset(row=0, column=offset_value ).value = postal_code[:3] + ' ' + postal_code[3:]
                     cell.offset(row=0, column=offset_value).value = cell.offset(row=0, column=offset_value).value.replace('  ', ' ')
             except Exception as e:
-                print("one", e, cell.coordinate)
                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                 cell.offset(row=0, column=offset_value ).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
         if cell.value == 'United States of America':

@@ -1,7 +1,7 @@
 from openpyxl import load_workbook, Workbook
 from myFunctions import *
 import os, sys
-import glob
+import csv
 from openpyxl.worksheet.datavalidation import DataValidation
 
 # This script is to be run after the cmt file has run through the LINKS Constituent Matching Tool
@@ -58,7 +58,7 @@ for cell in ws2['A']:
 """Creates a properly formatted Title Row in the CommMailPreference workbook"""
 comm_mail_preferences_title_row = ["LOOKUP ID", "EMAIL", "FIRST_NAME", "MIDDLE_NAME", "LAST_NAME", "MAIL Type", "Site",
                                    "Correspondence code", "Category", "Send Yes/No", "Send by", "Business Unit",
-                                   "Comments", "Last_UPDT", "Source", "Sequence"]
+                                   "Comments", "Last_UPDT", "Source"]
 
 ws2.insert_rows(1,1)
 i=0
@@ -68,7 +68,12 @@ for row in ws2.iter_rows(min_row=1, max_row=1):
         cell.font = Font(bold=True, color='FF0000')
         i = i + 1
 
-wb2.save("CommMailPreferences.csv")
+with open('CommMailPreferences.csv', 'w', newline="") as csvfile:
+    c = csv.writer(csvfile)
+    for r in ws2.rows:
+        c.writerow([cell.value for cell in r])
+
+#wb2.save("CommMailPreferences.csv")
 
 """New workbook: Contact Update Template"""
 wb3= Workbook()

@@ -11,4 +11,4 @@ businesstuple = ('.bc.ca', 'vancity.com','.ubc.ca', 'ubc.ca', 'canada.ca', 'ieee
                  'pt.edu', 'dlapiper.com', 'toh.ca', 'bchydro.ca', 'interiorhealth.ca', 'rbc.com', 'bchydro.com',
                  'carlton.ca', 'worksafebc.com', 'tru.ca', 'puttingonashow.ca', 'cfmrlaw.com', 'yorku.ca',
                  'kevingtonbuilding.com', 'sd44.ca', 'kdhs.org', 'ahs.ca', 'thecdm.ca', 'asdwonder.com', 'lakeheadu.ca',
-                 'cbmtinc.com', 'mylaurier.ca', 'fraserhealth.ca')
+                 'cbmtinc.com', 'mylaurier.ca', 'fraserhealth.ca', 'vcc.ca')
