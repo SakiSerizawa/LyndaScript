@@ -48,28 +48,28 @@ for row in ws1.iter_rows(min_col=column_index_from_string('AB'),max_col=column_i
             ws1.cell(row=cell.row, column=column_index_from_string('AA')).value = cell.value
             cell.value = None
 
-"""Moves values over from AS,AT,AU,AV,AW,AX,AY,AZ,BA and AC and places them into AR column"""
+"""Moves values over from AS,AT,AU,AV,AW,AX,AY,AZ,BA and places them into AR column ( Business Provinces)"""
 for row in ws1.iter_rows(min_col=column_index_from_string('AS'),max_col=column_index_from_string('BA'), min_row=2):
     for cell in row:
         if cell.value is not None:
             ws1.cell(row=cell.row, column=column_index_from_string('AR')).value = cell.value
             cell.value = None
 
-"""Moves values over from AQ and places them into AR column"""
+"""Moves values over from AQ and places them into AR column (Business Provinces)"""
 for row in ws1.iter_rows(min_col=column_index_from_string('AQ'),max_col=column_index_from_string('AQ'), min_row=2):
     for cell in row:
         if cell.value is not None:
             ws1.cell(row=cell.row, column=column_index_from_string('AR')).value = cell.value
             cell.value = None
 
-"""Moves values over from AK and places them into AR column"""
+"""Moves values over from AK and places them into AR column (Business Provinces)"""
 for row in ws1.iter_rows(min_col=column_index_from_string('AK'),max_col=column_index_from_string('AK'), min_row=2):
     for cell in row:
         if cell.value is not None:
             ws1.cell(row=cell.row, column=column_index_from_string('AR')).value = cell.value
             cell.value = None
 
-"""Moves values over from BC,BD  and places them into AR column"""
+"""Moves values over from BC,BD  and places them into BB column (Business Postal Codes)"""
 for row in ws1.iter_rows(min_col=column_index_from_string('BC'),max_col=column_index_from_string('BD'), min_row=2):
     for cell in row:
         if cell.value is not None:

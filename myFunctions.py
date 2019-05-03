@@ -142,6 +142,7 @@ def append_second_worksheet_other_info(source_ws,target_ws, length_OG, sis_file)
             elif cell.value == 'PHONE' or cell.value == 'Phone':
                 for col in source_ws.iter_cols(min_row=2, max_col=cell.column, min_col=cell.column):
                     for cell in col:
+                        cell.number_format = "0000000"
                         target_ws.cell(row=length, column=column_index_from_string('O')).value = cell.value
                         length = length+1
             elif cell.value == 'LastChangeDate' or cell.value == 'SIS_LAST_UPDATE_DATE':
@@ -208,38 +209,41 @@ def format_phone_number(worksheet):
     """Formats phone number by removing extra spaces and unnecessary characters"""
     for col in worksheet.iter_rows(min_row=2, min_col=column_index_from_string('O'), max_col=column_index_from_string('O')):
         for cell in col:
-            phone = str(cell.value)
-            cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').replace('None', '').\
-                replace('#', '').replace('.', '').replace('+','').replace('=','')
-            if len(cell.value) > 10:
-                # print(cell.coordinate)
-                if cell.value.startswith('1') and (
-                        cell.offset(row=0, column=-21).value == "Canada" or cell.offset(row=0,
-                                                                                        column=-21).value == "United States Of America"):
-                    cell.value = cell.value.replace('1', '')
-                else:
-                    for key in country_codes:
-                        if cell.value.startswith(key):
-                            if country_codes[key] == cell.offset(row=0, column=-21).value:
-                                cell.value = cell.value.replace(key, '')
-                                # print(cell.coordinate, 1)
-                                break
+            """Excel rounds integers longers than 15 digits hence the large value in if statement below"""
+            if (type(cell.value) == float) or (type(cell.value) == int and cell.value > 100000000000000):
+                    cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                    break
+            elif cell.value is not None:
+                phone = str(cell.value)
+                cell.value = phone.replace('(', '').replace('-', '').replace(')', '').replace(' ', '').replace(' ', '').\
+                    replace('#', '').replace('.', '').replace('+','').replace('=','')
+                if len(cell.value) > 10:
+                    if cell.value.startswith('1') and (
+                            cell.offset(row=0, column=-3).value == "Canada" or cell.offset(row=0,
+                                                                                            column=-3).value == "United States Of America"):
+                        cell.value = cell.value.replace('1', '')
+                    else:
+                        for key in country_codes:
+                            if cell.value.startswith(key):
+                                try:
+                                    if country_codes[key] == cell.offset(row=0, column=-4).value:
+                                        cell.value = cell.value.replace(key, '')
+                                    break
+                                except:
+                                    pass
                             else:
-                                # print(cell.coordinate,2)
                                 cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                                 break
-
-            if len(str(cell.value)) > 10:
-                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-
-            try:
-                cell.value = int(cell.value)
-            except:
-                pass
+                if len(str(cell.value)) > 10:
+                    cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                try:
+                    cell.value = int(cell.value)
+                except:
+                    pass
 
 
     for cell in worksheet['P']:
-        if (cell.offset(row=0, column=-1).value) == '':
+        if (cell.offset(row=0, column=-1).value) is None:
             continue
         else:
             cell.value = 'H'

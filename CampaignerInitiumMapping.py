@@ -47,7 +47,7 @@ for cell in ws1['A']:
 
 
 try:
-    initium_results_file_USA = (glob.glob("*USA-Results*")[0])
+    initium_results_file_USA = (glob.glob("*US-Results*")[0])
     workbook3 = (initium_results_file_USA)
     wb3 = load_workbook(workbook3)
     ws3 = wb3["Exact"]
