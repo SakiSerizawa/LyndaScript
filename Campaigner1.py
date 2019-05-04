@@ -94,7 +94,8 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
         phone = str(cell.value)
         cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').\
             replace('None', '').replace('#', '').replace('.', '').replace('+','').replace('=','')
-        if len(cell.value) > 10:
+        if len(cell.value) > 10 or 'e' in cell.value:
+            cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
             if cell.value.startswith('1') and (cell.offset(row=0, column=-21).value == "Canada" or cell.offset(row=0, column=-21).value == "United States Of America"):
                 cell.value = cell.value.replace('1', '')
             else:
@@ -111,9 +112,8 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
             cell.value = int(cell.value)
         except:
             pass
-for cell in ws2['AD']:
-    if len(str(cell.value)) > 10 and not str(cell.value).startswith('Preferred Phone'):
-        cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+
+
 
 """Formats phone number by removing extra spaces and unnecessary characters for business phone numbers"""
 for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('BE'), max_col=column_index_from_string('BE')):
@@ -133,7 +133,8 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('BE'), max_
 for row in ws2.iter_rows(min_col=2, max_col=column_index_from_string('BD')):
     for cell in row:
         try:
-            cell.value = unidecode.unidecode(cell.value)
+            if cell.value is not None and (type(cell.value) != int):
+                cell.value = unidecode.unidecode(cell.value.strip().title())
         except:
             continue
 
@@ -142,28 +143,28 @@ for row in ws2.iter_rows(min_col=2, max_col=column_index_from_string('BD')):
 -If the state given does not match something in our dictionary (aka mispelled)
 -
 -If the country os european and a city is written, state can be deleted"""
-for cell in ws2['I']:
-    if cell.value in popular_countries and cell.offset(row=0, column=8).value is not None:
-        try:
-            cell.offset(row=0, column=8).value = popular_countries[cell.value][cell.offset(row=0, column=8).value]
-        except:
+for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('I'), max_col=column_index_from_string('I')):
+    for cell in row:
+        if cell.value in popular_countries and cell.offset(row=0, column=8).value is not None:
+            try:
+                cell.offset(row=0, column=8).value = popular_countries[cell.value][cell.offset(row=0, column=8).value]
+            except:
+                cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+        elif cell.value in usa_canada and cell.offset(row=0, column=8).value is not None:
+            try:
+                cell.offset(row=0, column=8).value = usa_canada[cell.value][cell.offset(row=0, column=8).value]
+            except:
+                cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+        elif cell.value in european_countries_and_singapore and cell.offset(row=0, column=6).value is not None:
+            cell.offset(row=0, column=8).value = ''
+        elif cell.offset(row=0, column=3).value is None or cell.offset(row=0, column=8).value == 'Province':
+            pass
+        # elif cell.offset(row=0, column=8).value is not None and cell.offset(row=0, column=8).value != "Province":
+        #     cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+        else:
             cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-    elif cell.value in usa_canada and cell.offset(row=0, column=8).value is not None:
-        try:
-            cell.offset(row=0, column=8).value = usa_canada[cell.value][cell.offset(row=0, column=8).value]
-        except:
-            cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-    elif cell.value in european_countries_and_singapore and cell.offset(row=0, column=6).value is not None:
-        cell.offset(row=0, column=8).value = ''
-    elif cell.offset(row=0, column=3).value is None or cell.offset(row=0, column=8).value == 'Province':
-        pass
-    # elif cell.offset(row=0, column=8).value is not None and cell.offset(row=0, column=8).value != "Province":
-    #     cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-    else:
-        cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-    if cell.offset(row=0, column=6).value is None and (cell.value == 'Singapore' or cell.value == 'Hong Kong'):
-        cell.offset(row=0, column=6).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-
+        if cell.offset(row=0, column=6).value is None and (cell.value == 'Singapore' or cell.value == 'Hong Kong'):
+            cell.offset(row=0, column=6).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
 
 

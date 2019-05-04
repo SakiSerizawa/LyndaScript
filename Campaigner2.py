@@ -42,7 +42,11 @@ for cellz in ws1['AT']:
             row_info.append(ws1.cell(row=cellz.row, column=6).value)
             for item in extra_row_info:
                 row_info.append(item)
-            row_info.append(int(ws1.cell(row=cellz.row, column=column_index_from_string('AV')).value.strftime("%Y%m%d")))
+            try:
+                row_info.append(int(ws1.cell(row=cellz.row, column=column_index_from_string('AW')).value.strftime("%Y%m%d")))
+            except:
+                row_info.append(
+                    int(ws1.cell(row=cellz.row, column=column_index_from_string('AV')).value.strftime("%Y%m%d")))
             row_info.append("Alumni Association")
             ws2.append(row_info)
 

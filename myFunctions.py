@@ -266,7 +266,8 @@ def remove_accents(worksheet):
     for row in worksheet.iter_rows(min_col=2, max_col=column_index_from_string('L')):
         for cell in row:
             try:
-                cell.value = unidecode.unidecode(cell.value)
+                if cell.value is not None and (type(cell.value) != int):
+                    cell.value = unidecode.unidecode(cell.value.strip().title())
             except:
                 # print(cell.value)
                 continue
