@@ -262,8 +262,8 @@ def format_phone_number(worksheet):
     return 0
 
 def remove_accents(worksheet):
-    """Trys to remove accents from First/Middle/Last name, Address1234, City, and Country"""
-    for row in worksheet.iter_rows(min_col=2, max_col=column_index_from_string('L')):
+    """Trys to remove accents from First/Middle/Last name, Address1234, City"""
+    for row in worksheet.iter_rows(min_col=2, max_col=column_index_from_string('I')):
         for cell in row:
             try:
                 if cell.value is not None and (type(cell.value) != int):
@@ -286,7 +286,7 @@ def format_country(worksheet):
             cell.value = 'Canada'
         elif cell.value == 'USA' or cell.value == 'United States':
             cell.value = 'United States of America'
-        elif cell.value == 'CAMP':
+        elif cell.value == 'CAMP' or cell.value == 'Camp':
             cell.value = 'Canada'
             (cell.offset(row=0, column=-2).value) = 'BC'
             (cell.offset(row=0, column=-3).value) = 'Vancouver'
