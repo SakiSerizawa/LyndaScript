@@ -80,7 +80,7 @@ for row in ws1.iter_rows(min_col=column_index_from_string('BC'),max_col=column_i
 
 wb1.save("C:/Users/sakiikas/Documents/ScriptFiles_TEST/Campaigner/Campaigner_Workbook.xlsx")
 
-# wb1.save("W:/Records/LyndaScript-master/Campaigner Files/Campaigner_Workbook.xlsx")
+wb1.save("W:/Records/LyndaScript-master/Campaigner Files/Campaigner_Workbook.xlsx")
 
 
 workbook2 = ('Campaigner_Workbook.xlsx')
@@ -95,15 +95,19 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('AD'), max_
         cell.value = phone.replace('-', '').replace('(', '').replace(')', '').replace(' ', '').\
             replace('None', '').replace('#', '').replace('.', '').replace('+','').replace('=','')
         if len(cell.value) > 10 or 'e' in cell.value:
-            cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-            if cell.value.startswith('1') and (cell.offset(row=0, column=-21).value == "Canada" or cell.offset(row=0, column=-21).value == "United States Of America"):
+            if cell.value.startswith('1') and (cell.offset(row=0, column=-21).value == "Canada" or
+                                               cell.offset(row=0, column=-21).value == "United States Of America"):
                 cell.value = cell.value.replace('1', '')
             else:
                 for key in country_codes:
                     if cell.value.startswith(key):
                         if country_codes[key] == cell.offset(row=0, column=-21).value:
                             cell.value = cell.value.replace(key, '')
-                            break
+                            if len(cell.value) > 10 or 'e' in cell.value:
+                                cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                                break
+                            else:
+                                break
                         else:
                             cell.fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
                             break
@@ -134,14 +138,14 @@ for row in ws2.iter_rows(min_col=2, max_col=column_index_from_string('BD')):
     for cell in row:
         try:
             if cell.value is not None and (type(cell.value) != int):
-                cell.value = unidecode.unidecode(cell.value.strip().title())
+                cell.value = unidecode.unidecode(cell.value.strip())
         except:
             continue
 
 """Formats the states of both popular countries, USA, and Canada and formats to their matching state"""
 """There are several cases when the cell will be flagged (highlighted):
 -If the state given does not match something in our dictionary (aka mispelled)
--
+-If the country has already been put in abbreviated
 -If the country os european and a city is written, state can be deleted"""
 for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('I'), max_col=column_index_from_string('I')):
     for cell in row:
@@ -149,12 +153,18 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('I'), max_c
             try:
                 cell.offset(row=0, column=8).value = popular_countries[cell.value][cell.offset(row=0, column=8).value]
             except:
-                cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                if cell.offset(row=0, column=8).value in popular_countries[cell.value].values():
+                    pass
+                else:
+                    cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
         elif cell.value in usa_canada and cell.offset(row=0, column=8).value is not None:
             try:
                 cell.offset(row=0, column=8).value = usa_canada[cell.value][cell.offset(row=0, column=8).value]
             except:
-                cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
+                if cell.offset(row=0, column=8).value in usa_canada[cell.value].values():
+                    pass
+                else:
+                    cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
         elif cell.value in european_countries_and_singapore and cell.offset(row=0, column=6).value is not None:
             cell.offset(row=0, column=8).value = ''
         elif cell.offset(row=0, column=3).value is None or cell.offset(row=0, column=8).value == 'Province':
@@ -163,7 +173,7 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('I'), max_c
         #     cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
         else:
             cell.offset(row=0, column=8).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
-        if cell.offset(row=0, column=6).value is None and (cell.value == 'Singapore' or cell.value == 'Hong Kong'):
+        if cell.offset(row=0, column=6).value is None and cell.value == 'Hong Kong':
             cell.offset(row=0, column=6).fill = PatternFill(fgColor='FDAB9F', fill_type='solid')
 
 
@@ -171,7 +181,6 @@ for row in ws2.iter_rows(min_row=2, min_col=column_index_from_string('I'), max_c
 """Combines street address 1 and 2 into one"""
 """Try statements removes extra symbols and words from the address - such as #, commas, Apt"""
 for cell in ws2['L']:
-
     if cell.offset(row=0, column=-2).value is not None:
         cell_tuple = (str(cell.offset(row=0, column=-2).value), str(cell.value))
         x = "-".join(cell_tuple)

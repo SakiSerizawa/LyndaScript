@@ -31,6 +31,11 @@ extra_row_info = ["General Correspondence", " ", "AA - TREK Magazine"," ", "No",
                   "Requested by constituent"]
                   #"Last_UPDT", "Alumni Association"]
 
+for row in ws1.iter_cols(min_row=1, max_row=1):
+    for cell in row:
+        if cell.value == 'Entry Date':
+            entry_date_column= cell.column
+
 for cellz in ws1['AT']:
     row_info = []
     if "online" in cellz.value:
@@ -42,11 +47,7 @@ for cellz in ws1['AT']:
             row_info.append(ws1.cell(row=cellz.row, column=6).value)
             for item in extra_row_info:
                 row_info.append(item)
-            try:
-                row_info.append(int(ws1.cell(row=cellz.row, column=column_index_from_string('AW')).value.strftime("%Y%m%d")))
-            except:
-                row_info.append(
-                    int(ws1.cell(row=cellz.row, column=column_index_from_string('AV')).value.strftime("%Y%m%d")))
+            row_info.append(int(ws1.cell(row=cellz.row, column=entry_date_column).value.strftime("%Y%m%d")))
             row_info.append("Alumni Association")
             ws2.append(row_info)
 
