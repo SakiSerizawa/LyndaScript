@@ -78,7 +78,6 @@ with open('CommMailPreferences.csv', 'w', newline="") as csvfile:
     for r in ws2.rows:
         c.writerow([cell.value for cell in r])
 
-#wb2.save("CommMailPreferences.csv")
 
 """New workbook: Contact Update Template"""
 wb3= Workbook()
@@ -92,7 +91,7 @@ ws4 = wb4.active
 wb6= Workbook()
 ws6 = wb6.active
 
-column_list = ['B', 'D', 'E', 'F', 'J', 'K', 'L', 'M','N', 'O', 'I', 'Q', 'P', 'R', 'AW']
+column_list = ['B', 'D', 'E', 'F', 'J', 'K', 'L', 'M','N', 'O', 'I', 'Q', 'P', 'R', 'AU']
 
 x = make_column_list(ws1, column_list)
 

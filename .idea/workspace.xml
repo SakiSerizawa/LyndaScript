@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="96f56133-d6d9-4949-8736-2561a0f15fce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/myFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Campaigner2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Campaigner2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailHandles.py" beforeDir="false" afterPath="$PROJECT_DIR$/emailHandles.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,13 +13,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.35783717">
+    <splitter split-orientation="horizontal" split-proportion="0.63912517">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/RCSIS1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="435">
+                <state relative-caret-position="1000">
                   <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
@@ -27,10 +28,10 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/myFunctions.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="315">
+                <state relative-caret-position="5180">
                   <caret line="264" column="76" selection-start-line="264" selection-start-column="76" selection-end-line="264" selection-end-column="76" />
                   <folding>
                     <element signature="e#0#70#0" expanded="true" />
@@ -63,11 +64,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/emailHandles.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="260">
-                  <caret line="13" column="68" selection-start-line="13" selection-start-column="68" selection-end-line="13" selection-end-column="74" />
+                <state relative-caret-position="80">
+                  <caret line="4" column="65" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
                 </state>
               </provider>
             </entry>
@@ -79,8 +80,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Campaigner1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1485">
-                  <caret line="175" selection-start-line="175" selection-end-line="176" selection-end-column="96" />
+                <state relative-caret-position="3760">
+                  <caret line="193" column="25" selection-start-line="193" selection-start-column="25" selection-end-line="193" selection-end-column="25" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
                   </folding>
@@ -91,8 +92,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Campaigner2.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="236">
-                  <caret line="46" selection-start-line="46" selection-end-line="47" />
+                <state relative-caret-position="2980">
+                  <caret line="153" column="20" selection-start-line="153" selection-start-column="20" selection-end-line="153" selection-end-column="20" />
                   <folding>
                     <element signature="e#0#44#0" expanded="true" />
                   </folding>
@@ -115,8 +116,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/stateAbbreviations.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="225">
-                  <caret line="90" column="94" selection-start-line="90" selection-start-column="89" selection-end-line="90" selection-end-column="94" />
+                <state relative-caret-position="-1200">
+                  <caret line="30" column="13" lean-forward="true" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
@@ -134,8 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>campai</find>
-      <find>none</find>
       <find>bonjour</find>
       <find>.bc.ca</find>
       <find>AD</find>
@@ -164,6 +163,8 @@
       <find>unidecode</find>
       <find>title</find>
       <find>title()</find>
+      <find>unwant</find>
+      <find>online</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,28 +180,27 @@
         <option value="$PROJECT_DIR$/Copying2.py" />
         <option value="$PROJECT_DIR$/play.py" />
         <option value="$PROJECT_DIR$/stateAbbreviations.py" />
-        <option value="$PROJECT_DIR$/emailHandles.py" />
         <option value="$PROJECT_DIR$/CampaignerInitiumMapping.py" />
         <option value="$PROJECT_DIR$/InitiumMapping.py" />
         <option value="$PROJECT_DIR$/RCSIS1.py" />
         <option value="$PROJECT_DIR$/Campaigner1.py" />
-        <option value="$PROJECT_DIR$/Campaigner2.py" />
         <option value="$PROJECT_DIR$/myFunctions.py" />
+        <option value="$PROJECT_DIR$/Campaigner2.py" />
+        <option value="$PROJECT_DIR$/emailHandles.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2464" />
+    <option name="x" value="1943" />
     <option name="y" value="-8" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -212,6 +212,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -229,7 +230,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.RCSIS2">
+  <component name="RunManager" selected="Python.CampaignerInitiumMapping">
     <configuration name="Campaigner1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LyndaScript" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -293,7 +294,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="RCSIS1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="InitiumMapping" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LyndaScript" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -305,7 +306,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RCSIS1.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/InitiumMapping.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -337,11 +338,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.RCSIS2" />
-        <item itemvalue="Python.RCSIS1" />
         <item itemvalue="Python.CampaignerInitiumMapping" />
         <item itemvalue="Python.Campaigner2" />
         <item itemvalue="Python.Campaigner1" />
+        <item itemvalue="Python.InitiumMapping" />
+        <item itemvalue="Python.RCSIS2" />
       </list>
     </recent_temporary>
   </component>
@@ -369,14 +370,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13277134" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13277134" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18309858" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.18201517" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -483,6 +483,26 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/play.py" />
+    <entry file="file://$PROJECT_DIR$/RCSIS1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1000">
+          <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myFunctions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5180">
+          <caret line="264" column="76" selection-start-line="264" selection-start-column="76" selection-end-line="264" selection-end-column="76" />
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/RCSIS2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="560">
@@ -505,8 +525,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/emailHandles.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="13" column="68" selection-start-line="13" selection-start-column="68" selection-end-line="13" selection-end-column="74" />
+        <state relative-caret-position="80">
+          <caret line="4" column="65" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Campaigner1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3760">
+          <caret line="193" column="25" selection-start-line="193" selection-start-column="25" selection-end-line="193" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Campaigner2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2980">
+          <caret line="153" column="20" selection-start-line="153" selection-start-column="20" selection-end-line="153" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -520,50 +560,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Campaigner1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1485">
-          <caret line="175" selection-start-line="175" selection-end-line="176" selection-end-column="96" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RCSIS1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Campaigner2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="46" selection-start-line="46" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myFunctions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="264" column="76" selection-start-line="264" selection-start-column="76" selection-end-line="264" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stateAbbreviations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="90" column="94" selection-start-line="90" selection-start-column="89" selection-end-line="90" selection-end-column="94" />
+        <state relative-caret-position="-1200">
+          <caret line="30" column="13" lean-forward="true" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
         </state>
       </provider>
     </entry>
